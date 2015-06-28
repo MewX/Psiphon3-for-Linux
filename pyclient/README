@@ -1,0 +1,13 @@
+Psiphon client in Python
+=======================
+
+You will need to build OpenSSH 5.9p1 that supports obfuscation: 
+
+cd ../Server/3rdParty/openssh-5.9p1/
+./configure
+make
+
+and copy ssh binary from psiphon-circumvention-system/Server/3rdParty/openssh-5.9p1/ to psiphon-circumvention-system/pyclient/
+
+For more details visit related Google Group discussion at
+https://groups.google.com/forum/#!searchin/psiphon3-developers/python$20/psiphon3-developers/cb8CW7Y98nI/BRx7-cIQ7C8J
