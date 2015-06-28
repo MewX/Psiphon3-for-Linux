@@ -1,0 +1,10 @@
+ADMIN=ysato@delegate.org
+#CFLAGS=-O2 -MT -D_USE_32BIT_TIME_T -DARM -D_ARM_ -DUNDER_CE -DUNICODE
+CFLAGS=-O2 -MT -D_USE_32BIT_TIME_T -DARM -D_ARM_ -DUNDER_CE -I../include-ce -I../../include-ce
+#### AR added automatically ####
+AR=ar
+HOSTCC=hostcc.bat
+HOSTCFLAGS=
+LDOPTS=-subsystem:windowsce -NODEFAULTLIB:oldnames.lib coredll.lib corelibc.lib
+XEMBED = ..\xembed.exe
+XTARGET = wince-dg.exe

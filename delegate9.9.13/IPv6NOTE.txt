@@ -1,0 +1,120 @@
+____________________________________________________________________________
+                                                                IPv6NOTE.txt
+IPv6-DeleGate Implementation Note
+
+    Current version: DeleGate/9.0.0
+    ftp://ftp.delegate.org/pub/DeleGate/alpha/
+                                                              Yutaka Sato
+                                                              April 22, 2005
+____________________________________________________________________________
+
+DeleGate version 9 started supporting IPv6 as the first step of it. 
+But since I don't have a practical IPv6 environment, nor necessity of it
+(I'm developing it on MacOS X without IPv6 connection to Internet),
+I'm not sure if or not it is applicable for practical use.  So comments
+from practical users will be appreciated.  Your comments are welcome to
+be posted to the open feedback board at
+http://www.delegate.org/feedback/ (via feedback@delegate.org)
+
+This note is written for users familiar with DeleGate.  If you are not,
+see the reference manual <URL:http://www.delegate.org/delegate/Manual.htm>
+I expect that just reading 1.1 and 1.2 below is enough for most users of
+DeleGate who use it as a proxy server for usual application protocol on
+TCP/IP(v4/v6) like HTTP or so.
+
+1. Common Issue
+1.1 IPv6 address notation in DeleGate
+  Use "_" for ":".  "%" for scope Id can be used 'as is' in most situation.
+  Example:
+     "__" for "::"
+     "fe80__12_34_56" for "fe80::12:34:56"
+     "fe80__12_34_56%en0" for "fe80::12:34:56%en0" (with scope id name)
+     "fe80__12_34_56%5" for "fe80::12:34:56%5" (with numeric scope id)
+
+1.2 Accepting at IPv6/IPv4 port
+  Specify IPv6 host name or address in -Phost:port option.
+  Example:
+     -P9999            ... accept IPv4 only (for -P0.0.0.0:9999)
+     -P__:9999         ... accept IPv6 only
+     -P__0:9999        ... accept IPv4 and IPv6 together
+     -P9999,__:9999    ... accept IPv4 and IPv6 respectively
+     -Pfe80__12_34%en0:9999 ... accept IPv6 link local address
+     -Pme:9999 HOSTS=me/fe80__12_34%en0 ... by host name
+
+  "__0" means using IPv4-mapped IPv6 address if it's available on the host.
+
+
+1.3 Host name resolution to IPv6/IPv4 address
+  By default, IPv4 address is retrieved first. If it's not available,
+  IPv6 next.  This order can be controlled with the RES_AF parameter.
+  Example:
+     RES_AF=46         ... retrieve IPv4 address first (default)
+     RES_AF=64         ... retrieve IPv6 address first
+     RES_AF=4          ... retrieve IPv4 address only
+     RES_AF=6          ... retrieve IPv6 address only
+
+  Or it can be controlled by adding special prefixes for each hostname.
+  Example:
+     hostname          ... follows RES_TYPES setting
+     _46.hostname      ... retrieve IPv4 address first
+     _64.hostname      ... retrieve IPv6 address first
+     _4.hostname       ... retrieve IPv4 address only
+     _6.hostname       ... retrieve IPv6 address only
+
+1.4 Default access control
+  64bits mask is used for "on the same networks with me".
+  That is, ".localnet" includes "./ffff_ffff_ffff_ffff__"
+
+1.5 Connecting to IPv6 port
+  Done automatically in most situation.  When "%scopeid" cannot be used
+  as in URL, it is necessary to be escaped using HOSTS parameter.
+  Example:
+     HOSTS=v6host/fe80__12_34_56_78%ifn
+     SERVER=ftp://v6host
+
+1.6 Routing by address family of destination host
+  "_6." and "_4." prefix to each host in HostList is introduced.
+  Example:
+     PROXY="v6gw:8080:_6.*" ... forward to the proxy if the server is IPv6
+     SOCKS="v6gw:1080:_6.*" ... forward to the SOCKS if the server is IPv6
+
+
+2. Application Protocol Specific Issue
+2.1 DNS (RFC1886)
+  The following RR are relayed by DNS-DeleGate as a proxy resolver
+  (with SERVER=dns)
+     AAAA
+     x.x.x...x.x.x.IP6.INT
+
+2.2 FTP (RFC2428)
+  The following commands are supported to represent IPv6 address.
+     EPSV
+     EPRT
+
+2.3 SOCKS (RFC1928)
+  The following methods (for TCP) accept addresses represented in IPv6.
+     CONNECT
+     BIND
+
+2.4 HTTP
+     http://xxxx--yy-zz.ipv6  for xxxx::yy:zz
+
+
+3. NOT SUPPORTED (YET)
+  subin/dgbind
+    "subin/dgbind", as an executable file with the setuid bit set and
+    owned by super-user, is used to bind a socket to a privileged port,
+    without running the DeleGate itself under super-user.
+    but when this is used with IPv6 address, like -P__:80,
+    it fails because of EACCESS, at least on MacOSX.
+    [must be supported]
+  HOSTS="v46host/{192.168.1.1,ABCD__12_34_56_78}
+    defining a host with mixture of IPv4 and IPv6 addresses.
+    [will not be supported]
+  UDP/IPv6 over SOCKS
+    [should be supported, if someone need it]
+  DNS over UDP over IPv6
+    [should be supported, if someone need it]
+  http://[x:x:x:x:x:x:x:x]
+    [will not be supported]
+____________________________________________________________________________

@@ -1,0 +1,5 @@
+#### Disallow the redirection by the DeleGate-_-URL notation
+User-agent: *
+Disallow: /-_-
+Disallow: /=@=
+${no-robots.mount}

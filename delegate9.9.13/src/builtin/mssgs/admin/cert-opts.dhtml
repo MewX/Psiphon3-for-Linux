@@ -1,0 +1,16 @@
+<TR><TD width=20%>&nbsp; Optional Output</TD><TD>
+<INPUT type=checkbox name=cert-notext ${admin.formv.cert-notext?checked}><small>no human-readable text</small>
+<INPUT type=checkbox name=cert-nopubkey ${admin.formv.cert-nopubkey?checked}><small>no public-key</small>
+</TD></TR>
+
+<TR><TD width=20%>&nbsp; Encryption
+<INPUT type=checkbox name=cert-dodes ${admin.formv.cert-dodes?checked}>
+</TD><TD>
+&nbsp;${tag:small:encrypt the private-key}
+${admin.formv.cert-dodes.on?
+${tag:small:with passphrase}
+ <INPUT type=password size=12 name=cert-pass ${admin.formv.cert-error.cert-pass?style="background-color:pink"}>
+ <INPUT type=password size=12 name=cert-pass ${admin.formv.cert-error.cert-pass?style="background-color:pink"}>
+}
+</TD></TR>
+

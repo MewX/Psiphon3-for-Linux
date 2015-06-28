@@ -1,0 +1,7 @@
+libdelegate.a    -- DeleGate functions
+libmimekit.a     -- MIME encoder/decoder
+library.a        -- Libraries :-)
+libresolvy.a     -- Resolver with file, NIS and DNS
+libsubst.a       -- Compatibility functions
+libcfi.a         -- External filters
+libmd5.a         -- MD5

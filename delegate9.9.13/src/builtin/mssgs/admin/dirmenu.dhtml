@@ -1,0 +1,38 @@
+<TABLE width=100% border=0 cellpadding=2 cellspacing=2><TR>
+<TD>
+<KBD>
+<A HREF="${abase}showdir/DGROOT/">DGROOT</A> |
+<A HREF="${abase}showdir/ADMDIR/">ADMDIR</A> |
+<A HREF="${abase}showdir/CACHEDIR/">CACHEDIR</A> |
+<A HREF="${abase}showdir/ETCDIR/">ETCDIR</A> |
+<A HREF="${abase}showdir/LIBDIR/">LIBDIR</A> |
+<A HREF="${abase}showdir/LOGDIR/">LOGDIR</A> (
+<A HREF="${abase}showdir/LOGDIR-current/">current</A> )
+</KBD>
+</TD></TR></TABLE>
+
+<TABLE width=100% border=0 cellpadding=2 cellspacing=2 bgcolor=#F0F0F0><TR>
+</TD></TR></TABLE>
+
+<TABLE width=100% border=0 cellpadding=0 cellspacing=0 bgcolor=#D0D0F0><TR>
+<TD>
+${admin.is_dir?
+${button:submit:com:create:create}
+${button:submit:com:remove:remove}
+${button:submit:com:backup:backup}
+${button:submit:com:restore:restore}
+:
+${button:submit:com:refresh:head}
+${button:submit:com:show_file.next:next}
+${button:submit:com:show_file.prev:prev}
+${button:submit:com:showtail:tail}
+}
+</TD>
+<TD align=right>
+${button:submit:com:df:df:style="font-family:roman"}
+${button:submit:com:up:up:style="font-size:120%"}
+${button:submit:com:refresh:refresh:style="font-size:120%"}
+</TD></TR>
+</TABLE>
+
+${not.admin.formv.com.refresh,cancell?${admin.formv.com.create,remove|admin.formv.prevcom.create?${include:file-create.dhtml}}}

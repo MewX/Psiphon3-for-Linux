@@ -1,0 +1,45 @@
+# HEADING BEGIN<BR>
+#<TITLE>GACL template</TITLE><BASE HREF="${url.fullself}?Admin=GetACL&ADMINID=${acl.id}"><BR>
+#<B> A Template of Gateway Access Control List (GACL) for You.</B><BR>
+#<BR>
+# Admin-ID: ${_acl.id}<BR>
+#<BR>
+# Since your Admin-ID shown is correct, and you don't have GACL yet,<BR>
+# the gateway server is sending this template of GACL to you.<BR>
+# Fill it up and upload.<BR>
+#<BR>
+#<B> How to Upload Your GACL</B><BR>
+#<BR>
+# 1. Make a copy of this GACL template removing the HEADING part.<BR>
+# 2. Fill necessary fields in the copy.<BR>
+# 3. Place the copy somewhere in FTP or HTTP space.<BR>
+# 4. <A HREF="${url.self}?Admin&ADMINID=${_acl.id}#upload"> Upload the GACL 
+     by showing assigned Admin-ID and the ACL-URL to the gateway server</A>.<BR>
+#<BR>
+# You must upload your GACL in 6 hours after the reception of this<BR>
+# template, otherwise your registration of <I>seed</I> will be <B>cancelled</B>.<BR>
+#<BR>
+# Any time you can check the uploaded copy of your GACL at:<BR>
+# <A HREF="${url.fullself}?Admin=GetACL&ADMINID=${acl.id}">${url.fullself}?Admin=GetACL&ADMINID=${_acl.id}</A>.<BR>
+#<BR>
+# HEADING END
+
+#<PLAINTEXT>
+# ACL-Version: version
+#
+#   Current version GACL/0.1 is just tentative.
+#   Do not rewrite the following line.
+#
+ACL-Version: GACL/0.1
+
+#
+# Admin-Class: authority of the owner (administrator)
+#   Do not rewrite the following line.
+#
+Admin-Class: anonymous
+
+#
+# User-Class: user class to be controlled
+#   Do not rewrite the following line.
+#
+User-Class: ${user.class}

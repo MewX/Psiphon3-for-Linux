@@ -1,0 +1,23 @@
+<HR>
+Forwarding the message
+${Sendmail?
+  <FONT color=green>is finished successfully</FONT>.
+:
+  <FONT color=red>FAILED</FONT> (${error.reason})
+}
+<HR>
+
+${putmenu?
+  <BR><B><BIG>${art.Subject}</BIG></B><BR>
+  ${art.Summary?-- ${art.Summary} --<P>}
+  <DIV align=right>
+  ${art.Date}
+  <I>${hide.href?${art.From}:<A HREF="mailto:${arturl.From}">${art.From}</A>}
+  </I><BR>
+  <I> ${art.Organization} </I>
+  </DIV>
+  <HR>
+}
+<PRE>
+${art.body}
+</PRE>

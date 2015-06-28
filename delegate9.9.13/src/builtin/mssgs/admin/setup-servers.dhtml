@@ -1,0 +1,60 @@
+<TABLE width="100%" border=0 cellspacing=0 cellpadding=0 bgcolor=#D0D0F0>
+
+<TR>
+<TD>&nbsp;protocol</TD>
+<TD>active</TD>
+<TD>port</TD>
+<TD>auth</TD>
+</TR>
+
+<TR bgcolor="#D0D0D0">
+<TD>&nbsp;HTTP-Proxy
+</TD><TD><INPUT type=checkbox name=act-http-proxy value=on
+${svstat.active.http-proxy?checked}>
+</TD><TD><INPUT type=text align=right size=5 name=port-http-proxy
+value="${svstat.port.http-proxy}"
+onKeyPress="return disableEnterKey(event)">
+</TD><TD><INPUT type=checkbox name=auth-http-proxy value=on
+${admin.formvs.auth-http-proxy.on?checked}>
+</TD></TR>
+
+<TR>
+<TD>&nbsp;SOCKS</TD><TD>
+<INPUT type=checkbox name=act-socks value=on
+${svstat.active.socks?checked}>
+</TD><TD>
+<INPUT type=text align=right size=5 name=port-socks
+value="${svstat.port.socks}"
+onKeyPress="return disableEnterKey(event)">
+</TD><TD><INPUT type=checkbox name=auth-socks value=on
+${admin.formvs.auth-socks.on?checked}>
+</TD></TR>
+
+<!-- HTTPS -->
+
+<TR bgcolor="#D0D0D0">
+<TD>&nbsp;HTTP</TD><TD>
+<INPUT type=checkbox name=act-http value=on
+${svstat.active.http?checked}>
+</TD><TD>
+<INPUT type=text align=right size=5 name=port-http
+value="${svstat.port.http}"
+onKeyPress="return disableEnterKey(event)">
+</TD><TD><INPUT type=checkbox name=auth-http value=on
+${admin.formvs.auth-http.on?checked}>
+</TD></TR>
+
+<TR>
+<TD>&nbsp;FTP</TD><TD>
+<INPUT type=checkbox name=act-ftp value=on
+${svstat.active.ftp?checked}>
+</TD><TD>
+<INPUT type=text align=right size=5 name=port-ftp
+value="${svstat.port.ftp}"
+onKeyPress="return disableEnterKey(event)">
+</TD><TD><INPUT type=checkbox name=auth-ftp value=on
+${admin.formvs.auth-ftp.on?checked}>
+</TD></TR>
+
+</TABLE>
+

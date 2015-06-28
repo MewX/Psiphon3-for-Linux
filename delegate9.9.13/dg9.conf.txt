@@ -1,0 +1,491 @@
+#!/path/of/delegated +=
+##---------------------------------------------------------------------
+## A template of default configuration file for DeleGate version 9.X
+##                      ver.0.2, 2014-10-26, Yutaka Sato @ DeleGate.ORG
+##---------------------------------------------------------------------
+## - The latest version of this file is at
+##     <URL:http://www.delegate.org/delegate/dg9.conf.txt>
+##
+## - This is an example of a configuration file of DeleGate. 
+## - The "configuration" of DeleGate is a set of parameters (or options)
+##   which can be given in command line options, in configuration file,
+##   in environment variables, and so on.
+## - A "configuration file" of DeleGate is a plain text file including
+##   a list of configuration parameters one per line.
+## - The "default" configuration file is the one named as "XXX.conf"
+##   that is loaded on invocation of an executable file of DeleGate
+##   named as "XXX".
+## - You may give all of parameters in the default configuration file
+##   and invoke DeleGate without command line options.
+## - But it is more likely that writing a common set of parameters in
+##   the default configuration file while giving other parameters in
+##   command line options those are specific to individual usage.
+##
+## - Category of parameters
+##     ==A ... access control
+##     ==C ... configuration file
+##     ==D ... deployment of directories
+##     ==L ... logging
+##     ==N ... networking
+##     ==P ... application server
+##     ==R ... resource restriction
+##     ==S ... daemon and service
+## - Multiplicity of parameters
+##    [0-1] ... at most one is given
+##    [0-n] ... can be given multiply
+
+##==C [0-n] ---- example ------------------------ MINIMUM CONFIGURATION
+#@ typical and minimum configuraiton for a HTTP proxy
+##---------------------------------------------------------------------
+## - The following is a typical set of configuraiton parameters for
+##   DeleGate as a HTTP proxy.
+#
+#ADMIN=foo@bar.baz # mail-address of the administrator of this DeleGate
+#SERVER=http       # the protocol DeleGate speaks with its clients
+#-P8080            # the entrance port on which DeleGate waits clients
+##
+## - a little more.
+#
+#-vs                    # suppress logging of the behavior of DeleGate
+#SOCKS=192.168.1.1:1080 # forwarding to a SOCKS server, or
+#PROXY=192.168.1.1:8080 # forwarding to an upstream HTTP proxy
+
+##==C [0-1] ---- delegated.conf ------------ DEFAULT CONFIGURATION FILE
+#@ ${EXECDIR}/${EXECNAME}.conf[.txt] ... the default configuration file
+##---------------------------------------------------------------------
+## - To be detected as the "default configuration file" by DeleGate,
+##   this file must be located at and named as:
+##     /path/of/delegated.conf[.txt]
+##   where the path of the executable file of DeleGate is:
+##     /path/of/delegated[.exe]
+## - More generally, it must be EXECDIR/EXECNAME.conf[.txt] where
+##   EXECDIR is the directory under which the executable file of
+##   DeleGate is, and EXECNAME[.exe] is the name of the executable file.
+## - On Unix, an EXECNAME file can be a symbolic link to the executable
+##   file so that each symbolic name has each configuration file.
+## - In v9.9.13 or later, also EXECDIR/../etc/EXECNAME.conf[.txt] is a
+##   candidate of default configuration file.
+
+##==L [0-1] ---- -vQ --------------- TRACING CONFIGURATION FILE LOADING
+#@ -vQ ... quietly loading the default configuration file
+#@ -vq ... quietly loading all configuration files (loaded by +=URL)
+##---------------------------------------------------------------------
+## - Uncomment the following line to suppress the message shown on the
+##   invocation of DeleGate as "#### loading default conf: ..."
+#
+#-vQ
+
+##==D [0-1] ---- DGROOT ----------------------- DELEGATE ROOT DIRECTORY
+#@ DGROOT=dirPath ... the root directory of DeleGate
+##---------------------------------------------------------------------
+## - The root directory of DeleGate under which all of directories of
+##   DeleGate are located by default.
+## - DeleGate can load multiple configuration file but only the
+##   "default configuration file" can set DGROOT value.
+## - It can be specified as an absolute path like bellow:
+#DGROOT='/home/${HOME}/delegate'    # the default on Unix
+#DGROOT='C:/Program Files/DeleGate' # the default on Windows
+## - Or it can be specified as a relative path from the executable file
+##   of DeleGate using the string '${EXECDIR}'.
+## - '${EXECDIR}' is substituted by the path of directory under which
+##   the executable file of DeleGate is located.
+## - For example, if the path of executable is
+##   ".../DGroot/etc/delegated.exe" then the ${EXECDIR} points
+##   ".../DGroot/etc", thus "${EXECDIR}/.." points ".../DGroot".
+#
+DGROOT='${EXECDIR}/..'
+
+##==C [0-1] ---- common.conf ---------------- COMMON CONFIGURATION FILE
+#@ ${DGROOT}/common.conf ... common configuration file
+##---------------------------------------------------------------------
+## - "common" configuration files is commonly used among DeleGates that
+##   uses the same DGROOT.
+## - It is loaded unconditionally if exists.
+
+##==C [0-n] ---- +=URL ---------- LOADING CONFIGURATION FILE EXPLICITLY
+#@ +=URL ... loading configuration file from the specified URL
+##---------------------------------------------------------------------
+## - If the URL is a relative path, it is relative from the
+##   configuration file that includes it.
+## - Configuration file can be loaded recursively.
+#
+#+=http://server/path/dgconf.txt
+#+=/path/of/dgconf.txt
+#+=dgconf.txt
+
+##==D [0-1] ---- LDPATH ------------------------------- DYNAMIC LIBRARY
+#@ LDPATH=listOfDirectory ... search path for dynamic libraries
+#@ DYLIB=listOfNamePattern ... name pattern of dynamic libraries
+##---------------------------------------------------------------------
+#LDPATH='${ETCDIR};${LIBDIR};${HOME}/lib;/usr/lib;/lib'
+#DYLIB='lib*.so.0.9.8,lib*.so.1,lib*.so' # Unix
+#DYLIB='lib*.0.9.8.dylib,lib*.dylib'     # MacOSX
+#DYLIB='cyg*-0.9.8.dll,cyg*-1.0.0.dll'   # Cygwin
+#DYLIB='*.dll'                           # Windows
+
+##==L [0-1] ---- ADMIN ---------------------------------- ADMINISTRATOR
+#@ ADMIN=mailAddress ... mail address of the administrator
+##---------------------------------------------------------------------
+## - The address is used to notify fatal "incident" to administrator
+##   from DeleGate via mail.
+## - "Incident" includes a detection of an attack from intruder.
+#
+#ADMIN=foo@bar.baz
+
+##==N [0-1] ---- RESOLV -------------------------- HOST NAME RESOLUTION
+#@ RESOLV=orderOfResolver ... order of trial of resolution methods:server
+#@ RES_AF={46,64,4,6} ... order of IPv4 and IPv6
+##---------------------------------------------------------------------
+## - Controls the behavior of host-name resolver of DeleGate.
+## + orderOfResolver is a list of followings:
+##   - cache: cache file for "dns" and "sys" bellow.
+##   - file:pathOfHosts ... file in the format of /etc/hosts
+##     If the path is a relative one, it is searched under DGROOT/etc.
+##   - dns:DNSserver ... DNS server.
+##   - sys ... the resolver of the host system.
+#
+#RESOLV=cache,file,dns,sys # typical configuration
+#RESOLV=cache,file:hosts,dns:192.168.1.1,sys
+
+##==N [0-n] ---- HOSTS --------------------------- HOST NAME DEFINITION
+#@ HOSTS="nameList/addressList" ...
+##---------------------------------------------------------------------
+## - HOSTS pre-defines an entry in the on-memory cache of the resolver
+##   of DeleGate, suppressing resolution by resolvers listed in RESOLV.
+## - It can be used to define hosts that are unresolvable by resolvers
+##   listed in RESOLV.
+#
+#HOSTS="localhost/127.0.0.1"
+#HOSTS="{host1,host2}/1.2.3.4"
+#HOSTS="host3/{1.1.1.1,1.1.1.2}"
+
+##==N [0-n] ---- HOSTLIST ------------------------ HOST LIST DEFINITION
+#@ HOSTLIST="name:listOfHosts" ...
+##---------------------------------------------------------------------
+## - HOSTLIST defines a named list of hosts to be referred like a host
+##   name in other named or unnamed host lists.
+## - A host list is used for matchhing of access control list (ex.
+##   REACHABLE), routing destination (ex. FORWARD), MOUNT, and so on.
+## - A member of the list is one of host-name, domain-name with a wild
+##   card, IP-address, masked IP-address or range of IP-addresses.
+## - "*" matches any hosts
+## - Wild card in domain name matching is like *.subdoamin.domain
+## - The matching can be negation by "!" prefix to a host
+## - A masked IP address is n.n.n.n/m.m.m.m, n.n.n.n/m, or host-name/m
+## - A range of IP addresses is as n.n.n.[n-m]
+#
+#HOSTLIST="reachable:host1,host2,*.dom1,!*.dom2.dom1,!10.0.0.0/8"
+#HOSTLIST="unreachable:!reachable"
+
+##==R [0-n] ---- MAXIMA ----------------------- RESOURCE USAGE LIMITTER
+#@ MAXIMA=what:maxValue ...
+##---------------------------------------------------------------------
+## - The number of processes of DeleGate increases/decreases dynamically
+##   based on the current load to DeleGate.
+## - A "resident" process is the one that stays for a while after it
+##   finished a processing of a request/session, waiting a next
+##   connection from clients to process.
+#
+#MAXIMA=delegated:64 # max. parallel DeleGate processes
+#MAXIMA=standby:32   # max. parallel resident DeleGate processes
+#MAXIMA=conpch:16    # max. parallel connection from a client host
+#MAXIMA=listen:16    # size of the backlog of the entrance socket
+
+##==R [0-n] ---- TIMEOUT -------------------------------------- TIMEOUT
+#@ TIMEOUT=what:timeOut ...
+##---------------------------------------------------------------------
+##
+#
+#TIMEOUT=io:60       # breaking idle connection to terminate the session
+#TIMEOUT=standby:30  # exit of resident DeleGate on no client connection
+#TIMEOUT=dns:10      # giving up DNS response of too long latency
+#TIMEOUT=http-cka:30 # breaking idle HTTP connection in keep-alive 
+
+##==D [0-1] ---- LOGDIR ------------------- LOGGING DIRECTORY AND FILES
+#@ LOGDIR=logDirectory ... directory under which logfiles are located
+##---------------------------------------------------------------------
+#
+#LOGDIR=${DGROOT}/log # the default
+#LOGDIR=/var/spool/delegate/log
+##
+## - Logfiles can be split day by day using "[date+format]" specifier
+##   where "format" is the one like in strftime() function.
+## - For example, "%y", "%m", "%d" and "%H" mean two digits
+##   representation of year, month, day and hour respectively.
+## - The following is the recommended one that will be the default in
+##   future version of DeleGate. With this parameter, the log-file of
+##   HTTP in 31 October 2014 is "DGROOT/log/y14/m10/31/80.http".
+## - On Unix, a hard link for a split log-file created with a name
+##   without the "[date+format]" part, that is "DGROOT/log/80.http" in
+##   the example bellow.
+#
+#LOGDIR='log[date+/y%y/m%m/%d]'        # split log-directory day by day
+#PROTOLOG='${LOGDIR}/${PORT}.${PROTO}' # the default log-file path
+
+##==S [0-1] ---- -r --------------------------------- RESTARTING DAEMON
+## -r ... restart after terminating current daemon process
+##---------------------------------------------------------------------
+## - The process-id of current daemon is recorded in
+##   '${DGROOT}/act/pid/${PORT}' where '${PORT}' is the "primary" port
+##   of the daemon.
+## - The "primary" port is the one of entrance ports given firstly in
+##   "-P" or "-Q" option.
+## - With "-r" option, DeleGate kills currently running DeleGate daemon
+##   process by SIGTERM, and wait until the process releases the
+##   entrance port.
+## - This option is applicable to a daemon on Unix, or a daemon running
+##   in foreground on Windows.
+#
+#-r
+
+##==S [0-n] ---- SERVCONF --------------- RESTARTING SERVICE ON WINDOWS
+#@ SERVCONF=[yesall|auto|demand] ... starting service without interaction
+##---------------------------------------------------------------------
+## - DeleGate on Windows become a service of name with the port number
+##   as "DeleGate-P8080".
+## - It starts with interaction with the user on the console as follows:
+##    1) stop the current service if running ... asking [y]/n
+##    2) delete the current service if exists
+##    3) create a new service ... asking [y]/n
+##    4) set automatic start of the service ... asking [y]/n
+##    5) start the new service
+## - SERVCONF=yesall ... sets "y" for all interaction 1),3),4)
+## - SERVCONF=auto ... sets "y" for 4)
+## - SERVCONF=demand ... sets "n" for 4)
+## - "yesall" behaves like "-r" option for a Unix daemon.
+#
+#SERVCONF=yesall  # restart without interaction
+#SERVCONF=auto
+#SERVCONF=demand
+
+##==S [0-n] ---- -f ----------------------------- RUNNING IN FOREGROUND
+#@ -f[v] and -v[v] ... running in foreground
+##---------------------------------------------------------------------
+## - running DeleGate in foreground mainly for testing and debugging.
+## - In this mode, DeleGate is kept connected to the console (tty) from
+##   which it is invoked so that it can put log messages to the console
+##   and can be terminated with Control-C.
+## - Also DeleGate stays on the working directory of the parent process
+##   (shell command usually) by which it is invoked so that
+##   configuration files and core files are get from or put to the
+##   working directory.
+#
+#-f     # Running in foreground
+#-fv    # like -f, putting log both to console and log-file (LOGFILE)
+#-v     # Running in foreground, putting log to console
+#-vv    # like -v, with detailed log
+
+##==L [0-1] ---- -v ------------------------------------- LOGGING LEVEL
+#@ -v[stud] ... log detailness level
+##---------------------------------------------------------------------
+## - -v[stud] specifies detailness of information in "LOGFILE".
+## - -vS specifies not creating "PROTOLOG".
+#
+#-vd    # detailed
+#-vs    # silent, don't create LOGFILE.
+#-vt    # terse
+#-vu    # usual
+#-vS    # suppress "PROTOLOG" for HTTP (as 80.http) and FTP (ex. 21.ftp)
+
+##==A [0-n] ---- RELIABLE ---------------------------- RESTRICT CLIENTS
+#@ RELIABLE=hostList ... list of client hosts to be accepted
+##---------------------------------------------------------------------
+## - A comma separated list of client hosts to be accepted by DeleGate.
+## - It is a unnamed hostList of which syntax follows the one of value
+##   part HOSTLIST parameter.
+# 
+#RELIABLE="localhost,10.10.0.0/16,!10.1.2.[5-7],*.delegate.org"
+#RELIABLE="+,192.168.1.1/24"
+#RELIABLE="*"  # running as a server open to public
+
+##==A [0-1] ---- REACHABLE --------------------------- RESTRICT SERVERS
+#@ REACHABLE=hostList ... server hosts to be reachable
+##---------------------------------------------------------------------
+## - A comma separated list of server hosts to which connections from
+##   the DeleGate are allowed.
+## - It is a unnamed hostList of which syntax follows the one of value
+##   part HOSTLIST parameter.
+# 
+#REACHABLE="*"
+#REACHABLE="*,!10.0.0.0/8"
+
+##==A [0-n] ---- PERMIT ----------------- RESTRICT CLIENTS WITH SERVERS
+#@ PERMIT="protoList:servList:clntList" ... permit by combination
+#@ REJECT="protoList:servList:clntList" ... reject by combination
+##---------------------------------------------------------------------
+#
+#PERMIT="+:.reachable:.reliable" ... default
+#PERMIT="*:*:*" ... fully open
+
+##==A [0-n] ---- AUTHORIZER ---------- AUTHENTICATION AND AUTHORIZATION
+#@ AUTHORIZER=listOfAuthMethod ... auth. method of users
+#@ MYAUTH=user:pass ... auth. info to be sent to server (by proxy)
+##---------------------------------------------------------------------
+##
+#AUTHORIZER=-list{user:pass},-pam
+#AUTHORIZER=-dgauth{user:pass} ... digest authentication (HTTP only)
+
+##==N [0-n] ---- FORWARD ----------------------------------- FORWARDING
+#@ FORWARD=gwproto://[gwuser:gwpass@]gwhost:gwport[-_-protoL:servL:clntL]
+#@ SOCKS=host[:port] ... upstream SOCKS server
+#@ PROXY=host[:port] ... upstream proxy in protocol proto of SERVER=proto
+#@ SSLTUNNEL=host:port ... upstream HTTP proxy as a SSL-tunnel
+##---------------------------------------------------------------------
+## - Forwarding to upstream proxy server.
+## - Upstream proxy is one of SOCKS, application proxy (HTTP or FTP),
+##   or SSL-tunnel(HTTP proxy).
+## - FORWARD is a generic parameter for forwarding. It defines an
+##   upstream proxy by its protocol (socks, http, ssltunnel, etc.), its
+##   host and port, and user name and password if necessary.
+## - Multiple FORWARD can be specified and one of them are selected
+##   based on protocol, server and client.
+## - Examples:
+#FORWARD=socks://192.168.1.1:1080
+#FORWARD=http://192.168.1.1:8080 # applicable when client's speaks HTTP
+#FORWARD=ssltunnel://192.168.1.1:8080
+## - Examples: The above can be abbreviated as the bellow.
+#SOCKS=192.168.1.1:1080
+#PROXY=192.168.1.1:8080
+#SSLTUNNEL=192.168.1.1:8080
+
+##==N [0-n] ---- -P --------------------------------- LISTENING CLIENTS
+#@ -Pnnnn ... entrance ports for clients
+#@ -Qnnnn ... an entrance port for clients
+##---------------------------------------------------------------------
+## - The entrance port(s) on which DeleGate listens and accepts
+##   connections from clients.
+#
+#-Q8080
+#-Qlocalhost:8080
+#-Q192.168.1.1:8080
+#-Q8080/http
+#-Q1080/socks
+
+##==P [0-n] ---- SERVER ----------------- PROTOCOL OF CLIENT AND SERVER
+#@ SERVER=protocol[://server[:port]] ... protocol with clients
+##---------------------------------------------------------------------
+## - The protocol in which DeleGate communicates with clients.
+## - If a server is specified, DeleGate forward its request to the
+##   server in the protocol with clients.
+#
+#SERVER=ftp
+#SERVER=http
+#SERVER=smtp
+#SERVER=socks
+#SERVER=http://host.domain
+#SERVER=tcprelay://host.domain:22
+#SERVER=udprelay://host.domain:53
+#SERVER=tcprelay://odst.-                   # transparent proxy
+
+##==P [0-n] ---- MOUNT -------------------- MAPPING VIRTUAL TO PHYSICAL
+#@ MOUNT="vURL rURL mountOptions" ... serving as a server and a proxy
+##---------------------------------------------------------------------
+## - This is the central parameter to configure DeleGate as an
+##   application level origin/proxy server.
+## - It maps a logical resource name in a request message from a client
+##   (like URL) to (more) physical one to access to a server.
+## - Also it maps a physical name in a response message from a server
+##   to a logical name for a client.
+## - It is applicable to HTTP, FTP, NNTP, SMTP and POP.
+#
+#MOUNT="/*      file:data/www/*"            # an HTTP origin server
+#MOUNT="/abc/*  http://def/ghi/* moved"     # redirection
+#MOUNT="/*      http://server/* nvhost=xyz" # virtual hosting
+#MOUNT="/xyz/*  http://server/*             # reverse proxy
+#MOUNT="/xyz/*  ftp://server/*              # protocol translation
+#MOUNT="/xyz/*  sftp://server/*             # protocol translation
+#MOUNT="//xyz/* smtp://server/*             # SMTP routing
+#MOUNT="/-/ = AUTHORIZER=-list{adm:xyz}     # access control
+#MOUNT="/-/builtin/* data:builtin/*         # customizing builtin data
+
+##==N [0-n] ---- STLS ------------------------------------ SSL WRAPPING
+#@ STLS={fsv,fcl}* ... inserting SSL filter
+#@ CERTDIR=dirPath ... location of certificates
+#@ TLSCONF=options ... configuration and debugging of SSL behavior
+##---------------------------------------------------------------------
+## - do TLS unconditionally, or on-demand by STARTTLS (or STLS)
+##   negotiation with client and server.
+#
+#STLS=fcl   # wrapping communication with client by SSL
+#STLS=-fcl  # like fcl, but if explicit STARTTLS negotiation is done
+#STLS=fsv   # wrapping communication with server by SSL
+#STLS=-fsv  # like fsv, but if explicit STARTTLS negotiation is done
+
+
+##==C [0-1] ---- END ------------------------ ENDING CONFIGURATION FILE
+#@ END ... ending of a configuration file
+##---------------------------------------------------------------------
+END
+
+Lines in a configuration file after "END" is ignored.
+
+##--------------------------------------------------------------- ANNEX
+
+##==C [0-1] ---- DGOPTS ------------ OPTIONS IN AN ENVIRONMENT VARIABLE
+#@ DGOPTS="-opt1;-opt2;..."
+##---------------------------------------------------------------------
+## - This parameter is for giving options starting with "-" in a
+##   environment variable.
+#DGOPTS="-Q8080;-r;-vd"
+
+##==C [0-1] ---- -eNAME=VALUE ----------- DEFINING ENVIRONMENT VARIABLE
+#@ -eNAME=VALUE
+##---------------------------------------------------------------------
+## - Defines an environment variable of name NAME with value VALUE to
+##   be used in DeleGate or its libraries.
+#
+#-eTZ=JST
+#-ePATH=/usr/bin:/bin
+
+##==C [0-1] ---- scripts ------------ CONFIGURATION BY SCRIPT LANGUAGES
+To configure DeleGate reflecting the system environment or so, it
+should be invoked by a script language, like /bin/sh for example.
+It is recommended to define dynamic configuration in a script language,
+static one in a configuration file, then load it by +=URL notation in
+the script.
+
+  [console]
+  $ export LD_DEBUG=symbols
+  $ sh httpd.sh -fv
+
+  [httpd.sh]
+  #/bin/sh
+  . dgcommon.sh                   # include a shell script
+  DgExe=/path/of/delegated        # path name of DeleGate executable
+  $DgExe -P80 +=dghttpd.conf $*   # invoke a DeleGate
+
+  [dgcommon.sh]
+  #!/bin/sh
+  export MALLOC_CHECK_=2
+  if [ "$OS" = "Windows_NT" ]; then
+    export DGROOT=C:/DeleGate
+  else
+    export DGROOT=$HOME/delegate  # this is the default on Unix
+  fi
+
+  [dghttpd.conf]
+  +=dgcommon.conf                 # load a configuration file
+  SERVER=http                     # speak HTTP with the client
+  HTTPCONF="max-ckapch:8"         # limit the parallel connections to 8
+  HTTPCONF="methods:GET,POST"     # allow only GET and PUT method
+  MOUNT="/* file:data/www/*"      # map /* to DGROOT/data/www/*
+  RELAY=no                        # don't relay as a proxy server
+
+  [dgcommon.conf]
+  ADMIN=foo@bar.baz
+  RESOLV=cache,sys
+
+##==C [0-1] ---- NAME="VALUE" ------------------------------- QUATATION
+## - Quations for a parameter value is not necessary in a configuration
+##   file (except the MOUNT parameter).
+## - But it is recommended to do so to be compatible with the
+##   notation script languages so that it can be moved between script
+##   file and configuration file without modification.
+
+#==C [0-1] ---- #!magic ---- CONFIGURATION FILE AS AN EXECUTABLE SCRIPT
+On Unix or Cygwin, a configuration file can be used as an executable
+script.  To do so, the configuration file is needed to be with
+executable flag set, and the file starts with a line as this:
+#!/path/of/delegated +=
+
+#######################################################################

@@ -1,0 +1,35 @@
+<H3>How to authorize the administrator</H3>
+Use <A HREF=${homepage}Manual.htm?AUTH>AUTH=admin</A> option to specify
+how to authenticate a remote user and authorize the remote administration
+of this DeleGate.
+  <UL>
+  Example: permit a user "dgadmin" to do administration
+  <P>
+  <UL>
+  <KBD>SERVER=http -P8080<FONT color=red>/admin</FONT> AUTH="admin::<FONT color=red>dgadmin</FONT>:<FONT color=red>dgpass</FONT>"</KBD>
+  </UL>
+  </UL>
+In this example,
+if the client send the username "dgadmin" with the password "dgpass",
+then the client is authorized to be the administrator.
+<P>
+Remote administration is recommended to be done via
+<A HREF=${homepage}/tls/>HTTPS/SSL</A>,
+accessing this server as "https://<I>thisHost</I>:8080/-/admin/".
+A port number followed by "<KBD>/admin</KBD>" means accepting HTTPS/SSL
+on the port.
+DeleGate for any application protocol can have a dedicated port for
+administration.
+  <UL>
+  Example: admin-port for non-HTTP server
+  <P>
+  <UL>
+  <KBD>SERVER=ftp -P21,<FONT color=red>9021/admin</FONT> AUTH="admin::dgadmin:dgpass"</KBD>
+  </UL>
+  </UL>
+<BR>
+Typical examples of usage of
+<A HREF=${homepage}Manual.htm?AUTH>AUTH</A> is
+<A HREF=${ibase}builtin/mssgs/admin/server-help2.dhtml>here</A>.
+See the <A HREF="${homepage}${type:href:Manual.htm#AUTH}">Reference Manual</A> for more details.
+<HR>

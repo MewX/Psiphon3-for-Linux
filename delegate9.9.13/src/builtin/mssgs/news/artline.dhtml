@@ -1,0 +1,10 @@
+<DT>${art.NewSubj?<NOBR><A HREF=${art.Anum}><B><FONT color=#101080>${art.NewSubj}</FONT></B></A></NOBR><BR>}
+&nbsp;&nbsp;${art.STime}
+<CODE>${art.XrefList?<A HREF="${art.XrefList}">*</A>:.}</CODE>
+<A HREF=${art.Anum}>${%04art.Anum}</A>&nbsp;
+<I>${art.From}</I>
+${art.Lines?[${art.Lines}]}
+${art.putDigest?<DD>
+  ${formv.fmt.print?&nbsp;:<A TARGET=f-body HREF="${art.Anum}">___</A>}
+  <font color=#101040><small>${art.digest}</small></font>}
+</DT>

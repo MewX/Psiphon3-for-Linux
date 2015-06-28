@@ -1,0 +1,16 @@
+<small>
+${num.anum1<num.anum2?
+range ${num.anum1} - ${num.anum2}
+<INPUT type=hidden name=digest value="${art.digestlen}">
+${button:submit:JumpTo:wider:wide:style="font-family:monospace;font-size:small;border:none;background-color:#C0C0F8"}
+${button:submit:JumpTo:narrower:narrow:style="font-family:monospace;font-size:small;border:none;background-color:#C0C0F8"}
+}
+&nbsp;
+digest&#58;
+${button:submit:digest:0:none:style="font-family:monospace;font-size:small;border:none;background-color:#C0C0F8"}
+${button:submit:digest:2:100:style="font-family:monospace;font-size:small;border:none;background-color:#C0C0F8"}
+${button:submit:digest:4:200:style="font-family:monospace;font-size:small;border:none;background-color:#C0C0F8"}
+${button:submit:digest:8:400:style="font-family:monospace;font-size:small;border:none;background-color:#C0C0F8"}
+${button:submit:digest:16:800:style="font-family:monospace;font-size:small;border:none;background-color:#C0C0F8"}
+</small>
+

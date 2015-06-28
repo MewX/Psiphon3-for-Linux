@@ -1,0 +1,44 @@
+<UL>
+<LI> Authentication with
+ AUTH=<KBD>admin:<I>authServ</I>[:<I>listOfUsers</I>[:<I>listOfHosts</I>]]</KBD>
+<BR>
+ Users to be an administrator need to be authenticated by the
+ <A HREF=${homepage}Manual.htm?authServ><I>authServ</I></A>.
+ If ":<I>listOfUsers</I>" is specified, the user name must be in the list.
+ If ":<I>listOfHosts</I>" is specified, only clients from a host listed in
+ the <I>listOfHosts</I> can be authorized.
+ <P>
+ Example: authorize if authenticated as "dgadmin" in <I>authServ</I>
+   <UL>
+   <LI><KBD>AUTH=admin:-list{dgadmin:password}</KBD>
+   -- simple authentication
+   <LI><KBD>AUTH=admin:-list{dgadmin:password}::.localnet</KBD>
+   -- from local network only
+   <LI><KBD>AUTH=admin:-pam:dgadmin</KBD> -- use PAM authentication
+   <LI><KBD>AUTH=admin:-dgauth{dgadmin:password}</KBD>
+   -- use <A HREF=${homepage}Manual.htm?dgauth>Digest Authentication</A>
+   <LI><KBD>AUTH=admin:*:dgadmin@localhost</KBD> -- use FTP authentication
+   </UL>
+<P>
+<LI> Authentication with AUTHORIZER=<KBD><I>authServ</I>:admin</KBD><BR>
+ Users authenticated by the <I>authServ</I> is permitted to be
+ the administrator. 
+ The special protocol name "admin" means the administration of DeleGate.
+ <P>
+ Example:
+   <UL>
+   <LI><KBD>AUTHORIZER=-pam:admin</KBD> -- use PAM authentication
+   <LI><KBD>AUTHORIZER=-pam:admin::localhost</KBD> -- allow only from localhost
+   <LI><KBD>AUTHORIZER=-dgauth:admin</KBD> -- use Digest Authentication
+   </UL>
+<P>
+<LI> Authentication with the combination of AUTHORIZER and AUTH<BR>
+ <P>
+ Example: authorize "dgadmin" from "localhost" only
+   <UL>
+   <LI><KBD>AUTHORIZER=-pam:admin::localhost AUTH=admin::dgadmin</KBD>
+   </UL>
+<P>
+</UL>
+----[ The followings are to be obsoleted ]----
+${include:server-help-old.dhtml}

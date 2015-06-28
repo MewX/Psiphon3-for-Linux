@@ -1,0 +1,26 @@
+${admin.act.Editline?
+ <TABLE border=0 width=100%><TR><TD>
+   <TABLE border=0 width=100%><TR><TD>
+     <INPUT type=submit name=com value=delete>
+     <INPUT type=submit name=com value=insert>
+     <INPUT type=submit name=com value=replace>
+    </TD><TD ALIGN=right>
+     <INPUT type=submit name=com value=next>
+     <INPUT type=submit name=com value=prev>
+   </TD></TR></TABLE>
+  </TD></TR>
+  <TR><TD>
+   <KBD><FONT color=#808080>
+    current-line#${admin.editconf.curln} ${admin.getconfig.curln}
+   </FONT></KBD><BR>
+  </TD></TR>
+  <TR><TD>
+    <TEXTAREA name=editdata cols=90 rows=4 wrap=off>${admin.getconfig.curln}</TEXTAREA>
+  </TD></TR>
+  <TR><TD ALIGN=right>
+   <INPUT type=submit name=com value=copy>
+   <INPUT type=submit name=com value=paste>
+  </TD></TR>
+ </TABLE>
+ <small>(click the line to be edited)</small>
+ }

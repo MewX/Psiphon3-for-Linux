@@ -1,0 +1,11 @@
+#!/bin/sh
+
+OUT=$1
+CC=$2
+
+TYP1="socklen_t"
+NAM1="DEFINED_type_$TYP1"
+DEF1="typedef char $TYP1;"
+
+$CC -DTypeDef="$DEF1" -Dtesting_DEFINED typedefs.c >> errors 2>&1
+if [ $? != 0 ]; then echo "#define $NAM1" >> $OUT; fi

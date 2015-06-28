@@ -1,0 +1,37 @@
+${formv.fmt.Reply?${include:reply.dhtml}${exit}}
+${formv.fmt.Forward?${include:forward.dhtml}${exit}}
+${formv.fmt.Sendmail?${include:sendmail.dhtml}${exit}}
+${formv.fmt.Getpass?${include:getpass.dhtml}${exit}}
+${formv.fmt.Sendpass?${include:sendpass.dhtml}${exit}}
+
+${printmode?
+ <I>${art.Newsgroups} - &lt;${art.Message_ID}&gt;</I><HR>
+:
+ ${putmenu?
+   <small>
+   ${hide.href?:
+    <INPUT type=submit name=ViewerControl value="Viewer" style="font-size:small">
+    <INPUT type=submit name=Source value="Source" style="font-size:small">
+    <INPUT type=submit name=fmt value="Reply" style="font-size:small">
+    <INPUT type=submit name=fmt value="Forward" style="font-size:small">
+   }
+   ${art.xreflist} ${art.References?[Reference${=:}${art.lastref}]}
+   <BR>
+   Newsgroups${=:} ${art.Newsgroups}
+   </small>
+ }
+}
+${putmenu?
+  <BR><B><BIG>${art.Subject}</BIG></B><BR>
+  ${art.Summary?-- ${art.Summary} --<P>}
+  <DIV align=right>
+  ${art.Date}
+  <I>${hide.href?${art.From}:<A HREF="mailto:${arturl.From}">${art.From}</A>}
+  </I><BR>
+  <I> ${art.Organization} </I>
+  </DIV>
+  <HR>
+}
+${art.IsHTML?:<PRE><font face="courier new">}
+${art.body}
+${art.IsHTML?:</font></PRE>}

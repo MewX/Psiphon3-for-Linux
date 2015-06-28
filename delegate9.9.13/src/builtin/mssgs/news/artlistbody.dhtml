@@ -1,0 +1,58 @@
+<TABLE width=100% border=0 cellpadding=1 cellspacing=0 bgcolor=#C0D8C0>
+ <TR>
+  <FORM ACTION="${url.base}" METHOD=GET>
+   <TD valign=middle>
+    <small>&nbsp;</small>${include:artbuttons.dhtml}
+   </TD>
+  </FORM>
+
+ ${putmenu?
+  <FORM ACTION="../-search" METHOD=GET>
+   <TD align=right valign=middle>
+    <INPUT TYPE=text size=16 name=key>
+    <A HREF=../-search?key=${grp.print}><IMG ALIGN=MIDDLE BORDER=0 ALT="search" SRC="${icon.frogSearch.gif}"></A>
+   </TD>
+  </FORM>
+  }
+ </TR>
+</TABLE>
+
+<TABLE width=100% border=0 cellpadding=0 cellspacing=0 bgcolor=#C0D8C0>
+ <TR bgcolor=#E4E0E4>
+  <FORM ACTION="${url.base}" METHOD=GET>
+   <TD>
+    <small>${include:artmenu.dhtml}</small>
+   </TD>
+  </FORM>
+ </TR>
+</TABLE>
+
+${num.anum1<num.anum2?
+ ${hide.href?:
+  <TABLE width=100% border=0 cellpadding=0 cellspacing=0>
+   <TR>
+    <FORM ACTION="${url.base}" METHOD=GET>
+     <TD ALIGN=right>
+      ${include:viewopts.dhtml}
+     </TD>
+    </FORM>
+   </TR>
+  </TABLE>
+ }
+}
+
+<TABLE width=100% border=0 cellpadding=2 cellspacing=2>
+ <TR>
+  <FORM ACTION="${url.base}" METHOD=GET>
+   <TD>
+   ${num.anum1<num.anum2?<DL>}
+   ${art.list}
+   ${num.anum1<num.anum2?</DL>}
+   </TD>
+  </FORM>
+ </TR>
+</TABLE>
+
+ ${art.emptys?Empty-Articles = ${art.emptys}<HR>}
+
+${include:artlistfooter.dhtml}

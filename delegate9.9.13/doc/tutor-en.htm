@@ -1,0 +1,122 @@
+<HEAD>
+<TITLE>Short Tutorial for Beginners of DeleGate</TITLE>
+<META name=description
+content="Short Tutorial for Beginners of DeleGate.
+DeleGate is a multipurpose proxy server
+(caching, translation, routing, gatewaying, firewall, etc.)
+for multiple protocols (HTTP,FTP,NNTP,Telnet,etc.)
+running on multiple platforms (Unix, Windows, OS/2).">
+<META name=keywords
+content="proxy,cache,translation,gateway,firewall,SSL,SSLeay,
+WWW,HTTP,ICP,NNTP,POP,FTP,Telnet,UNIX,Windows,Win32,OS/2,free">
+</HEAD>
+
+<BODY>
+<H2>Short Tutorial for Beginners of DeleGate</H2>
+<A HREF="http://www.delegate.org/delegate/tutorial/">This</A>
+is a very short tutorial of
+<A HREF="http://www.delegate.org/delegate/">DeleGate</A> for beginners.
+See the reference manual
+(<A HREF="ftp://www.delegate.org/pub/DeleGate/Manual.htm">Manual.htm</A>)
+and <A HREF="http://www.delegate.org/delegate/">related documents</A>
+for more details.
+A collection of usage examples at
+<A HREF=http://www.delegate.org/delegate/HowToDG.html>http://www.delegate.org/delegate/HowToDG.html</A> might be helpful to see what you can do with DeleGate.
+
+<H2>Minumum instruction</H2>
+
+a. The simplest way to use DeleGate as a HTTP proxy, on the port 8080, is like
+this:
+<PRE>
+    delegated -P8080 SERVER=http
+</PRE>
+where -Pxxxx specifies the port number used to accept request from clients,
+and SERVER=yyyy specifies the protocol name used to communicate with clients.
+<P>
+b. The validity and custody of cached data can be controlled using EXPIRE and
+CRON parameters.
+<PRE>
+    EXPIRE=1d CRON="0 * * * * -expire 2d"
+</PRE>
+c. DeleGate implicitly allows only access from networks local to the host
+of DeleGate. You can explicitly specify hosts, networks, or domains
+to be allowed using a PERMIT parameter like this:
+<PRE>
+    PERMIT="*:*:host1,123.123.123.123/255.255.255.0,*.my.domain,!bad.my.domain"
+</PRE>
+
+<H2>A little advanced instruction</H2>
+01. Execute DeleGate in debug mode
+(run in forground and put log to the console):
+<PRE>
+    delegated -v ...
+</PRE>
+02. Stop the DeleGate server running at the port 8080:
+<PRE>
+    delegated -P8080 -Fkill
+</PRE>
+03. Load and use configuration parameters at specified URL:
+<PRE>
+    delegated +=http://server/path/of/parameters.txt
+</PRE>
+04. Restrict network interface(s) to be used to accept clients' request:
+<PRE>
+    delegated -Phostname:8080 SERVER=http
+</PRE>
+05. Control the sequence of name resolution trials using multiple resolvers:
+<PRE>
+    RESOLV=dns,nis,file
+</PRE>
+06. Connect via Socks server(s) if the destination is not local to your site:
+<PRE>
+    CONNECT="cache,socks:*:!*.my.domain" SOCKS=sockshost
+</PRE>
+07. Forward any requests to another proxy:
+<PRE>
+    PROXY="proxyHost:8080:*"
+</PRE>
+08. Forward requests toward some destination servers to another proxy:
+<PRE>
+    PROXY="proxyHost:8080:!*.my.domain,!*.near.domain"
+</PRE>
+09. Relay an arbitrary TCP protocol to a specified server:
+<PRE>
+    SERVER=tcprelay://serverName:portNumber/
+</PRE>
+10. Forward arbitrary TCP protocols to another DeleGate:
+<PRE>
+    MASTER="delegateHost:8080:*"
+</PRE>
+11. Relay an arbitrary UDP protocol to a specified server:
+<PRE>
+    SERVER=udprelay://serverName:portNumber/
+</PRE>
+12. Bind the target server of DeleGate to provide the DeleGate as an
+origin server to clients:
+<PRE>
+    delegated -P80 SERVER=http://httpserver/
+</PRE>
+13. Restrict newsgroups to be provided to clients: 
+<PRE>
+    delegated -P8119 SERVER=nntp://nntpserver/comp,misc,news
+</PRE>
+14. Merge multiple servers into a single virtual server using MOUNT parameter:
+<PRE>
+    SERVER=nntp MOUNT="= nntp://serv1/comp" MOUNT="= nntp://serv2/misc,news"
+</PRE>
+15. Gateway for HTTP clients to NNTP servers:
+<PRE>
+    SERVER=http MOUNT="/news1/* nntp://ns1/*" MOUNT="/news2/* nntp://ns2/*"
+</PRE>
+16. Use DeleGate as an origin HTTP server:
+<PRE>
+    -P80 SERVER=http MOUNT="/* /usr/local/www/*" REMITTABLE=file
+</PRE>
+17. Restrict destination hosts/nets/domains reachable via the DeleGate:
+<PRE>
+    PERMIT="*:*.reachable.domain:*"
+</PRE>
+<HR>
+<I><A HREF="http://www.etl.go.jp/~ysato/">Yutaka Sato</A>
+&lt;ysato AT delegate DOT org&gt;</I>
+</BODY>

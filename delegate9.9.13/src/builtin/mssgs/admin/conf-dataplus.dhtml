@@ -1,0 +1,16 @@
+<TABLE width=100% border=0 cellpadding=0 cellspacing=0
+ ${admin.formv.conf-data?bgcolor=#C0C0E0}>
+<TR><TD align=right>
+${tag:small:Other configurations}
+ <INPUT type=checkbox name=Flag-showconfplus ${admin.formv.Flag-showconfplus.on?checked}>
+ </TD></TR></TABLE>
+
+${not.admin.formv.conf-data?<!-- no extra configuration --> ${exit}}
+
+${admin.formv.Flag-showconfplus?
+ <TABLE border=0 width=100% bgcolor="#C0C0E0"><TR><TD width=25%></TD>
+ <TD><TEXTAREA name=conf-data readonly cols=64 rows=${lines.admin.formv.conf-data}>${admin.formv.conf-data}</TEXTAREA>
+ </TD></TR></TABLE>
+:
+  <TEXTAREA name=conf-data readonly style="display:none" cols=80>${admin.formv.conf-data}</TEXTAREA>
+}

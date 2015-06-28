@@ -1,0 +1,40 @@
+<TITLE> Forbidden </TITLE>
+
+<H2>Forbidden by DeleGate</H2>
+Forbidden by DeleGate on `<X-D T=HOSTPORT W=MYSELF>'.
+<P>
+Tried from <X-D T=HOSTPORT W=CLIENT>
+        to <X-D T=PROTOCOL W=SERVER>://<X-D T=HOSTPORT W=SERVER>.
+<P>
+Reason: ${forbidden.reason}
+<P>
+The Administrator of this DeleGate --
+<A HREF="mailto:${ADMIN}?Subject=help"><BIG><I>&lt;<X-D T=ADMIN>&gt;</I></BIG></A>
+-- may help you...
+<P>
+<HR>
+<P>
+Note for managers: If this access should be permitted,
+add a REMITTABLE and/or a PERMIT parameter into the list of parameters
+which you give to the DeleGate.
+<MENU>
+REMITTABLE = +, <I>protoList</I><BR>
+PERMIT = <I>protoList</I> : <I>dstHostList</I> : <I>srcHostList</I>
+</MENU>
+This will permit a client host in <I>srcHostList</I> to access a server host
+in <I>dstHostList</I> using a protocol in <I>protoList</I>.
+For example, current access will be permitted with one of following specifications.
+<UL>
+<LI> <B>PERMIT="<X-D T=PROTOCOL W=SERVER>:<X-D T=HOST W=SERVER>:<X-D T=HOST W=CLIENT>"</B>
+<BR>(narrowest permission)
+<LI> <B>PERMIT="*:*:<X-D T=HOST W=CLIENT>"</B>
+<BR>(<I><X-D T=HOST W=CLIENT></I> can access any host by any protocol)
+<LI> <B>PERMIT="*:*:<X-D T=HOST W=CLIENT>/@"</B>
+<BR>(any host on the same network with <I><X-D T=HOST W=CLIENT></I> are permitted)
+</UL>
+Also you need <B>REMITTABLE=+,<X-D T=PROTOCOL W=SERVER></B> if
+<B><X-D T=PROTOCOL W=SERVER></B> is not included in the current REMITTABLE.
+<P>
+And also you need <B>RELAY=proxy,delegate</B> parameter to enable
+DeleGate's original proxy function with "/-_-" notation
+for users from non-local networks.

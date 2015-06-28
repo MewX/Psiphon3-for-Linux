@@ -1,0 +1,32 @@
+${setenent}
+${admin.com.addconv?${admin.addconv.conv-from.conv-to}}
+${admin.com.setconv?${admin.setconv.conv-data}}
+
+${+TITLE=${type:title:Customize Administration Display}}
+${include:head.dhtml}
+
+<FORM ACTION="${request.url}" METHOD=POST>${admin.dump_common}
+<INPUT type=hidden name=act value=customize>
+
+${include:custom-add.dhtml}
+
+<TABLE width=100% border=0><TR><TD width=15%></TD>
+<TD>
+<TEXTAREA cols=70 row=3 readonly style="color:${admin.conferr?red:green};background-color:#E0F0F0;border-style:none">${admin.respmssg}</TEXTAREA>
+</TD></TR></TABLE>
+
+<TABLE width=100%><TR><TD width=15%>
+<IMG ALIGN=middle SRC=${icon.next}>
+${button:submit:com:setconv:${type:button:set}}
+</TD><TD align=right>
+${button:submit:com:refresh:${type:button:refresh}}
+${button:submit:com:download:${type:button:download}}
+${button:submit:com:upload:${type:button:upload}}
+${button:submit:com:library:${type:button:library}}
+</TD></TR></TABLE>
+<TABLE width=100%><TR><TD width=10%></TD><TD>
+<TEXTAREA name=conv-data cols=75 rows=${lines.admin.dumpconv}>${admin.dumpconv}</TEXTAREA>
+</TD></TR></TABLE>
+
+</FORM>
+<HR>

@@ -1,0 +1,133 @@
+To: feedback@ml.delegate.org
+Date: Wed Aug 13 15:23:59 JST 2014
+Subject: DeleGate/9.9.11 (STABLE) -- fixes/extensions on HTTP origin server
+From: feedback@delegate.org (Yutaka Sato)
+Reply-To: feedback@delegate.org
+Organization: The DeleGate Project
+Message-Id: <1Jwlxh.feedback@delegate.org>
+References: <1JrGzc.feedback@delegate.org> <1JurhJ.feedback@delegate.org>
+        <1JwhBV.feedback@delegate.org>
+
+Dear DeleGate users,
+
+I inform you of the new release of DeleGate available as follows:
+--------------------------------------------------------------------------
+DeleGate/9.9.11 (STABLE) -- fixes around chained HTTP and HTTPS proxy
+                                                          August 13, 2014
+--------------------------------------------------------------------------
+This release includes fixes and extensions on DeleGate as a HTTP origin
+server.
+
+DeleGate/9.9.11-pre1 STABLE(beta) is released including fixes about
+the MOUNT parameter to realize HTTP reverse proxy and HTTP origin
+server with CGI and SSI.
+
+HTTP (URL-path based reverse proxy and origin server)
+  - Fixed failure in URL rewriting for HTTP response message.
+    Fortunately, it occurs rarely and the effect is not fatal.
+    It rewrites a string out of tag which looks like a tag attribute
+    as "url=xxx" for example.  It can occur after each boundary of
+    buffered input for response message.
+  - DeleGate both as reverse proxy and origin server, configured as
+    bellow, may suffer from the failure.
+      MOUNT="/path1/* http://server/*"     ... reverse proxy
+      MOUNT="/path2/* file:/path/of/www/*" ... origin server
+  - There is no workaround to escape the problem in former versions.
+
+SSI (rewriting URLs in local HTML included from SHTML)
+  - Fixed failure in rewriting URLs in .html of local file included
+    from .shtml.
+  - An example of the failure is as follows:
+    An example of SHTML tag:
+      <!--#include virtual=example.cgi -->
+    An example of HTML tag in output from example.cgi:
+      <A HREF=example.html>
+    The HTML tag can be rewritten by failure to:
+      <A HREF=http://physical-hostname/dir-of-shtml/example.html>
+  - There is no workaround to escape the problem in former versions.
+
+CGI (CGI scripts in a CGI directory and CGI with extra path info.)
+  - Fixed MOUNT for CGI directory to work with definition as bellow:
+      MOUNT="/cgi-bin/* cgi:/path/of/cgi-bin/*"
+  - Fixed interpretation of CGI URL with extra path as bellow:
+      http://server/path/script.cgi/extra/path?query
+  - These problems have been since version 8.6.0 in March 2003.
+    So there seems no user of this feature :O
+
+FTP (logging data larger than 4GB uploaded to local file)
+  - Fixed response message and logging data of FTP origin server.
+    The problem is limited to DeleGate working as an origin FTP
+    server and when a file larger than 4GB is uploaded to local file.
+  - DeleGate as a FTP origin server allowing upload to local file
+    is defined as bellow:
+      MOUNT="/* file:/path/* rw"
+  - Added logging of upload to local file into the xferlog
+    file (LOGDIR/PORT.ftp).
+
+Documentation (reference manual)
+  - Made the reference manual a bit more readable :) using CSS.
+
+----
+
+DeleGate/9.9.11-pre2 STABLE(beta) is released including modification
+about HTML filter and SSI.
+
+HTML filter (HTML part extraction filter)
+  - Extended the HTML part filter to copy META and STYLE tags in the
+    original HTML into the extracted HTML.
+  - The HTML part filter of DeleGate is a filter that extracts a part
+    of HTML named as "<A NAME=yyy>" in "xxx.html" by a URL "xxx.html?yyy".
+    In the extracted HTML, an original label reference "<A HREF=#zzz>"
+    is converted to "<A HREF=xxx.html?zzz>".
+    The filter is applied to local HTML files when DeleGate is working
+    as an original HTTP server. (It should be applicable also to
+    local/remote HTML response included by SSI include).
+  - Output HTML of the filter for the reserved part name ".parts"
+    (referred by "[ALL]" at the beginning of each extracted part) is
+    refined a little.
+  - Manual.htm, the reference manual, is revised to fit the filtering.
+  - Example:
+       <URL:http://www.delegate.org/delegate/Manual.htm?general>
+       <URL:http://www.delegate.org/delegate/Manual.htm?.parts>
+
+SSI (Server Side Include in SHTML)
+  - Fixed reverse rewriting (for MOUNT) to virtual URLs of URLs in
+    included HTML by SSI when DeleGate is serving as a name based
+    virtual host.
+
+-Fimp option (Implanted configuration parameters)
+  - Fixed -Fimp option to make it work again.  It was disabled in
+    version 9.9.7-pre24 (Feb. 2010).
+
+----
+
+DeleGate/9.9.11-pre3 STABLE(beta) is released including modification
+to improve SSI and documentation.
+
+SSI (Fix and extensions for Server Side Include in SHTML)
+  - Fixed to prevent stack overflow by deep recursion (possibly in
+    infinite loop) of SSI include.
+  - Introduced <!--#config var=VBASE val=URL --> in including HTML
+    to be used as the BASE URL of rewritten URLs in included HTML.
+  - Introduced ${SELF} and ${VBASE} to be prefixed to hyper links
+    in included HTML.  ${SELF} is substituted by the URL of included
+    HTML itself while ${VBASE} is substituted by the VBASE defined
+    in the including HTML.
+  - Made hyperlink URL from relative one to absolute one in the context
+    of the included HTML, HREF="?query" or HREF="#label" for example.
+  - Introduced ${QUERY_STRING} and ${QUERY_STRING?string1:string2} to
+    be used in the URL in including HTML as
+    <!--#include virtual=URL?${QUERY_STRING} -->
+  - Made customizable the format of <PRE>, to wrap a included plain
+    text, with CSS style of "#plainpre"
+
+DOCUMENT (Manual.htm)
+  - Manual.htm, the reference manual, is revised to use the extended
+    features of SSI include.
+
+Cheers from Japan,
+Yutaka
+--
+  9 9   Yutaka Sato { Do the more with the less -- B. Fuller }
+ ( ~ )  National Institute of Advanced Industrial Science and Technology
+_<   >_ 1-1-4 Umezono, Tsukuba, Ibaraki, 305-8568 Japan

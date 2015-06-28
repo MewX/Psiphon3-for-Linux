@@ -1,0 +1,33 @@
+To: feedback@delegate.org
+Date: Fri Oct 31 13:00:10 JST 2014
+Subject: DeleGate/9.9.13 (STABLE) -- small fix and sources for Windows
+From: feedback@delegate.org (Yutaka Sato)
+Reply-To: feedback@delegate.org
+Organization: The DeleGate Project
+Message-Id: <1KKmH1.feedback@delegate.org>
+References: <_A5107@delegate-en.ML_>
+
+--------------------------------------------------------------------------
+DeleGate/9.9.13 (STABLE) -- small fix and sources for Windows
+                                                         October 31, 2014
+--------------------------------------------------------------------------
+DeleGate/9.9.13 STABLE is released with small fixes, source codes for
+Windows, and simplified license conditions.
+
+Small Fixes
+  -- Fixed SEGV in sending mail to ADMIN on occurrence of incident.
+
+Source Codes for Windows
+  -- Opened source code for Windows.
+  -- A tiny code for launching DeleGate as a service is closed yet.
+
+Simplified License Conditions
+  -- The license condition of DeleGate version 9 is simplified.
+     See LICENSE.txt or <URL:http://www.delegate.org/delegate/license/>
+
+Cheers from Japan,
+Yutaka
+--
+  9 9   Yutaka Sato { Do the more with the less -- B. Fuller }
+ ( ~ )  National Institute of Advanced Industrial Science and Technology
+_<   >_ 1-1-4 Umezono, Tsukuba, Ibaraki, 305-8568 Japan

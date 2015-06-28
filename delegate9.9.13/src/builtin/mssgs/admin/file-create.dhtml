@@ -1,0 +1,19 @@
+${not.admin.admpath.ADMDIR/shutout/? ${admin.putrespmssg.- no permittion to write this directory}${exit}}
+
+${admin.formv.com.remove?${admin.remove_file.file-checked}${exit}}
+${admin.formv.com.backup|admin.formv.com.backup?${exit}}
+
+<P>
+<INPUT type=hidden name=prevcom value="create">
+Create
+<INPUT type=text name=file-newname value="${_admin.formv.file-newname}">
+
+${button:submit:file-type:file:file}
+${button:submit:file-type:directory:directory}
+${button:submit:com:cancell:cancell}
+<P>
+
+${not.admin.formv.com&admin.formv.file-newname?
+ ${admin.formv.file-type.file?${admin.create_file.file-newname}}
+ ${admin.formv.file-type.directory?${admin.create_directory.file-newname}}
+}

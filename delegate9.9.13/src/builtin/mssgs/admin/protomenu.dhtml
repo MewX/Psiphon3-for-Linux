@@ -1,0 +1,15 @@
+<SELECT align=middle name=conf-protocol>
+<OPTION ${admin.formv.conf-protocol.http?selected}>http
+<OPTION ${admin.formv.conf-protocol.delegate?selected}>delegate
+<OPTION ${admin.formv.conf-protocol.ftp?selected}>dns
+<OPTION ${admin.formv.conf-protocol.ftp?selected}>ftp
+<OPTION ${admin.formv.conf-protocol.imap?selected}>imap
+<OPTION ${admin.formv.conf-protocol.nntp?selected}>nntp
+<OPTION ${admin.formv.conf-protocol.pop?selected}>pop
+<OPTION ${admin.formv.conf-protocol.smtp?selected}>smtp
+<OPTION ${admin.formv.conf-protocol.socks?selected}>socks
+<OPTION ${admin.formv.conf-protocol.sockmux?selected}>sockmux
+<OPTION ${admin.formv.conf-protocol.tcprelay?selected}>tcprelay
+<OPTION ${admin.formv.conf-protocol.telnet?selected}>telnet
+<OPTION ${admin.formv.conf-protocol.udprelay?selected}>udprelay
+</SELECT>

@@ -1,0 +1,13 @@
+${request.reloading? ${evaleval.admin.putrespmssg.${admin.formv.com} - ignored on Reloading ...}${exit}}
+${admin.com.start?${admin.start_serv.serv-confname}}
+${admin.com.restart?${admin.restart_serv.serv-confname}}
+${admin.com.stop?${admin.stop_serv.serv-confname}}
+${admin.com.backup?${admin.backup_conf}}
+${admin.com.remove?${admin.remove_conf}}
+${admin.com.new?${admin.new_conf.conf-newservname}}
+${admin.com.restore?${admin.restore_conf}}
+
+${admin.com.rename?
+ ${admin.formv.conf-servname&admin.formv.conf-servname?
+  ${admin.rename_conf.conf-servname.conf-newservname}}
+}

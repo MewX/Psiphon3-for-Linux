@@ -1,0 +1,50 @@
+${setenent}
+${+TITLE=DeleGate Mount Control}
+${include:head.dhtml}
+
+Let real url <I>R</I> be shown as if it is virtual url <I>V</I>.
+(<A HREF=${ibase}builtin/mssgs/admin/mount-example.dhtml>HELP</A>)
+<P>
+
+<FORM ACTION="${ibase}admin/mount" METHOD=POST>
+<INPUT TYPE=hidden NAME=action VALUE="mount">
+<I>V</I>:
+<SELECT NAME=vurl-proto style="width:100">
+<OPTION SELECTED>http://-/
+<OPTION>builtin:
+</SELECT>
+<INPUT TYPE=TEXT NAME=vurl-path SIZE=40 style="margin:0">
+<SELECT NAME=vurl-tail>
+<OPTION SELECTED>/*
+<OPTION>*
+<OPTION>
+</SELECT>
+
+<BR>
+<I>R</I>:
+<SELECT NAME=rurl-proto style="width:100">
+<OPTION SELECTED>http://
+<OPTION>ftp://
+<OPTION>news://
+<OPTION>nntp://
+<OPTION>pop://
+<OPTION>gopher://
+<OPTION>builtin:
+</SELECT>
+<INPUT TYPE=TEXT NAME=rurl-login SIZE=40>
+<SELECT NAME=rurl-tail>
+<OPTION SELECTED>/*
+<OPTION>*
+<OPTION>
+</SELECT>
+<P>
+<INPUT TYPE=submit VALUE=" MOUNT ">
+<INPUT TYPE=reset VALUE=reset>
+</FORM>
+
+<H2>Current Mount List</H2>
+<PRE>
+${mtab.mtab}
+</PRE>
+
+<HR>

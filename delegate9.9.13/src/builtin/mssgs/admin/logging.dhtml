@@ -1,0 +1,44 @@
+${define.TITLE=${type:title:DeleGate Logging Control}}
+${include:head.dhtml}
+
+<script language="JavaScript">
+function disableEnterKey(e){
+     var key;     
+     if(window.event)
+          key = window.event.keyCode; //IE
+     else key = e.which; //firefox     
+     return (key != 13);
+}
+</script>
+
+<FORM ACTION="${request.url}" METHOD=POST onEnter="return false;">${admin.dump_common}
+
+<TABLE width="100%" border=0 cellspacing=0 cellpadding=0 bgcolor=#D0D0F0>
+<TR>
+ <TD align=right>
+  ${button:submit:com:logging:Logfile:style="color:green"}
+ </TD>
+ <TD align=center>
+  &nbsp;
+  <INPUT type=radio name=loglev value="s" ${admin.formv.loglev.s?checked}>
+  <FONT ${admin.formv.LogLev.s?color=green}>${tag:small:silent}</FONT>
+  <INPUT type=radio name=loglev value="t" ${admin.formv.loglev.t?checked}>
+  <FONT ${admin.formv.LogLev.t?color=green}>${tag:small:terse}</FONT>
+  <INPUT type=radio name=loglev value="u" ${admin.formv.loglev.u|not.admin.formv.loglev?checked}>
+  <FONT ${admin.formv.LogLev.u?color=green}>${tag:small:usual}</FONT>
+  <INPUT type=radio name=loglev value="v" ${admin.formv.loglev.v?checked}>
+  <FONT ${admin.formv.LogLev.v?color=green}>${tag:small:verbose}</FONT>
+  &nbsp;
+ </TD>
+ <TD align=left>
+  ${button:submit:com:capture:Capture:style=""}
+  <small>
+  <INPUT type=text align=right size=4 name=capsec value=${admin.formv.capsec?${admin.formv.capsec}:30}   onKeyPress="return disableEnterKey(event)"> sec.
+  &nbsp;
+  <INPUT type=text align=right size=5 name=caplns value=${admin.formv.caplns?${admin.formv.caplns}:1000} onKeyPress="return disableEnterKey(event)"> lines
+  &nbsp;
+  </small>
+ </TD>
+</TR>
+</TABLE>
+</FORM>

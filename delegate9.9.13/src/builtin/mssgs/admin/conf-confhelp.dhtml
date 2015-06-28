@@ -1,0 +1,11 @@
+${not.admin.com.help?${exit}}
+
+<FONT color=blue>
+This page is for editing configuration file.
+The simplest example of crating a new configuration is
+(1) enter the "user port number",
+(2) push the "compose" button, then
+(3) push the "store" button.
+
+</FONT>
+<P>

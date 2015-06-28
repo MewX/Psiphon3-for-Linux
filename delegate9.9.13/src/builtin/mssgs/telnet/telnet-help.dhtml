@@ -1,0 +1,11 @@
+-- Telnet-proxy ${verdate}
+-- Usage:
+--   c host         -- connect to the `host'
+--   -ssh.host      -- connect to the SSH server on the host
+--   x [host:disp#] -- set X proxy to the X server `host:disp#'
+--   a host         -- start X proxy to accept from the X client `host'
+--   j [j|k|s|e|t]  -- Japanese character code conversion
+--   quit / exit    -- disconnect
+--
+-- Note: The only acceptable X client host is the Telnet server host specified
+-- in "c Telnet-server-host".  You can change it by 'a X-client-host'.

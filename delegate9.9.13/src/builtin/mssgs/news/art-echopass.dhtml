@@ -1,0 +1,7 @@
+Copy this pass-String
+<INPUT type=hidden name=clientPassQ value="${client.pass}">
+<INPUT type=text size=10 value="${client.pass}" readonly
+ style="font-family:monospace">
+to here &gt;&gt;
+<INPUT type=text size=10 name=clientPassA
+ style="font-family:monospace;${NOT.formv._admresp_.*passString?:background-color:#FFE0E0}">

@@ -1,0 +1,12 @@
+<H2>GACL Format</H2>
+<PRE>
+
+ACL-Version: GACL/0.1
+Admin-Class: anonymous
+User-Class: anonymous
+Base-URL: <I>nntp://news.server/</I>
+
+On:  <I>news.group1</I>
+Off: <I>news.group2</I>
+
+</PRE>

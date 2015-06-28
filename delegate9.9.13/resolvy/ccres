@@ -1,0 +1,9 @@
+#!/bin/sh
+
+echo $*
+$*
+if [ $? = 0 ]; then exit 0; fi
+
+echo "#### ignore above erros if the following trial succeeds ####"
+echo $* -DRES_STATE
+$* -DRES_STATE

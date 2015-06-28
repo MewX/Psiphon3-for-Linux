@@ -1,0 +1,7 @@
+Commandline arguments:
+<TABLE border=1 width=100% cellpadding=4 cellspacing=0 border=0 bgcolor=#D0D0D0><TR><TD><PRE>${admin.main.args}</PRE></TD></TR></TABLE>
+
+<P>
+Whole configuration parameters:
+<TABLE border=1 width=100% cellpadding=4 cellspacing=0 border=0 bgcolor=#D0D0D0><TR><TD><PRE>${admin.statconf}</PRE></TD></TR></TABLE>
+

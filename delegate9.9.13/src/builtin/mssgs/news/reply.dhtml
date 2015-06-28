@@ -1,0 +1,12 @@
+<PRE>
+-- <A HREF="mailto:${arturl.Reply_To}?\
+X-Newsgroups=${art.Newsgroups}&\
+Subject=${arturl.Subject}&\
+References=%3C${arturl.Message_ID}%3E">\
+REPLYING TO THE FOLLOWING MESSAGE</A> --
+From\: ${art.From}
+Date\: ${art.Date}
+Message-ID: &lt;${art.Message_ID}&gt;
+--
+${art.body}
+</PRE>${tailer.off}\

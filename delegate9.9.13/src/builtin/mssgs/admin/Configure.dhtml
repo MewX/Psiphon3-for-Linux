@@ -1,0 +1,54 @@
+${not.admin.formv.form.ConfEditor?${include:Form2conf.dhtml}${exit}}
+
+${setenent}
+${+TITLE=${type:title:DeleGate Configuration}}
+${include:head.dhtml}
+
+<FORM ACTION=config METHOD=POST>${admin.dump_common}
+<INPUT type=hidden name=prevact value="${_admin.act}">
+
+${include:configmenu.dhtml}
+
+<P>
+<TABLE width=100%><TR><TD>
+  <FONT color=${admin.config.error?red:green}>
+  ${_admin.act}: ${_admin.respmssg}
+  </FONT>
+</TD></TR><TR><TD>
+${admin.act.Edit?<INPUT type=submit name=act value=Set>}
+${admin.config.error?:
+ ${admin.act.Set,Append?<INPUT type=submit name=act value=Undo>}
+ }
+${admin.act.Restart?<INPUT type=submit name=act value=Restart>}
+${admin.act.Add,Append?<INPUT type=submit name=act value=Append>}
+${admin.act.Add?<INPUT type=submit name=act value=Template>}
+</TD><TD ALIGN=right>
+${admin.act.Edit,Add,Restart?<INPUT type=submit name=act value=Cancell>}
+</TD></TR></TABLE>
+
+${admin.act.Editline?${include:editline.dhtml}}
+${admin.act.Showlog?<HR><PRE>${admin.getlog}</PRE><HR>}
+
+${admin.act.Add,Append?<TEXTAREA name=confdata.add cols=90 rows=8 wrap=off></TEXTAREA><BR><small>&nbsp;</small>}
+${admin.act.Edit?<TEXTAREA name=confdata cols=90 rows=30 wrap=off>${admin.getconfig}</TEXTAREA>}
+</FORM>
+
+${admin.act.Upload?
+<FORM ENCTYPE="multipart/form-data" ACTION="${ibase}admin/config" METHOD=POST>
+<INPUT type=hidden name=prevact value="${admin.act}">
+<INPUT type=file name=confdata size=60 value="dgdefault.cnf"><BR>
+<INPUT type=submit name=act value=Upload>
+</FORM>
+<P>
+}
+
+${admin.act.Edit?:
+<small>Current configuration: CRC32=${admin.getconfig.crc32}</small><BR>
+}
+${admin.act.Edit?:
+ <TABLE border=1 width=100% cellpadding=4 cellspacing=0><TR bgcolor=#E0E0E0><TD><PRE>${admin.getconfig.putln}</PRE></TD></TR>
+ </TABLE>}
+
+<P>
+${include:showconf.dhtml}
+<PRE>${admin.dumpform}</PRE>

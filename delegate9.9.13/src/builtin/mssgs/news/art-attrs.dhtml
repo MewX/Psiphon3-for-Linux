@@ -1,0 +1,40 @@
+<TABLE border=0>
+<TR>
+       <TD width=140pt><FONT color=green>Anonymizing</FONT>
+  </TD><TD width=90pt><FONT color=#08FF08><small>this article</small></FONT>
+  </TD><TD width=90pt><FONT color=blue><small>this poster</small></FONT>
+  </TD><TD align=center><FONT color=blue><small>&lt;--reset&lt;--</small></FONT>
+  </TD><TD align=right><small>group</small>
+  </TD><TD align=right><small>server</small>
+  </TD></TR>
+<TR><TD>From
+  </TD><TD bgcolor=#C0FFC0>${checkbox.anonFromA}
+  </TD><TD bgcolor=#C0C0FF>${checkbox.anonFromP}
+  </TD><TD bgcolor=#C0C0FF align=center>${checkbox.anonFromX}
+  </TD><TD align=right>${checkbox.anonFromG disabled}
+  </TD><TD align=right>${checkbox.anonFromS disabled}
+  </TD></TR>
+ <TR><TD>Message-ID
+  </TD><TD bgcolor=#C0FFC0>${checkbox.anonMsgidA}
+  </TD><TD bgcolor=#C0C0FF>${checkbox.anonMsgidP}
+  </TD><TD bgcolor=#C0C0FF align=center>${checkbox.anonMsgidX}
+  </TD><TD align=right>${checkbox.anonMsgidG disabled}
+  </TD><TD align=right>${checkbox.anonMsgidS disabled}
+  </TD></TR>
+ <TR><TD>Email Addr. <small>in Body</small>
+  </TD><TD bgcolor=#C0FFC0>${checkbox.anonEmailA}
+  </TD><TD bgcolor=#C0C0FF>${checkbox.anonEmailP}
+  </TD><TD bgcolor=#C0C0FF align=center>${checkbox.anonEmailX}
+  </TD><TD align=right>${checkbox.anonEmailG disabled}
+  </TD><TD align=right>${checkbox.anonEmailS disabled}
+  </TD></TR>
+ <TR><TD>Phone Num. <small>in Body</small>
+  </TD><TD bgcolor=#C0FFC0>${checkbox.anonPhoneA}
+  </TD><TD bgcolor=#C0C0FF>${checkbox.anonPhoneP}
+  </TD><TD bgcolor=#C0C0FF align=center>${checkbox.anonPhoneX}
+  </TD><TD align=right>${checkbox.anonPhoneG disabled}
+  </TD><TD align=right>${checkbox.anonPhoneS disabled}
+  </TD></TR>
+</TABLE>
+
+${include:art-mask.dhtml}

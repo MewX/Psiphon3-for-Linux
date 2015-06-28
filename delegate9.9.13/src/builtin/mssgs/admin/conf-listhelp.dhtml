@@ -1,0 +1,15 @@
+<FONT color=blue>
+In this page, you can control the status of servers and manage
+configuration files of them.
+A server is identified by the name of <I>configuration</I> file.
+Check the configuration(s) then push
+<INPUT type=submit value=start> or
+<INPUT type=submit value=stop>.
+<BR>
+To
+<INPUT type=submit value=edit>
+a configuration file, click the name of the configuration.
+To backup or remove configurations, check configuration(s) then push
+<INPUT type=submit value=backup> or
+<INPUT type=submit value=remove> .
+</FONT>

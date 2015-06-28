@@ -1,0 +1,95 @@
+Subject: [DeleGate-En] DeleGate/9.9.6 (STABLE) -- building without C++
+From: feedback@delegate.org (Yutaka Sato)
+Date: 01 Dec 2009 07:18:17 GMT
+Message-ID: <1B4vR4.feedback@delegate.org>
+X-Seqno: 4680 (via mail.delegate.org)
+References: <_A4519@delegate-en.ML_> <_A4595@delegate-en.ML_>
+
+Dear DeleGate users,
+
+I inform you of the new release of DeleGate available as follows:
+--------------------------------------------------------------------------
+DeleGate/9.9.6 (STABLE) -- building without C++
+
+This release includes fixes to make DeleGate version 9 more stable and
+portable to multiple platforms.
+
+Portability
+ * make: building without C++ (with CFLAGS=-DQSC or by make -f Makefile.QSC)
+ - make: building with icc (with CFLAGS=-MD and LDOPTS=-MD)
+
+Modified Behavior
+ - General: added a notice for recovery from "seems interpolated" (prelink)
+ - HTTP: encoding the 405 response in quoted-printable
+ - PAM: trying dynamic PAM library if not bound at the build time
+
+New features
+ * CERTDIR: certificate per an IP-address (as CERTDIR/sa.IpAddr.pem)
+ - SMTP: sending a copy of relayed mail to admin. (SMTPCONF=bcc:admin@domain)
+ - AUTHORIZER: "-map" for nested auth, using auth. both locally and for server
+ - FTP: supported nested proxy auth. (with AUTHORIZER="-map,...")
+ - FTP: added servon={init|user|pass}" MountOption
+ - POP: supported nested proxy auth. (with AUTHORIZER="-map,...")
+
+New features (tentative or for debugging)
+ - "-Ess" to reject non HTTPS/SSL request over SSLtunnel
+ - "-DId" to completely disable the usage of Ident protocol
+ - "-Esf" to apply SOCKS,SRCIF,... for the connection to sftp/SSH
+ - "-Dam" to disable automatic adjusting of MAXIMA=delegated:N
+ - "-EHa" for access control on a multi-homed host
+
+Spinach (SERVER=http-sp or SERVER=http with -Ecc)
+ - Spinach: coped with "Proxy-Connection" (Safari)
+ - Spinach: implemented general timeout for idle HTTP sessions
+ - Spinach: SO_LINGER+close() equivalent, without blocking, by shutdown()
+ - Spinach: fixed stalling or infinite-loop after a connection error
+ - Spinach: added a "Resolver" thread to do resolution in background
+ - Spinach: relaying with lesser buffers
+
+Platform Specific Fixes
+ - Win32: relaying OOB (for break) over Telnet (since 9.4.0)
+ - Win2K: enabled CAPSKEY (orig. Win2K without a ServicePack)
+ - KuroBox: fixed SEGV or with "SERVER=http-sp" or "-Ecc"
+ - Solaris9: making on Solaris9 (since 9.9.4)
+
+Protocol Specific Fixes
+ - HTTP: fixed SEGV in dir. listing under /-/admin/ (since 9.9.4)
+ - HTTP: fixed SERVER=http://odst.-:- (transparent pxy) with an upstream PROXY
+ - sftp/FTP: fixed broken result on slow LIST response
+ - sftp/FTP: supported abortion during LIST (ABOR command)
+ - X/Telnet: terminating X sessions at the finish of a Telnet session
+--------------------------------------------------------------------------
+
+(current, with time stamp Dec-01)
+  SITE: <URL:ftp://ftp.delegate.org/pub/DeleGate/>
+  FILE: delegate9.9.6.tar.{gz,bz2}
+  DATE: Dec 1 12:13 JST 2009
+  SRCSIGN=9.9.6:20091201121325+0900:a27ab05977a4ab52
+  TAR-SIZE: 7505920 bytes
+  TAR-MD5:  d0d4d7f752ccacde3ba80b820c281b8f
+  PUBLIC-KEY: http://www.delegate.org/rsa-pubkey.pem
+  TAR-MD5-SIGN:
+    VUkWQGduX7McTUrXxAwbleWZlTGJwNsF4iVG+Db4aV7H/q9/J/g7UeFMVVf3P0tvVFMEiOTR
+    MUt+hTJyAyYL9k0cbaCTiIxbnW/rL6kMMkNcc+DCPpsGksNyoFn0ptbM7XopxlLJviAMviAs
+    mLtLQ1OHpNYS4IVe2YK21lVlmGI=
+
+(old, with time stamp Nov-30, without the fix for "http-sp" on KuroBox)
+  SITE: <URL:ftp://ftp.delegate.org/pub/DeleGate/>
+  FILE: delegate9.9.6.tar.{gz,bz2}
+  DATE: Nov 30 18:28 JST 2009
+  SRCSIGN=9.9.6:20091130182747+0900:cdf8c7a0a9ccd709
+  TAR-SIZE: 7495680 bytes
+  TAR-MD5:  a02503210ad17d3e69955b640ee2245e
+  PUBLIC-KEY: http://www.delegate.org/rsa-pubkey.pem
+  TAR-MD5-SIGN:
+    V+fJpcc8JrkM7o/RhDmHxce8QYHxYOlmcdOP3Ug7EB5ixVmLi/BUYDJR1Mkalfwq7TJAQQVx
+    Ti/q5/8iQm0b0Pc6nLkxR3q5bFDbAAiNNUYsEGC0E6CEL1M2bV7uCWZOXjPCaG/9QC1uGwPG
+    SaTE7wkhijdTp1YnMsfDvNf/ApQ=
+
+Cheers,
+Yutaka
+--
+  9 9   Yutaka Sato <y.sato@delegate.org> http://delegate.org/y.sato/
+ ( ~ )  National Institute of Advanced Industrial Science and Technology
+_<   >_ 1-1-4 Umezono, Tsukuba, Ibaraki, 305-8568 Japan
+Do the more with the less -- B. Fuller

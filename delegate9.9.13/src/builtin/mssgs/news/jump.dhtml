@@ -1,0 +1,7 @@
+<TITLE> NNTP/HTTP DeleGate </TITLE>
+
+${req.search?
+ Jump to <A HREF="${req.search}">${req.search}</A>
+:Jump to <A HREF="./">TOP</A>
+}
+<HR>

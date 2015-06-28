@@ -1,0 +1,10 @@
+<TITLE> You are authority </TITLE>
+<H1> You are authority </H1>
+
+You are authenticated as an administrator
+who is authorized to do DeleGate Server Administration.
+<HR>
+${include:printauth.dhtml}
+<HR>
+[<A HREF=${abase}>Return to Admin</A>]
+

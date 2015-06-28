@@ -1,0 +1,6 @@
+
+Rewrite the variables in the scripts here before you use them.
+
+   go-far   ... DHOST, DPORT, and GOPHER
+   dmosaic  ... DHOST, DPORT, and MOSAIC
+   dwhois   ... DFLTSERV

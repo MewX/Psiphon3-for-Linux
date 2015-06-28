@@ -1,0 +1,64 @@
+#!/bin/csh -f
+#
+#  go-far script by Hayato YAMANA (yamana@etl.go.jp)
+# -----------------------------------------------------
+#  ver 0.1  Supporting only -p option.
+#  ver 0.2  940612 inserted '=@=+J=' for JIS code conversion by ysato@etl.go.jp
+
+
+setenv DHOST etlcom
+setenv DPORT 2070
+setenv GOPHER gopher
+
+#
+#
+#
+
+if ( $#argv == 0 ) then
+        $GOPHER -p "=@=+J=" $DHOST $DPORT
+	exit 0
+
+else
+
+    set op=(" " "$DHOST" "70")
+    
+    switch ($argv[1])
+	case "-p":
+            if (($#argv > 4)||($#argv < 2)) then
+		echo "Usage:go-far [-p path] [hostname port]"
+		exit 1
+	    endif
+
+  	    set op[1]=$argv[2]
+	    @ j = 3
+
+	    breaksw
+
+	default:
+    	    if (("$argv[1]" != "-p")&&($#argv > 2)) then
+		echo "Usage:go-far [-p path] [hostname port]"
+	    exit 1
+            endif
+
+	    @ j = 1
+
+        endif
+        breaksw
+    endsw
+
+    @ i = 2
+
+    while ( $j <= $#argv )
+	set op[$i] = $argv[$j]
+	@ i++
+	@ j++
+    end
+
+    set op[2]=$op[2]":"
+
+    echo "% $GOPHER -p $op[1]=@=+J=gopher:$op[2]$op[3] $DHOST $DPORT"
+    sleep 1
+
+    $GOPHER -p $op[1]=@=+J=gopher:$op[2]$op[3] $DHOST $DPORT
+
+endif

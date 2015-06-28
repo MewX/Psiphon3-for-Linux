@@ -1,0 +1,47 @@
+${not.admin.formv.Flag-showdir.on&not.admin.formv.Flag-showall?
+<!-- dumping ... conf-CHROOTx=${admin.formv.conf-CHROOTx} -->
+  ${admin.dumpformv.-.conf-CHROOTx,conf-DGROOTx,conf-DGROOT,conf-VARDIRx,conf-VARDIR,conf-TMPDIRx,conf-TMPDIR,conf-LOGDIRx,conf-LOGDIR}
+  ${exit}
+}
+
+<TABLE width=100% border=1 cellspacing=0 cellpadding=0 bgcolor=#D0D0F0>
+<TR>
+ <TD align=center>directories</TD>
+ <TD>
+ <INPUT type=checkbox name=conf-DGROOTx ${admin.formv.conf-DGROOTx.on?checked}>${tag:small:DGROOT}==${tag:small:CHROOT}<INPUT type=checkbox name=conf-CHROOTx ${admin.formv.conf-CHROOTx.on?checked}>
+   &nbsp;&nbsp;
+ <INPUT type=checkbox name=conf-TMPDIRx ${admin.formv.conf-TMPDIRx.on?checked}>${tag:small:TMPDIR}
+ <INPUT type=checkbox name=conf-VARDIRx ${admin.formv.conf-VARDIRx.on?checked}>${tag:small:VARDIR}
+ </TD>
+</TR>
+
+${admin.formv.conf-DGROOTx.on?
+<TR>
+ <TD align=center width=25%>root of DeleGate</TD>
+ <TD> &nbsp;<KBD>${tag:small:DGROOT}</KBD> <INPUT type=text name=conf-DGROOT size=50 value="${admin.formv.conf-DGROOT}"><BR>
+ </TD>
+</TR>
+}
+
+${admin.formv.conf-VARDIRx.on?
+ <TR>
+ <TD align=center width=25%>variable files</TD>
+ <TD> &nbsp;<KBD>${tag:small:VARDIR}</KBD> <INPUT type=text name=conf-VARDIR size=50 value="${admin.formv.conf-VARDIR}"><BR>
+ </TD>
+ </TR>
+}
+${admin.formv.conf-LOGDIRx.on?
+ <TR>
+ <TD align=center width=25%>log files</TD>
+ <TD> &nbsp;<KBD>${tag:small:LOGDIR}</KBD> <INPUT type=text name=conf-LOGDIR size=50 value="${admin.formv.conf-LOGDIR}"><BR>
+ </TD>
+ </TR>
+}
+${admin.formv.conf-TMPDIRx.on?
+ <TR>
+ <TD align=center width=25%>temporary files</TD>
+ <TD> &nbsp;<KBD>${tag:small:TMPDIR}</KBD> <INPUT type=text name=conf-TMPDIR size=50 value="${admin.formv.conf-TMPDIR}"><BR>
+ </TD>
+ </TR>
+}
+</TABLE>

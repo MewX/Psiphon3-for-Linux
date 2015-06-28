@@ -1,0 +1,32 @@
+#
+# dump request message
+#
+# set Cookie
+#
+# set Authorization
+#
+
+<H2>CLIENT CONTROL</H2>
+(under construction)
+
+<P>
+<B>You are from</B>:
+  <MENU>
+  ${hostport.client}<P>
+  Current parallel sessions from your host: ${client.peersessions}
+  </MENU>
+
+<B>The request number on this connection</B>: ${client.requestserno}
+<BR>
+<B>Your request messages is</B>:
+<MENU><PRE>
+${_request.mssg}
+</PRE></MENU>
+
+<HR>
+<UL>
+<LI>CREATE CONTEXT / account / cookie
+<LI>LOGGING CONTROL / watchdog / notification
+<LI>VIEW HISTORY / <I>hotlist</I>
+<LI>ACCESS CONTROL
+</UL>

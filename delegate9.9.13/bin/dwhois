@@ -1,0 +1,19 @@
+#!/bin/sh
+
+DFLTSERV=whois.nic.ad.jp
+
+if [ "${DELEGATE=}" = "" ]; then
+	echo "set DELEGATE environment variable to the DeleGate for Whois Proxy."
+	exit 1
+fi
+
+if [ "$1" = "-h" ]; then
+	shift
+	HOST=$1
+	shift
+else
+	HOST=$DFLTSERV
+fi
+
+echo whois -h $DELEGATE "whois://$HOST?$*"
+whois -h $DELEGATE "whois://$HOST?$*"

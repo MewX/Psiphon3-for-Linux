@@ -1,0 +1,19 @@
+${not.admin.formv.conf-serverx?
+    <TR>
+    <TD align=center style="margin:0;padding:0">${tag:small:destination server}
+    </TD>
+    <TD style="margin:0;padding:0">
+       <INPUT type=checkbox name=conf-serverx style="border-style:none">
+    </TD>
+    </TR>
+  :
+    <TR>
+    <TD align=center>destination server
+       <INPUT type=checkbox name=conf-serverx checked>
+    </TD>
+    <TD> <INPUT type=text size=40 name=conf-server
+         value="${admin.formv.conf-server}">
+         ${tag:small: ex. servhost or servhost:9080}
+    </TD>
+    </TR>
+}

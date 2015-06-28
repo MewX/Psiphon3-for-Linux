@@ -1,0 +1,9 @@
+<TABLE width="100%" border=0 cellspacing=0 cellpadding=0 bgcolor=#D0D0F0>
+<TR><TD>
+${button:submit:com:apply:Apply:style="font-size:140%;font-color:green"}
+<INPUT type=reset VALUE="Reset">
+</TD><TD align=right>
+${button:submit:com:restart:Restart:style=""}
+${button:submit:com:terminate:Terminate:style=""}
+</TD></TR>
+</TABLE>

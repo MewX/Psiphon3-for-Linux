@@ -1,0 +1,17 @@
+<TABLE width="100%" border=0 cellspacing=0 cellpadding=0 bgcolor=#E0E0F0>
+<TR><TD>
+Authentication
+<INPUT type=radio name=auth-type value=manual ${admin.formv.auth-type.manual?checked}>manual
+&nbsp;&nbsp;
+<INPUT type=radio name=auth-type value=pass   ${admin.formv.auth-type.pass?checked}>
+${admin.formv.auth-type.pass?
+user<INPUT type=text name=auth-user size=6 value="${admin.formv.auth-user}">
+pass<INPUT type=text name=auth-pass size=6 value="${admin.formv.auth-pass}">
+:password}
+</TD></TR>
+</TABLE>
+
+${not.admin.formv.auth-type.pass?
+<INPUT type=hidden name=auth-user value="${admin.formv.auth-user}">
+<INPUT type=hidden name=auth-pass value="${admin.formv.auth-pass}">
+}

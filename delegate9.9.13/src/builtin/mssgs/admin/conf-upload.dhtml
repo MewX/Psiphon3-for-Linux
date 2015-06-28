@@ -1,0 +1,46 @@
+${not.admin.com.upload,download? ${exit}}
+
+
+${admin.com.download?
+<TABLE width=100% border=0 cellpadding=0 cellspacing=0 bgcolor=#D0D0FF>
+<TR><TD><HR>
+ <INPUT type=hidden name=act value=Servlist>
+ <INPUT type=hidden name=conf-newservname>
+ ${button:submit:com:download:download}
+ ${not.admin.formv.conf-checked?
+   <FONT color=green>check a configuration and push download again</FONT>
+ :
+  <INPUT type=text readonly value="${admin.formv.conf-checked}">
+  <A HREF="${ibase}admin/config?act=download&content-type=text/plain&confname=${admin.formv.conf-checked}"><BIG>show</BIG></A>
+  <A HREF="${ibase}admin/config?act=download&content-type=application/octetstream&confname=${admin.formv.conf-checked}&localfile=${admin.formv.conf-checked}.cnf"><BIG>download</BIG></A>
+ }
+<HR></TD></TR></TABLE>
+
+<TABLE width=100% border=0><TR><TD align=right>
+ ${button:submit:com:dismissed:dismissed}</TD></TR></TABLE>
+ ${exit}
+}
+
+</FORM>
+<FORM ENCTYPE="multipart/form-data" ACTION=${ibase}admin/config METHOD=POST>
+<INPUT type=hidden name=act value=Form2conf>
+
+<TABLE width=100% border=0 cellpadding=0 cellspacing=0 bgcolor=#D0D0FF>
+<TR><TD><HR>
+
+<TABLE width=100% border=0 cellpadding=0 cellspacing=0
+ ${admin.act.Form2conf?bgcolor="#C0C0FF"}>
+<TR>
+ <TD>
+ &nbsp;${tag:small: local file }
+ <INPUT type=file size=40 name=confdata>
+ ${button:submit:com:show:show:style="font-size:120%"}
+ ${button:submit:com:upload:upload:style="font-size:120%"}
+ <INPUT type=hidden name=conf-newservname value="uploaded">
+ </TD>
+</TR>
+</TABLE>
+
+<HR></TD></TR></TABLE>
+</FORM>
+

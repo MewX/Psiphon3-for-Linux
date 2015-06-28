@@ -1,0 +1,17 @@
+<TITLE> DeleGate for Non-CERN-Proxy clients </TITLE>
+
+<H2>
+<X-D T=LOGOMARK A=MIDDLE>
+DeleGate for Non-CERN-Proxy clients </H2>
+
+<ISINDEX PROMPT="URL ">
+
+<B>Usage</B>: Enter <I>URL</I>, then it will be redirected
+to <I>gateway-_-URL</I> notation and will be relayed
+by the DeleGate.<BR>
+
+<B>Caution</B>: If your client supports CERN-Proxy,
+you should specify the DeleGate for CERN-Proxy.
+<P>
+
+<X-D T=FROG_VER A=MIDDLE>

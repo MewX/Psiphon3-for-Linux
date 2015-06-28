@@ -1,0 +1,1 @@
+#include "maker/mkmake.c"

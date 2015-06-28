@@ -1,0 +1,143 @@
+------------------------------------------------------------------------------
+ DeleGate/8.X RELEASE NOTE
+
+ Date: January 14, 2004
+ Author: Yutaka Sato <ysato AT delegate DOT org>
+ <URL:http://www.delegate.org/delegate/>
+------------------------------------------------------------------------------
+
+Note that some default behaviors of DeleGate/8.X are not compatible with
+DeleGate/7.X or former versions.
+
+In the following, "old)" does not necessarily mean the configuration which
+was available in old versions, but the configuration to make "new"
+DeleGate/8.X compatible with older ones if necessary.
+
+CONSIDERABLE INCOMPATIBILITY WITH DeleGate/7.X AND FORMERS
+
+ 8.8.8 REMITTABLE="https" has come to detect and reject non-HTTPS protocol on
+   SSLtunnel.  Use "ssltunnel" instead of "https" to relay arbitrary protocol.
+
+ 8.8.0 client side Keep-Alive has become enabled by default even if the
+   client is a proxy (can be disabled with HTTPCONF=bugs:no-keepaliveproxy)
+
+ 8.8.0 RELAY=vhost has become allowed by default for .localnet
+
+ 8.6.3 AUTHORIZER for HTTP-DeleGate has come to ask (Proxy)Authorization
+   even without AUTH=proxy/origin and RELIABLE/PERMIT restriction.
+
+ 8.6.3 BASEURL has come to be unused when "Host:vhost" is given.
+   new) BASEURL=http://-vhost:port  ... to ignore "Host:" even if it exists
+   old) BASEURL=http://vhost:port   ... "Host:" is ignored by default
+
+ 8.6.0 MOUNT has come to be applied to URLs in JavaScript and CSS
+   new) URICONV=where:any
+
+ 8.6.0 Pseudo hostname "=" or "///path" in right hand of MOUNT has come
+   to be substituted with the virtual host prior to the interface.
+
+ 8.6.0 MOUNT="/p/* proto://sv/q/*" has come to imply MOUNT="/p ///p/ moved"
+   to have "http://delegate/p" redired to "http://delegate/p/"
+
+ -----
+
+ 8.4.1 control char. in HTTP-Authorization has come to be escaped by default
+   new) HTTPCONF="passesc:%C"
+   old) HTTPCONF="passesc"
+
+ 8.4.0 detaulf DGROOT has become "/" when CHROOT=/dgroot is specified
+ 8.4.0 CHROOT="/" + DGROOT=/dgroot has come to mean CHROOT=/dgroot + DGROOT="/"
+
+ 8.0.0 /-/* has come to be forbidden for non-RELIABLE hosts by default
+   new) MOUNT="/-/* = forbidden,!.RELIABLE"
+   old) MOUNT="/-/* ="
+
+ 8.0.0 default RELIABLE for class-A address has became narrower (24bits netmask)
+   new) HOSTLIST=.localnet:localhost,./@,-/@,.o/@
+   new) HOSTLIST=.localnet:localhost,./.,-/.,.o/.
+
+ 8.0.0 SOCKS has come to be tried before direct connection by default
+   new) CONNECT=c,i,m,h,v,s,d
+   old) CONNECT=c,i,m,h,v,d,s
+
+ 8.0.0 FTP data port number for PASV has become random number by default
+   new) SRCIF="*:*:ftp-data-pasv"
+   old) SRCIF="*:L-1:ftp-data-pasv"
+
+ 8.0.0 RESOLV has come not to use "sys" if a DNS server is detected by default
+   new) RESOLV=cache,file,dns
+   old) RESOLV=cache,file,nis,dns,sys
+
+ 8.0.1 Virtual hosting for arbitrary host become disabled by default
+   new) RELAY="proxy:*:*"
+   old) RELAY="proxy,vhost:*:*"
+
+ 8.0.4 default REMITTABLE for Generalist (without SERVER) become restricted
+   new) [without SERVER] REMITTABLE="http,https/{443,563},gopher,ftp,wais"
+   old) SERVER=delegate REMITTABLE="*"
+
+ 8.0.8 Content-Encoding:gzip from server has become acceptable by default
+   new) HTTPCONF=acc-encoding:-thrugzip
+   old) HTTPCONF=acc-encoding:identity
+
+ 8.0.9 Content-Encoding:gzip to client has become enabled by default
+   new) HTTPCONF=gen-encoding:gzip
+   old) HTTPCONF=gen-encoding:identity
+
+ 8.0.10 Restart at the first client if start-up errors occurred (ex. in DNS)
+   new) MAXIMA=erestart:1
+   old) MAXIMA=erestart:0
+
+ 8.0.10 Output of "-tee" has come to be directed to LOGFILE "-l" by default
+   new) -tee-e (direct output to the standard error)
+   old) -tee
+
+ 8.2.2 HostList matching logging has become optional to be activated with "-dh"
+   new) -dh
+   old) (shown with -vd)
+
+OTHER MAJOR CHANGES FROM DeleGate/7.X
+
+ 8.0.0 TIMEOUT for DNS, TCP connection, etc. become shorter by default
+   new) TIMEOUT=dns:10,con:10,acc:10,lin:10
+   old) TIMEOUT=dns:30,con:30,acc:30,lin:30
+
+ 8.0.6 HostList come to match with both client-host and user-authentication.
+   new) RELIABLE="clientHosts,&,*@authHost"
+   old) RELIABLE="cl,&,*@authHost" HOSTLIST="cl/c:clientHosts"
+
+ 8.0.10 SOCKOPT=shut has become the default
+   new) SOCKOPT=shut
+   old) SOCKOPT=noshut
+
+ 8.0.11 HTTP response of 302 status code has come to be not cached by default
+   new) HTTPCONF=cache:dafault
+   old) HTTPCONF=cache:302
+
+CHANGED PARAMETERS
+
+ 8.0.1 CHARCODE=XXX -> charset-name mapping become compliant with formal names
+   new) EUC -> EUC-JP, SJIS -> Shift_JIS, x-euc-jp -> x-euc-jp, x-sjis -> x-sjis
+   old) EUC -> x-euc-jp, SJIS -> x-sjis
+
+ 8.0.1 REACHABLE="" and RELIABLE="" come to never match with any host
+   new) REACHABLE="" -> REACHABLE="!*", RELIABLE="" -> RELIABLE="!*"
+   old) REACHABLE="" -> REACHABLE="*", RELIABLE="" -> RELIABLE="*"
+
+ 8.0.5 "*" as the delimiter of FTP username with server like "USER user*serv"
+   new) FTPCONF="usdelim:*%#"
+   old) FTPCONF="usdelim:"
+
+NEWLY INTRODUCED PARAMETERS AND OPTIONS
+
+ 8.0.0 REJECT=proto:dstHostList:srcHostList
+ 8.0.0 -p, -s, and -w option for filter parameters
+ 8.0.1 {HTTP,POP,NNTP} over FTP, just to be used as AUTHORIZER
+ 8.2.0 conditionally applied parameter "(condition)parameter"
+ 8.2.0 pseudo domain name for AF_UNIX socket
+ 8.2.2 socket multiplexer SockMux for tunneling sockets over a channel
+
+OBSOLETED PARAMETERS
+ ...
+
+------------------------------------------------------------------------------

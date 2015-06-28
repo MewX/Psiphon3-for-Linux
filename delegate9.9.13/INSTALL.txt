@@ -1,0 +1,120 @@
+/////////////////////////////////////////////////////////////////////////
+
+ How to Build DeleGate on Unix (DeleGate/9.9.8)
+
+                                        2013-06-28 <y.sato@aist.go.jp>
+
+/////////////////////////////////////////////////////////////////////////
+A1. WHAT YOU NEED
+
+ 1) DeleGate tar ball
+  ... "dg9.9.8-src.tar.gz" in this case (or "delegate9.9.8.tar.gz" in the source distribution)
+
+ 3) C++ compiler
+  ... g++ typically
+
+A2. WHAT YOU DO
+
+ 1) Unfreeze and expand the tar ball
+    $ tar xfz "somewhere/dg9.9.8-src.tar.gz" 
+  ... you will see the direcory "delegate9.9.8"
+    $ cd delegate9.9.8
+
+ 2) Execute make
+    $ make
+  ... your E-mail address will be asked on the way. Enter it to proceed.
+  ... if it fails on the way, try "make CC=g++" or so
+
+A3. WHAT YOU GET
+
+    ./src/delegated  -- the executable file of DeleGate
+
+A4. HOW TO INSTALL
+
+  ... put delegated anywhere
+  ... if necessary, put shared library of OpenSSL and Zlib at the directory where delegated is put
+
+A5. HOW TO CONFIGURE
+
+  See http://www.delegate.org/delegate/HowToDG.html
+
+/////////////////////////////////////////////////////////////////////////
+
+ How to Build DeleGate on Windows (DeleGate/9.9.8)
+
+                                        2013-06-28 <y.sato@aist.go.jp>
+
+/////////////////////////////////////////////////////////////////////////
+
+B1. WHAT YOU NEED
+
+ 1) DeleGate tar ball
+  ... "dg9.9.8-src.tar.gz" in this case
+
+ 2) Cygwin (any version)
+  ... sh, tar and gzip are necessaly
+
+ 3) Visual Studio 2005
+  ... expected to be installed at the standard location "C:\Program Files\Microsoft Visual Studio 8"
+
+B2. WHAT YOU DO
+
+ 1) Create a working directory for building
+  ... for example as "C:\delegate"
+  ... any directory is OK, except the directory path includes non-ASCII characters or SPACE
+
+ 2) Unfreeze and expand the tar ball
+    C:/delegate> tar xfz "somewhere/dg9.9.8-src.tar.gz" 
+  ... you will see the direcory "delegate9.9.8"
+    C:/delegate> cd delegate9.9.8
+
+ 3) Execute the build script
+    C:/delegate/delegate9.9.8> ./make-vs8.bat
+  ... please ignore warnings as long as your script finishes with "====FINISHED===="
+  ... your E-mail address will be asked on the way. Enter it to proceed.
+
+B3. WHAT YOU GET
+
+    ./src/delegated.exe  -- the executable file of DeleGate as a Console Application
+    ./src/win32-dg.exe   -- the executable file of DeleGate as a Windows Application
+
+B4. HOW TO INSTALL
+
+  ... put delegated.exe anywhere
+  ... if necessary, put DLL of OpenSSL and Zlib at the directory where delegated.exe is put
+
+/////////////////////////////////////////////////////////////////////////
+
+ How to Build DeleGate for Windows CE/Mobile (DeleGate/9.9.8)
+
+                                        2013-06-28 <y.sato@aist.go.jp>
+
+/////////////////////////////////////////////////////////////////////////
+
+C1. WHAT YOU NEED
+
+ 1) DeleGate tar ball
+ 2) Cygwin
+ 3) Visual Studio 2005
+ 4) the directory of DeleGate for Win32 build at B2. above.
+
+C2. WHAT YOU DO
+
+ 1) Create a working directory for building
+  ... for example as "C:/delegate/cea"
+
+ 2) Make symbolic link of name "dg-host" pointing the DeleGate directory built for Win32
+  ... if your Win32 build is at "C:\delegate\delegate9.9.8" then
+    C:/delegate/cea> ln -s ../delegate9.9.8 dg-host
+
+ 3) Unfreeze and expand the tar ball
+    C:/delegate/cea> tar xfz "somewhere/dg9.9.8-src.tar.gz"
+
+ 4) Execute the build script
+    C:/delegate/cea/delegate9.9.8> ./make-vce.sh
+
+C3. WHAT YOU GET
+  ./src/wince-dg.exe for Windows CE
+  ./src/winmo-dg.exe for Windows Mobile
+
+/////////////////////////////////////////////////////////////////////////

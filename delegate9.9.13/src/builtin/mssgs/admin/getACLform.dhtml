@@ -1,0 +1,5 @@
+<FORM ACTION="" METHOD="GET"><INPUT TYPE=hidden NAME="Admin" VALUE=GetACL>
+<I>Your Admin-ID</I>: <INPUT TYPE=text NAME=ADMINID SIZE=16 VALUE="${_acl.id}">
+<INPUT TYPE=reset VALUE="clear">
+<INPUT TYPE=submit VALUE="download-GACL">
+</FORM>

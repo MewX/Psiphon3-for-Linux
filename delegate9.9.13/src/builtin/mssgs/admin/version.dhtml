@@ -1,0 +1,22 @@
+The version of this DeleGate program
+<TABLE cellspacing=0 border=1 width=80% bgcolor="#FFFFFF">
+<TR><TD width=33%>Version</TD> <TD>DeleGate/${ver}</TD></TR>
+<TR><TD>Release Date</TD> <TD>${verdate.date}</TD></TR>
+<TR><TD>Licensee</TD> <TD>${licensee}</TD></TR>
+<TR><TD>License Custody</TD> <TD>${license.custody}</TD></TR>
+</TABLE>
+<P>
+<A HREF=/-/COPYRIGHT>COPYRIGHT</A><PRE>${copyright}</PRE>
+<P>
+
+<BR>
+<BR>
+Status of this DeleGate executable file
+<TABLE cellspacing=0 border=1 width=80% bgcolor="#FFFFFF">
+${admin.foreachconf._self_.
+<TR><TD width=33%%>Compiled at</TD><TD>%xd</TD></TR>
+<TR><TD>File size</TD><TD>%xs&nbsp;</TD></TR>
+<TR><TD>File CRC32</TD><TD>%xX&nbsp;</TD></TR>
+<TR><TD>Configured at</TD><TD>%m</TD></TR>
+}
+</TABLE>

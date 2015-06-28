@@ -1,0 +1,14 @@
+${not.admin.formv.Flag-showmount.on&not.admin.formv.Flag-showall?
+  ${admin.dumpformv.-.conf-MOUNT}
+  ${exit}
+}
+
+<TABLE width=100% border=1 cellspacing=0 cellpadding=0 bgcolor=#D0D0F0>
+<TR>
+ <TD align=center width=25%>Mount</TD>
+ <TD>
+   ${~admin.foreach.conf-MOUNT.<INPUT type=text name=conf-MOUNT size=60 value="%_V"><BR>}
+   <INPUT type=text name=conf-MOUNT size=60><BR>
+ </TD>
+</TR>
+</TABLE>

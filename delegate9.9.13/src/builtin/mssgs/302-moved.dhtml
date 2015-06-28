@@ -1,0 +1,8 @@
+<TITLE> Redirection </TITLE>
+
+<H2> Redirection </H2>
+
+This document can be found <A HREF="${moved.url}">elsewhere</A>.
+You see this message because your browser doesn't support
+automatic redirection handling.
+

@@ -1,0 +1,33 @@
+<PLAINTEXT>
+#
+# A Template of DeleGate Access Control List (DGACL)
+# - current version DGDCL/0.1 is just tentative
+#
+ACL-Version: DGACL/0.1
+ACL-URL: ${acl.url}
+ACL-ID: ${acl.newid}
+
+#
+# Administrator: your E-mail address
+#
+Administrator:
+
+#
+# Admin-Status: open / anonymous
+# - open vote is visible for others
+# - open vote has 10 points weight, anonymous vote weights 1 point
+#
+Admin-Status: anonymous
+
+#
+# Base-URL: URL of the target NNTP server
+#
+Base-URL: nntp://${serv.hostport}/
+
+#
+# You can control at most 20 newsgroups.
+#
+# On / Off: newsgroup
+#
+On: ${grp.name}
+Off: ${grp.name}

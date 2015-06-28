@@ -1,0 +1,19 @@
+<TABLE width=100% cellpadding=0 cellspacing=0 bgcolor="#C0C0FF">
+<TR>
+<TD width=1%>
+<BUTTON type=reset name=com value=reset style="font-family:roman">clear</BUTTON>
+</TD>
+<TD width=15% align=right>${button:submit:showdir-sort:size:size:style="width=100%;background-color:#${admin.formv.showdir-sort.size?F0F0F0:C0C0FF};font-family:roman"}
+<TD width=20% align=center>${button:submit:showdir-sort:date:date:style="width:100%;background-color:#${admin.formv.showdir-sort.date?F0F0F0:C0C0FF};font-family:roman"}
+<TD width=60% align=left>${button:submit:showdir-sort:name:name:style="width=100%;background-color:#${admin.formv.showdir-sort.name?F0F0F0:C0C0FF};font-family:roman"}
+</TR>
+${admin.foreachfile.sortby-showdir-sort.<TR bgcolor=#%a>
+ <TD><INPUT type=checkbox name=file-checked value="%A"></TD>
+ <TD align=right style="font-family:monospace">%S</TD>
+ <TD align=center style="font-family:monospace">%T</TD>
+ <TD onmouseover="this.style.backgroundColor='#E0D0FF'" onmouseout="this.style.backgroundColor='#%a'">
+ <NOBR>
+ <A HREF=%A><IMG BORDER=0 ALIGN=top SRC=%I></A>
+ <A HREF="%A"><INPUT type=text size=50 readonly value="%N" style="border-style:none;background-color:transparent;font-family:monospace"></A></TD></TR>\n}
+ </NOBR>
+</TABLE>

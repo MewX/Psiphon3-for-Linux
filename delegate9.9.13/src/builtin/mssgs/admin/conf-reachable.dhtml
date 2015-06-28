@@ -1,0 +1,12 @@
+<TR><TD align=center>server hosts</TD><TD>
+<INPUT type=radio name=conf-REACH value=any ${not.admin.formv.conf-REACH|admin.formv.conf-REACH.any?checked}>${tag:small:any hosts}
+<INPUT type=radio name=conf-REACH value=localnet ${admin.formv.conf-REACH.localnet?checked}>${tag:small:local network only}
+<INPUT type=radio name=conf-REACH value=none ${admin.formv.conf-REACH.none?checked}>${tag:small:none}
+<INPUT type=radio name=conf-REACH value=custom network only ${admin.formv.conf-REACH.custom?checked}>${tag:small:custom}
+<TD></TR>
+
+${admin.formv.conf-REACH.custom?
+<TR><TD align=center>reachable server hosts</TD><TD>
+<INPUT type=text size=60 name=conf-REACH-list value="${_admin.formv.conf-REACH-list}">
+</TD></TR>
+}

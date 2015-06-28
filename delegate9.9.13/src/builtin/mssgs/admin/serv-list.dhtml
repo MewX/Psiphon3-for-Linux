@@ -1,0 +1,37 @@
+<TABLE cellspacing=0 border=1 width=100%>
+<TR bgcolor="#C0FFC0">
+
+${admin.formv.com?<TD width=5% align=center>
+ ${tag:small:check} ${button:submit:com:checkall:all:style="font-size:small"}</TD>}
+
+ <TD align=center>&nbsp;${tag:small:Server}</TD>
+${auth.authorized_pass?
+ <TD align=right>${tag:small:Pid}&nbsp;</TD>
+}
+ <TD align=center>${tag:small:Started}</TD>
+${admin.formv.com?
+<TD align=center><small>Updated</small></TD>
+}
+ <TD align=center><A HREF=servers?com=status&help=status>${tag:small:Status}</A></TD>
+ <TD align=center>${tag:small:CPU Usage}</TD>
+ <TD align=center><small>Processes<BR><small>now / total</small></small>&nbsp;</TD>
+ <TD align=right>${tag:small:Req.}&nbsp;</TD>
+ <TD>&nbsp;<small>Load Ave. <small>(RPM)</small></small></TD>
+</TR>
+
+${admin.foreachserv.idle/30m.<TR>
+%{admin.formv.com?
+<TD align=right ${admin.conferr.conf-checked?bgcolor=pink}><INPUT type=checkbox name=conf-checked value="%xn" %C></TD>
+}
+<TD align=center><small>%xn</small></TD>
+%{auth.authorized_pass?
+<TD align=right><small><A HREF="${ibase}admin/system?com=ps&filter=%p">%p</A>&nbsp;</small></TD>
+}
+<TD align=center %{admin.formv.serv-confname.%xn?bgcolor="FFF080"}><small><A HREF="${ibase}admin/servers?act=Servlist&com=showinit&serv-confname=%xn"><FONT color=%{admin.formv.serv-confname.%xn?color=red:blue}>%s</FONT></A></small></TD>
+%{not.admin.formv.com?:<TD align=center><small>%u</small></TD>}
+<TD align=center><KBD>%t</KBD></TD>
+<TD align=center><small>%Ruu %Rss</TD>
+<TD align=right><small>%a / %f</small>&nbsp;</TD><TD align=right><small>%q</small>&nbsp;</TD><TD>&nbsp;<small>%L / %l</small></TD></TR>}
+</TABLE>
+
+${admin.formv.help?${include:serv-help.dhtml}}

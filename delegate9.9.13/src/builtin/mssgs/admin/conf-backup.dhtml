@@ -1,0 +1,39 @@
+<FORM ACTION="${abase}servers" METHOD=POST>
+<INPUT type=hidden name=act value=Servlist>
+
+<TABLE width=100% border=0 cellpadding=0 cellspacing=0><TR><TD align=right>
+${tag:small:Show all configurations}
+<INPUT type=checkbox name=Flag-showback ${admin.formv.Flag-showback.on?checked}>
+</TD></TR></TABLE>
+
+${admin.formv.Flag-showback.on|admin.com.help,backup,remove,edit,restore?
+<TABLE width=100% border=0 cellpadding=0 cellspacing=0 bgcolor=#C0C0FF><TR><TD>
+<IMG SRC=${icon.prev} ALIGN=middle>
+${button:submit:com:restore:restore}
+${button:submit:com:rename:rename}
+</TD><TD align=right>
+${button:submit:com:refresh:refresh}
+</TD></TR></TABLE>
+
+<TABLE width=100% border=1 cellpadding=0 cellspacing=0><TR>
+ ${tag:TD align=center:${tag:small:check}}
+ ${tag:TD align=left:${tag:small:configuration}}
+ ${tag:TD align=center:${tag:small:locked}}
+ ${tag:TD align=center:${tag:small:updated}}
+ ${tag:TD align=left:${tag:small:summary}}
+</TR>
+
+ ${admin.foreachconf.-any.<TR>
+<TD align=right><INPUT type=checkbox name=conf-checked value="%N"></TD><TD width=20%><A HREF="${ibase}admin/config/act=Form2conf&com=load&conf-servname=%N"><INPUT type=text value=%N readonly onmouseover="this.style.backgroundColor='#A0A0FF'" onmouseout="this.style.backgroundColor='white'"></A></TD><TD align=center>${tag:small:%K}</TD><TD align=center>${tag:small:%T}</TD><TD>${tag:small:%X}</TD></TR>}
+</TABLE>
+<DIV align=right>
+${button:submit:com:remove:remove}
+</DIV>
+:
+<TABLE width=100% border=0 cellpadding=0 cellspacing=0><TR><TD align=right>
+${button:submit:com:refresh:refresh}
+</TD></TR></TABLE>
+}
+
+${admin.dumpformv.act,com,xcom,conf-servname,conf-newservname,conf-checked,Flag-showback}
+</FORM>

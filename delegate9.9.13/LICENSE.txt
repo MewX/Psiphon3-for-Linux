@@ -1,0 +1,30 @@
+--------------------------------------------------------------------------------
+Commercial Licensing of DeleGate
+--------------------------------------------------------------------------------
+DeleGate is an intellectual property owned by the National Institute of
+Advanced Industrial Technology and Science (AIST) and the commercial
+licensing is provided by the Technology Licensing Office (T.L.O.)
+
+CONTACT
+
+  Technology Licensing Office, Intellectual Property Division,
+  Research and Innovation Promotion Headquarters, AIST
+  Address: 1-1-1 Umezono, Tsukuba, Ibaraki 305-8568 Japan
+  E-mail: aist-tlo-ml@aist.go.jp (Please include the word "DeleGate" in Subject)
+  Details: https://www.aist.go.jp/aist_e/contact/index.html
+
+NOTE
+
+  The licensing and pricing policy of DeleGate version 9 has changed from the
+  one of version 8.
+  DeleGate version 9 is still free for non-commercial and/or personal usage,
+  or short term usage for evaluation for commercial purposes.
+  In these cases, you should cite the following copyright notice in all copies.
+
+    Copyright (c) 1994-2000 Yutaka Sato and ETL,AIST,MITI
+    Copyright (c) 2001-2014 National Institute of Advanced Industrial Science and Technology (AIST)
+    AIST-Product-ID: 2000-ETL-198715-01, H14PRO-049, H15PRO-165, H18PRO-443
+
+  If you need to know more about the current commercial licensing scheme of
+  DeleGate version 9, please contact the T.L.O.
+--------------------------------------------------------------------------------

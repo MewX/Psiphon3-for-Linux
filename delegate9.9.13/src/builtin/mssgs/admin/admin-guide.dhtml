@@ -1,0 +1,49 @@
+<A NAME="admin-guide">
+<H2>Guide for Administrators</H2>
+</A>
+The accessibility for target resources via this DeleGate server is
+controlled by a set of Gateway Access Control Lists (<I>GACL</I>)
+which are deposited by administrators.
+You can be an administrator of <B>${user.class}</B> users to control
+their accessibility.  If you wish to join the administrators,
+deposit your own GACL by following steps.
+
+<UL>
+<LI><B>Get Your <I>Admin-ID</I></B><BR>
+First of all, acquire your <I>Admin-ID</I> sending a mail to
+<I>&lt;${acl.mailgate}&gt;</I>.
+Just sending a empty message is enough because the receiver ignores
+anything in the message.
+In a while, you will receive a return mail from
+<I>&lt;${acl.mailgate}&gt;</I>.
+The message includes your <I>Admin-ID</I> (labeled as <B>MUID</B> in it)
+which uniquely identifies you based on your mail address.
+<P>
+
+<LI><B>Download Your GACL</B><BR>
+Download your GACL (template) via HTTP showing your <I>Admin-ID</I> by
+the following form.
+${include:getACLform.dhtml}
+<I>You will receive a copy of the template via mail also.</I>
+<P>
+<A NAME=upload>
+<LI><B>Upload Your GACL</B><BR>
+</A>
+Place your GACL somewhere in HTTP or FTP space, then inform the location
+(URL) of it together with your <I>Admin-ID</I> by the following form.
+The URL is not necessary at the second uploading and after.
+${include:putACLform.dhtml}
+<I>On every download / upload action for your GACL, the server will notify you
+about the event via mail.</I>
+</UL>
+
+When it is accepted without error, your GACL immediately becomes <I>active</I>
+and starts to be used by the DeleGate server for its access control.
+<P>
+
+<B>CAUTION</B>: Current version of GACL is very tentative both in the
+format and protocol.  Thus it may be changed totally in near future and
+your GACL may be discarded when the version changes.
+<P>
+<HR>
+${include:gaclSpec.dhtml}

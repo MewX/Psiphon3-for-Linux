@@ -1,0 +1,50 @@
+${admin.openssl.isCA?
+<INPUT type=checkbox name=cert-selfsign ${admin.formv.cert-selfsign?checked}>
+Self signed
+}
+
+${not.admin.openssl.isCA?:
+ <TABLE width=100% border=0 cellspacing=0 cellpadding=0><TR>
+ <TD width=50%>
+  ${button:submit:com:newCert:new Certificate}
+ ${not.admin.formv.cert-selfsign?
+  ${button:submit:com:signCA:do sign of CA:${not.admin.openssl.isCA?style="color=gray"}}
+ }
+ </TD><TD align=right>
+   <NOBR>
+   CA passphrase <INPUT type=password size=12 name=cert-capass value="${admin.formv.cert-capass}" ${admin.formv.cert-error.cert-capass?style="background-color:pink"}>
+   </NOBR>
+ </TD><TD align=right>
+   <NOBR>
+   <FONT color=gray> DeleGate CA </FONT>
+   ${button:submit:com:resetCA:reset CA:style="font-size:small;color:gray"}
+   </NOBR>
+ </TD></TR>
+ </TABLE>
+ <TABLE width=100% border=0 cellspacing=0 cellpadding=0><TR>
+ <TD align=right>
+ <small>select issuer</small>
+ <INPUT type=checkbox name=cert-xissuer ${admin.formv.cert-xissuer.on?checked}>
+ &nbsp;
+ <FONT color=gray>Issuer</FONT>
+ <INPUT type=text size=30 name="cert-issuer" value=" ${ADMIN}" ${not.admin.formv.cert-xissuer?readonly} ${not.admin.formv.cert-xissuer?style="color:gray"}> 
+
+ </TD>
+ </TABLE>
+ ${exit}
+}
+
+<FONT color=red> DeleGate CA </FONT><BR>
+<TABLE width=100% border=1 cellspacing=0 cellpadding=0><TR>
+<TD width=20%>&nbsp;Email Address</TD><TD>
+ <INPUT type=text size=30 name="cert-issuer" value=" ${ADMIN}"> <small>(to be Issuer's Email)</small>
+</TD></TR>
+<TR>
+<TD width=20%>&nbsp;Passphrase</TD><TD>
+<INPUT type=password size=12 name=cert-capass>
+<INPUT type=password size=12 name=cert-capass>
+<small>(if empty, password for the Administrator is used)</small>
+</TD></TR>
+</TABLE>
+${button:submit:com:setupCA:setupCA:style="color:red"}
+(create a self-signed certificate of the administrator)

@@ -1,0 +1,68 @@
+<TITLE> DeleGate Information </TITLE>
+
+<TABLE>
+<TR><TD VALIGN=TOP>
+<A HREF="http://www.delegate.org/delegate/"><IMG ALT="Logo of DeleGate" BORDER=0 SRC="${icon.frog9LT}"></A>
+</TD><TD><PRE>
+<B><BIG>${verdate}</BIG></B>
+<SMALL>${copyright}</SMALL>
+<A HREF="/-/COPYRIGHT"><FONT color=red>COPYRIGHT</FONT></A></PRE>
+</TD>
+</TABLE>
+<P>
+
+<B> CONTROL </B>
+<UL>
+<LI> <A HREF=builtin/mssgs/client/welcome.dhtml>Setup for the client</A><BR>
+     (You are from <B>${hostport.client}</B>)
+<LI> <A HREF=admin/>Server administration</A>
+${admin.isset?
+<LI> <A HREF=/-/ext/admin/><FONT color=#206060>Extended Server Administration</FONT></A>
+<small>(<FONT color=red>scripts are downloaded from <A HREF="http://www.delegate.org/delegate/ext/"><FONT color=red>www.delegate.org</FONT></A></FONT>)</small>
+}
+</UL>
+
+<B> STATUS </B><MENU><PRE>
+Version: ${ver}
+current-time: ${time.now}
+server-start: ${time.start}
+server-count: ${num.serno}
+server-alive: ${num.peers}
+service-done: ${num.served}
+load_average: ${load.total} (${load.recent}) RPM
+</PRE></MENU>
+
+<B> CONFIGURATION </B><MENU>
+SERVER=<B>${server.iproto}</B><BR>
+EXPIRE=<B>${expire}</B> seconds<BR>
+CHARCODE=<B>${codeconv}</B><BR>
+ADMIN=<B>${ADMIN}</B><BR>
+...<A HREF=builtin/mssgs/config.dhtml>more</A>...<BR>
+</MENU>
+
+<B> DISTRIBUTION </B>
+<UL>
+ <LI> The home page of DeleGate is at
+      <A HREF=${delegate.homeurl}>${delegate.home}</A>
+ <LI> The latest DeleGate is at
+      <A HREF=${delegate.ftpurl}>${delegate.ftp}</A>
+ <LI> CERN's <A HREF=${delegate.icons}>icons</A> in public domain
+      are built-in.
+</UL>
+<HR>
+
+Comment about this server is expected to be sent to the administrator
+of this server:
+<B>
+<A HREF="mailto:${ADMIN}?Subject=help"><BIG><I>&lt;<X-D T=ADMIN>&gt;</I></BIG></A>
+</B>
+<P>
+<HR>
+
+<ADDRESS>
+<IMG ALT="@_@" ALIGN=LEFT SRC="${icon.frog}"> Author:
+Yutaka Sato,
+National Institute of Advanced Industrial Science and Technology
+(<A HREF="http://www.aist.go.jp/">AIST</A>),
+Japan
+</ADDRESS>

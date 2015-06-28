@@ -1,0 +1,31 @@
+<TABLE border=0>
+  <TR><TD width=140pt><FONT color=green>Concealing</FONT>
+ </TD><TD width=90pt><FONT color=#08FF08><small>this article</small></FONT>
+ </TD><TD width=90pt><FONT color=blue><small>this poster</small></FONT>
+ </TD><TD align=center><FONT color=blue><small>&lt;--reset&lt;--</small></FONT>
+ </TD><TD align=right><small>group</small>
+ </TD><TD align=right><small>server</small>
+ </TD></TR>
+
+ <TR><TD>Realname <small>in From</small>
+  </TD><TD bgcolor=#C0FFC0> ${checkbox.maskFromA}
+  </TD><TD bgcolor=#C0C0FF> ${checkbox.maskFromP}
+  </TD><TD bgcolor=#C0C0FF align=center>${checkbox.maskFromX}
+  </TD><TD align=right>${checkbox.maskFromG disabled}
+  </TD><TD align=right>${checkbox.maskFromS disabled}
+  </TD></TR>
+ <TR><TD>Body</small>
+  </TD><TD bgcolor=#C0FFC0> ${checkbox.maskBodyA}
+  </TD><TD bgcolor=#C0C0FF> ${checkbox.maskBodyP}
+  </TD><TD bgcolor=#C0C0FF align=center>${checkbox.maskBodyX}
+  </TD><TD align=right>${checkbox.maskBodyG disabled}
+  </TD><TD align=right>${checkbox.maskBodyS disabled}
+  </TD></TR>
+ <TR><TD>Signature <small>in Body</small>
+  </TD><TD bgcolor=#C0FFC0> ${checkbox.maskSignA}
+  </TD><TD bgcolor=#C0C0FF> ${checkbox.maskSignP}
+  </TD><TD bgcolor=#C0C0FF align=center>${checkbox.maskSignX}
+  </TD><TD align=right>${checkbox.maskSignG disabled}
+  </TD><TD align=right>${checkbox.maskSignS disabled}
+  </TD></TR>
+</TABLE>

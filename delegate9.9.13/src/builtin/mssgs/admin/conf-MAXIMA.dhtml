@@ -1,0 +1,18 @@
+${not.admin.formv.Flag-showmaxima.on&not.admin.formv.Flag-showall?
+  ${admin.dumpformv.-.conf-MAXIMA}
+  ${exit}
+}
+
+<TABLE width=100% border=1 cellspacing=0 cellpadding=0 bgcolor=#D0D0F0>
+<TR>
+ <TD align=center width=25%>max. parallelism</TD>
+ <TD>
+ &nbsp;${tag:small:processes}
+   <INPUT type=text name=conf-MAXIMA-delegated size=4>
+ &nbsp;${tag:small:listen}
+   <INPUT type=text name=conf-MAXIMA-listen size=4>
+ &nbsp;${tag:small:connections/client}
+   <INPUT type=text name=conf-MAXIMA-conpch size=4>
+ </TD>
+</TR>
+</TABLE>

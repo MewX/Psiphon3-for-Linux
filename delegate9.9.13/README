@@ -1,0 +1,278 @@
+------------------------------------------------------------------------------
+ DeleGate/9.9 RELEASE NOTE
+
+ Date: October 28, 2014
+ Author: Yutaka Sato
+ <URL:http://www.delegate.org/delegate/updates/>
+------------------------------------------------------------------------------
+
+DeleGate/9.9 (STABLE / MAINTENANCE)
+9.9.0 CAPSKEY to enable suppressed capabilities, HTMUX for tunneling over HTTP
+9.9.1 mintor fixes (m17n-lib,ipfw,FTP,Win95,HP-UX,SWF-MOUNT/HTTP,NTHT/Win32)
+9.9.2 fixes for resolver, FTPS, sftp/FTP, HTTP, SSI, "_-prefix.host" extension
+9.9.3 connection cache, fixes for HTTP cache, thread on amd64, relaying x-gzip
+9.9.4 fixed frozen/broken in SSL or gzip, rewriting Referer, STLS=fsv for FTPS
+9.9.5 portability fixes, HTTP/WinCE, SERVER=http-sp, MOUNT by SNI/TLS
+9.9.6 making without C++, enhancement of SERVER=http-sp, AUTHORIZER=-map
+9.9.7 yysh + yy11 / yyMux, WinCE ver. on Win32, SNI fix, porting to HP-UX+AIX
+9.9.8 new FTPxHTTP, DYCONF, fixes for FTP bounce, yysh/yymux, SERVER=http-sp, sftp/FTP
+9.9.9 smooth SSLtunnel, being with OpenSSL1.X
+9.9.10 revival of yysh, fix for HTTP proxy chaining
+9.9.11 fixes for MOUNT (HTTP reverse proxy), SSI and CGI as origin HTTP server
+9.9.12 fixes for REJECT, MIME-header encoded-word, improved SSI, yysh on Win.
+9.9.13 trivial fixes, opened source code for Windows
+
+DeleGate/9.8 (DEVELOPMENT)
+9.8.0 introduced generalized CLUSTERing of servers, SSL Server Name Indication
+9.8.1 coped with VC++ in VisualStudio 2005/2008, revival of IPv6 on Windows
+9.8.2 ported to WinCE, single process server, NAT or name-based reverse proxy
+9.8.3 fixed MOUNT with nvhost and avhost, fixed dialup for DNS on WinCE
+9.8.4 SSL-shutdown control, loading common config. file, fixes for WinCE
+9.8.5 fixes for multi-threads, HTTP, FTP+STLS+auth, VSAP, -T.period, NTHT
+9.8.6 fixes for VSAP, new VSAP via HTTP ACCEPT, HTTP ACCEPT over SockMux
+
+DeleGate/9.7 (STABLE)
+9.7.0 new stable version
+9.7.1 fixes for frozen or broken SSL+gzip thread on FreeBSD and Windows
+9.7.2 fixes for SIGPIPE with thread on Linux and Solaris
+9.7.3 fixes for automatic adjusting of MAXIMA=delegated:N on memory shortage
+9.7.4 coped with the chained certificate for SSL
+9.7.5 fixes for freezing by sync. error with gunzip/gzip threads
+9.7.6 fixes for SIGSEGV on Solairs, SOCKS on Windows, UDPrelay error
+9.7.7 coped with VC++ in VisualStudio 2005/2008, revival of IPv6 on Windows
+9.7.8 fixes for SSL, Win32, HTTP, cache, gzip/gunzip, CFI, FTP, _ARM_, etc.
+
+DeleGate/9.6 (DEVELOPMENT)
+9.6.0 thread based smooth gzip/HTTP streaming, lighter SSL by thread
+9.6.1 fixes for Solaris, Arm-linux, log-mutex, sftp/FTPS, CFI, MAX_DELEGATE
+9.6.2 fixes for SEGV in FreeBSD thread, frozen FTPS, sftp/SSL, POP/NNTP/HTTP gw
+9.6.3 fixes for frozen gzip and SSL threads by signals or with CFI filters
+
+DeleGate/9.5 (STABLE)
+9.5.0 new stable version
+9.5.1 minor fixes for Japanese character code conversion
+9.5.2 a minor fix for Japanese character code conversion
+9.5.3 minor fixes for JP char. conv., tuning for recv. via slow line
+9.5.4 fix for uploading via chained-FTP, MITM with slow-client
+9.5.5 fix for SEGV in FTP, IPv6/IPv4 in /etc/hosts, etc.
+9.5.6 fix for MITM with keep-alive, JP char. conv.
+
+DeleGate/9.4 (DEVELOPMENT)
+9.4.0 editing built-in parameters, SERVER=sudo, invocation via SSH/CGI/SSI
+9.4.1 transparent application-level proxy over SOCKS
+9.4.2 external auth. command, conditional CACHE, Japanese code conversion
+9.4.3 fixed UDP and FTP over SOCKS, generalized routing with proxy auth.
+9.4.4 MOUNT for SOAP/XML, fixed SEGV on charcode conv.
+
+DeleGate/9.3 (STABLE)
+9.3.0 new stable version
+9.3.1 fixed SSL session cache with client's certificate
+9.3.2 fixed CGI/SHTML revealment, SEGV on Win. service STOP, SEGV in Credhy
+
+DeleGate/9.2 (DEVELOPMENT)
+9.2.5 minor fixes for HTTP, sftp, FTP, UDPrelay, SockMux, MASTER auth., Win
+9.2.4 faster MITM, SOCKS over SSL, multiplexed SOCKS/SockMux, cache on Win
+9.2.3 supported SSL MITM mode, syslog, fixed abortion and delay in CFI on Win
+9.2.2 supported huge file over 4GB in FTP, and HTTP, fixed CFI on Windows
+9.2.1 fixes for Keep-Alive and logging as a service on Win, CGI/SSI+FTOCL 
+9.2.0 added access counters, Cookie encryption, fixed CGI/CFI/SSI for Win
+
+DeleGate/9.1 (STABLE)
+9.1.0 new stable version
+9.1.1 minor fixes for HTTP, FTP/EPRT, DNS, STLS=fsv, and AUTHORIZER
+9.1.2 minor fixes for SSL
+
+DeleGate/9.0 (DEVELOPMENT)
+9.0.0 IPv6 support
+9.0.1 supported dynamic linker and improved SSL/TLS performance and usability
+9.0.2 fixed IPv6 name resolution, fixed make problems on 64bits machine, etc.
+9.0.3 added Skype brocker, encrypted config., extended CHARSET conv., etc.
+9.0.4 added gateway for sftp/SSH server to FTP/HTTP
+9.0.5 total renewal of remote config. and admin. via HTTPS
+9.0.6 anonymizing NNTP article, tracking SPAMmers, routing DNS
+
+DeleGate/8.11 (STABLE)
+8.11.0 new stable version
+8.11.1 fixed I/O timeout, virtual host & transparent proxy, coped with non-C99
+8.11.2 fix for Windows, HTTP, MOUNT, etc.
+8.11.3 fixed permission for SSLtunnel and STLS, Cookie to/from HTTPS/HTTP
+8.11.4 fixed compilation problems, UDP/SocksV5, obsoleted X-Locking header
+8.11.5 coped with HRS, fixes for Win32 (freezing, filters and log directory)
+
+DeleGate/8.10 (DEVELOPMENT)
+8.10.0 rewritten in ANSI/ISO C++ / C (tested only with Gcc variants and VC++)
+8.10.1 qualified with "const", porting to OS/2 and FreeBSD
+8.10.2 become suitable to be compiled and run with Bounds-Checking Gcc
+8.10.3 fixed a lot of overflows on arrays of char, pointers, and structures
+8.10.4 moved STARTTLS into each app. protocol and introduced STLS parameter
+8.10.5 fixed STARTTLS for SMTP and binary I/O with VC++
+8.10.6 fixed relaying POST and gzip on HTTP, symlink on Win32 (8.10.3)
+
+DeleGate/8.9 (STABLE)
+8.9.0 fixes for HTTP, SSLway and SMTP.
+8.9.1 fixed proxy-HTTP for authentication and SSLtunnel (8.9.0)
+8.9.2 extended CFI, supported SWF MOUNT, fixed FTP, making with SSL
+8.9.3 added SMTPCONF=callback, fixed SSLway, FTP+SSL, Telnet, Tcprelay, etc.
+8.9.4 added service shutdown on abort in child process, fixed FTP, gzip/HTTP
+8.9.5 fix for Win32 (8.9.4),virtual host (8.9.3),added JIS to ASCII conv,etc.
+8.9.6 fix for SSLway, CFI, AUTHORIZER, FTP, Resolvy, Socks5, added XML MOUNT, interface for FreyaSX, etc.
+8.9.7 fix for HTTP
+
+DeleGate/8.8 (DEVELOPMENT)
+8.8.0 introduced Digest authentication, session management, UDP over SockMux
+8.8.1 introduced "Credhy" encryption with Diffie-Hellman key agreement
+8.8.2 fixed SockMux and CFI Filter (8.8.1)
+8.8.3 porting to MacOSX and SunOS4, fixes for SockMux and SEGV in NNTP
+8.8.4 improvement of Credhy and SockMux
+8.8.5 extended CHROOT support, fix for SockMux, etc.
+8.8.6 extended Credhy and SockMux
+8.8.7 fixed DGAuth in background, AUTHORIZER MountOption, etc.
+8.8.8 restricted SSLtunnel(CONNECT) usage, fixed SockMux, Digest Auth., etc.
+8.8.9 added SMTPGATE "Errors-To:", "/-/admin/account", etc.
+
+DeleGate/8.7 (STABLE)
+8.7.0 new stable version slightly modified from 8.6.8
+8.7.1 fixed SEGV in HTTP with filter, added UDP/SOCKS relay between DeleGates
+8.7.2 fixed UDP/SOCKS relay between DeleGates
+8.7.3 fixed making sslway on Win32 or with non OpenSSL (SSLeay) library
+8.7.4 fixed slow HTTP with server-side Keep-Alive
+8.7.5 fixed JavaScript MOUNT, multipart/NNTP MOUNT, and FTP/HTTP gateway
+8.7.6 fixed SOCKS server with MASTER (DNS), HTTP with MYAUTH and AUTHORIZER
+8.7.7 fixed HTTP Proxy-Authorization leak, bugs in FTP/HTTP, CFI, etc.
+8.7.8 fixed SSLTUNNEL and FTP+SRCIF (8.4.0)
+8.7.9 porting to MacOSX and SunOS4, fixes for HTTTPAM
+
+DeleGate/8.6 (DEVELOPMENT)
+8.6.0 introduced MOUNT for JavaScript, CHARSET=guess, fixed MOUNT, FTP, etc.
+8.6.1 fixed garbage tags inserted into HTML/HTTP by MOUNT (8.6.0)
+8.6.2 fixed MOUNT not to partialize URL in BASE tag (8.6.0)
+8.6.3 introduced PAM (AUTHORIZER=-pam/passwd), -a/host, BASEURL=http://-vhost
+8.6.4 fixed restarting as a service on Win32 (8.6.3)
+8.6.5 fixed stopping as a service on Win32 (8.6.3) and introduced PAM/sslway
+8.6.6 fixes for DNS and HTTP Keep-Alive, porting to DEC-Alpha and MacOSX
+8.6.7 fixed SEGV in Socks5
+8.6.8 fixed restarting service and increased stack limit
+
+DeleGate/8.5 (STABLE)
+8.5.0 new stable version slightly modified from 8.4.1
+8.5.1 fixed SMTP AUTH PLAIN, etc.
+8.5.2 fixed HTTP-gateway and FTP-proxy with PERMIT (since 8.4.0)
+8.5.3 fixed DNS, LDAP, SMTPGAE, and HTTP with proxy-auth (8.4.0)
+8.5.4 fixed port binding (since 7.4.2) and error message (8.4.0)
+8.5.5 fixed LDAP, HTTP, CRON with leap-seconds
+8.5.6 fixed SEGV on dup. free(7.0.1), SSLway+SSLTUNNEL(8.4.0), UDP/Socks, AUTHORIZER, etc.
+8.5.7 fixed SEGV on long command (8.4.0), restarting by -r option
+8.5.8 fixed the message on -Fkill-hup, etc.
+8.5.9 fixed HTTP, FTP and SOCKS
+
+DeleGate/8.4 (DEVELOPMENT)
+8.4.0 bind(privileged port) by command, access control by method, etc.
+8.4.1 fixes for HTTP / PERMIT (8.4.0), DNS server stall on Win32, etc.
+
+DeleGate/8.3 (STABLE)
+8.3.0 new stable version slightly modified from 8.2.5
+8.3.1 a fix for making on OS/2 and a fix for "gzip" on Win9X
+8.3.2 a fix for SEGV on heavy load (since 8.2.2) and select() loop on Win32
+8.3.3 fixes for FTP, NNTP, HTTP, porting to Win32, etc.
+8.3.4 fixes for forwarding HTTP to MASTER, invoking CFI, VSAP, etc.
+
+DeleGate/8.2 (DEVELOPMENT)
+8.2.0 introduced conditional parameter and pseudo host name of AF_UNIX socket
+8.2.1 fixed MOUNT and CFI
+8.2.2 introduced "SockMux" socket multiplexer protocol
+8.2.3 fixes and extensions for SockMux
+8.2.4 fixes and extensions for SockMux (flow control and OOB relay)
+8.2.5 fixes and extensions for SockMux
+
+DeleGate/8.1 (STABLE)
+8.1.0 a stable version slightly modified from 8.0.11
+
+DeleGate/8.0 (DEVELOPMENT)
+8.0.0 changes for default configurations, CFI extension, Win32 fixes, etc.
+8.0.1 changes for default configurations (SERVER, etc.) and parameter spec.
+8.0.2 a fix for SERVER=delegate (enbuged in 8.0.1)
+8.0.3 a fix for SERVER=delegate
+8.0.4 changed SERVER=delegate, improved restarting on Win32
+8.0.5 fixes for CFI, PASV/FTP/Socks and extension for ftp://user*host@proxy
+8.0.6 changes for HostList by client-host/user-auth, ext. for ABOR/FTP, etc.
+8.0.7 fixes for NNTP and MOUNT
+8.0.8 supported HTTP Content-Encoding:gzip from server
+8.0.9 supported HTTP Content-Encoding:gzip to client
+8.0.10 changes for CFI, restarting on configuration error, etc.
+8.0.11 changes about HTTP cache and NNTP/HTTP gateway, etc.
+
+DeleGate/7.9 (STABLE)
+7.9.0 fixes for logfile on Win32, extension of SRCIF for ftp-data, etc. 
+7.9.1 a fix for NNTP/HTTP gateway (enbugged in 7.9.0)
+7.9.2 fixes for origin-HTTP, chained DeleGate, Win32 DHCP nameserver, etc.
+7.9.3 fixes for NNTP, CFI srcipt, SMTP EHLO, Win32 service, IMAP APPEND, etc.
+7.9.4 fixes for WinXP, VSAP, etc.
+7.9.5 fixes for freezing on Win32 and reloading by HTTP/1.1.
+7.9.6 fixes for MOUNT, AUTH TLS for FTP, udprelay, etc.
+7.9.7 fixes for Win32 service and AUTHORIZER cache
+7.9.8 fixes for SMTP and HTTP, extensions of HOSTLIST and HTTPCONF, etc.
+7.9.9 extensions for HTTP, -r option, etc.
+7.9.10 fixes for HTTP/1.1 Keep-Alive, adaptation to OS/2, Win32, etc.
+7.9.11 fixes for Win32 bugs (since 7.8.0), CSS vulnerability, etc.
+7.9.12 fixed for FTP proxy auth., buffer overflows, etc.
+7.9.13 fixes for SERVER=delegate, unknown icon error, etc.
+
+DeleGate/7.8 (ALPHA)
+7.8.0 extension of HOSTLIST parameter, fixes for FTP MOUNT, etc.
+7.8.1 a fix for FTP proxy login by "USER user@server"
+7.8.2 fixes for FTP MOUNT, extension of SRCIF for SOCKS/BIND, etc.
+7.8.3 extended SRCIF, SRCIF for FTP data, modified UDP/SOCKS, etc.
+
+DeleGate/7.7 (STABLE)
+7.7.0 extensions for Socks (Socks4A support and FORWARD=socks)
+7.7.1 a fix for OS/2 (since 7.6.0)
+
+DeleGate/7.6 (ALPHA)
+7.6.0 extensions for MOUNT, FORWARD, DNS, Win32, etc.
+7.6.1 extensions for filtering HTTP headers and HTML tags, etc.
+7.6.2 fixes for MOUNT, SMTP, SOCKS, etc. and extensions for HTTP, SSLway, etc.
+
+DeleGate/7.5 (STABLE)
+7.5.0 a stable version slightly modified from 7.4.1
+7.5.1 fixed MOUNT for HTTP/1.1
+7.5.2 fixed unnecessary HTTP delay (since 7.4.2) and SEGV in LDAP
+7.5.3 fixes for MOUNT, FTP authentiation, /robots.txt generation, etc.
+
+DeleGate/7.4 (ALPHA)
+was released as an alpha version including tentative features for
+authentication/authorization.
+7.4.0 introduced -Fauth, SMTP-AUTH and Socks-AUTH
+7.4.1 fixed cross-site scripting vulnerabilities, POP/NNTP, VSAP, etc.
+7.4.2 minor fixes (logging, HTTP, CFI, DNS, etc.)
+
+DeleGate/7.3 (STABLE)
+7.3.0 a stable version with slight changes from 7.2.2.
+7.3.1 FTP and SSL fixes, AUTH TLS support
+7.3.2 HTTP and FTP fixes
+7.3.3 CMAP and CFI fixes
+7.3.4 CFI and BackTrace fixes
+7.3.5 FTP, CMAP+CFI and BackTrace fixes
+
+DeleGate/7.2 (BETA)
+7.2.0 gets rid of unused obsolete or tentative codes.
+7.2.1 introduced new MOUNT option.
+7.2.2 fixed a serious bug about MOUNT introduced at 7.0.1.
+
+DeleGate/7.1 (STABLE)
+7.1.0 has come out as a stable version with slight changes
+from the last beta version (7.0) which had been stable enough through
+its beta testing.
+7.1.1 fixed several problems caused in late 6.1.XX.
+7.1.2 fixed problems emerges on slow line (caused in 6.X)
+
+DeleGate/7.0 (BETA)
+7.0.X has no incompatible changes from the last version of DeleGate/6.1,
+but its source code is under rewriting in whole to become more compact
+and clearer.
+7.0.0 large part of static data area (most of BSS area and part of
+DATA area) is moved to dynamic area which will be allocated on the
+stack area or in the heap area randomly.
+7.0.1 addresses of text area and static data area are rodomized at
+compile time.
+
+------------------------------------------------------------------------------

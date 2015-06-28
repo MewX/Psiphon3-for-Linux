@@ -1,0 +1,107 @@
+#!/bin/sh
+
+export DGROOT=/tmp/dgbench
+export ADMIN=bench@delegate.org
+DGEXE=src/delegated
+GZIP=-egzip
+PORT=9999
+PPORT=9998
+PAUSEF=/tmp/dg-pause
+
+if [ "$1" = "clear" -o "$1" = "clean" ]; then
+	echo > $DGROOT/log/$PORT
+	echo > $DGROOT/log/$PORT.http
+	echo > $DGROOT/log/0
+fi
+if [ "$1" = "sv" ]; then
+	while :
+	do
+		if [ -f $PAUSEF ]; then
+			echo "PAUSING sv "`ls -l $PAUSEF`
+			sleep 10
+			continue
+		fi
+		$DGEXE TIMEOUT=daemon:15s \
+			SERVER=http \
+			-r \
+ -Esc \
+			-Etl \
+			-P$PORT \
+			MOUNT="/* /*" \
+			STLS=fcl
+
+		sleep 20
+		if [ "$2" = "-p" ]; then
+			DGP=`cat $DGROOT/act/pid/$PORT`
+			/bin/kill -PIPE -$DGP
+			wait
+			sleep 2
+		fi
+	done
+fi
+if [ "$1" = "px" ]; then
+	while :
+	do
+		$DGEXE TIMEOUT=daemon:15s \
+			REMITTABLE=+,https \
+			SERVER=http \
+			-r \
+			-Etl \
+			-P$PPORT \
+			MOUNT="/* http://-/*" \
+			CACHE=no \
+			STLS=mitm
+
+		sleep 20
+		if [ "$2" = "-p" ]; then
+			DGP=`cat $DGROOT/act/pid/$PPORT`
+			/bin/kill -PIPE -$DGP
+			wait
+			sleep 2
+		fi
+	done
+fi
+if [ "$1" = "cl" ]; then
+	if [ "$2" = "-px" ]; then
+		PROXY="SSLTUNNEL=localhost:$PPORT"
+		AUTH="MYAUTH=mitm:test"
+		echo "## PROXY=$PROXY MYAUTH=$AUTH"
+	fi
+	while :
+	do
+		if [ -f $PAUSEF ]; then
+			echo "PAUSING cl "`ls -l $PAUSEF`
+			sleep 10
+			continue
+		fi
+		$DGEXE $PROXY $AUTH FSV=sslway \
+			-Fdget http://localhost:$PORT \
+			-v1.1 $GZIP \
+			-p20 -50 -i0.3
+
+		sleep 3
+	done
+fi
+
+#if [ "$1" = "stat" ]; then
+while :
+do
+	HOST=`hostname`
+	(
+		echo "######## date: "`date`
+		echo "######## uptime: "`uptime`
+		if [ -d "$DGROOT" ]; then
+			df $DGROOT | sed 's/^/######## df: /'
+		else
+			df /tmp | sed 's/^/######## df: /'
+		fi
+		ps uaxw | grep "DeleGate[= ].*$PORT" | sed 's/ -- .*//'
+		echo ""
+	) | sed -e 's/  */ /g' -e "s/^/STAT $HOST /"
+	if [ "$1" = "stats" ]; then
+		sleep 10
+	else
+		break
+	fi
+done
+#fi

@@ -1,0 +1,28 @@
+<TABLE width=100% cellspacing=0 cellpadding=0 border=0>
+<TR><TD><NOBR>&nbsp;
+<FONT color="#8080FF">
+
+<A HREF="${abase}?${admin.url_common}"><FONT color=#${not.admin.admact?60A060:6060FF}>${type:button:Admin}</FONT></A> |
+
+<A HREF="${abase}setup?${admin.url_common}"><FONT color=#${admin.admact.setup?60A060:6060FF}>${type:button:Setup}</FONT></A> |
+
+<A HREF="${abase}logging?${admin.url_common}">
+<FONT color=#${admin.admact.logging?60A060:6060FF}>${type:button:Logging}</FONT></A> |
+
+<A HREF="${abase}servers?${admin.url_common}&act=Servlist&com=servers"><FONT color=#${admin.admact.servers&not.admin.act.ScreenCtl?60A060:6060FF}>${type:button:Servers}</FONT></A> |
+
+${include:menu-ext.dhtml}
+
+<A HREF="${abase}showdir/LOGDIR-current/?${admin.url_common}"><FONT color=#${admin.admpath.LOGDIR-current/?60A060:6060FF}>${type:button:Log}</FONT></A> |
+
+<A HREF="${abase}showdir/DGROOT/?${admin.url_common}"><FONT color=#${admin.admact.showdir|admin.formv.form.Directory?60A060:6060FF}>${type:button:Directory}</FONT></A> |
+
+<A HREF="${abase}stats?form=StatusCtl&com=status&${admin.url_common}"><FONT color=#${admin.formv.form.StatusCtl?60A060:6060FF}>${type:button:Status}</FONT></A> |
+
+<A HREF="${abase}stats?${admin.url_common}&com=version"><FONT color=#${admin.formv.com.version?60A060:6060FF}>${type:button:Version}</FONT></A>
+
+${admin.formv.menu.customize?  |
+<A HREF="${abase}?act=customize"><FONT color=#${admin.formv.act.customize?60A060:6060FF}>${type:button:Customize}</FONT></A>
+}
+
+</NOBR></TD></TR></TABLE>

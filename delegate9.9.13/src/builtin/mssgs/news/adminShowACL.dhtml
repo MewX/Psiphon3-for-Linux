@@ -1,0 +1,18 @@
+<TITLE>Access Control List for nntp://${serv.hostport}/${grp.name}</TITLE>
+
+<PRE>
+#
+# DeleGate Access Control List
+#
+#   Resources: nntp://${serv.hostport}/${grp.name}
+#   Userclass: ${user.class}
+#
+#   [<I>Date-Time</I>] On/Off <I>User-Class</I> <I>Admin-Class</I> <I>Admin-ID</I>
+#
+
+${grp.Nadmin?${grp.acl}:<I>(no access control list for the newsgroup)</I>}
+
+#
+# Total: Administrators = ${grp.Nadmin}, Subscribe = ${grp.Nsubsc}, Unsubscribe = ${grp.Nunsub}
+#
+</PRE>

@@ -1,0 +1,36 @@
+<TABLE width=100% border=0 cellpadding=0 cellspacing=0><TR><TD align=right>
+${tag:small:Remote administration}
+<INPUT type=radio style="background-color:transparent" name=conf-admin value=on ${admin.formv.conf-admin.on?checked}>${tag:small:on}
+<INPUT type=radio style="background-color:transparent" name=conf-admin value=off ${not.admin.formv.conf-admin.on?checked}>${tag:small:off}
+<INPUT type=checkbox name=Flag-showadmp ${admin.formv.Flag-showadmp.on?checked}>
+</TD></TR></TABLE>
+
+${not.admin.formv.conf-admport?${admin.formv.conf-protocol.http&admin.formv.conf-usrport?<INPUT type=hidden name=conf-admport value="${admin.formv.conf-usrport}">${admin.copyformv.conf-admport.conf-usrport}}}
+
+${not.admin.formv.Flag-showall.on?
+${not.admin.formv.Flag-showadmp.on&not.admin.conferr.conf-admport,conf-admpass?
+  ${admin.dumpformv.-.conf-admport,conf-admuser,conf-admpass}
+  ${exitfile}
+}
+}
+
+${+EMark=<FONT color=red><big>*</big></FONT>}
+<TABLE width=100% border=1 cellpadding=0 cellspacing=0 bgcolor="#D0D0F0">
+<TR ${admin.conferr.conf-admport?bgcolor="#E0D0E0"}><TD width=25% align=center>${admin.conferr.conf-admport?${?EMark}}admin port</TD>
+<TD><INPUT type=text name=conf-admport value="${_admin.formv.conf-admport}">
+    <small>&nbsp;ex. 58080 or ${clif.addr}:58080</small></TD></TR>
+<TR ${admin.conferr.conf-admuser?bgcolor="#E0D0E0"}><TD align=center>${admin.conferr.conf-admuser?${?EMark}}admin username</TD>
+<TD><INPUT type=text name=conf-admuser value="${admin.formv.conf-admuser}"></TD></TR>
+<TR ${admin.conferr.conf-admpass?bgcolor="#E0D0E0"}><TD align=center>${admin.conferr.conf-admpass?${?EMark}}admin password</TD>
+<TD>
+${admin.formv.conf-admpass&not.admin.formv.conf-clearadmpass?
+<INPUT type=text size=40 name=conf-admpass readonly value="${_admin.formv.conf-admpass}">
+<INPUT type=checkbox name=conf-clearadmpass> ${tag:small:clear password}
+:
+<INPUT type=password name=conf-admpass>
+${tag:small:confirm}
+<INPUT type=password name=conf-admpass>
+}
+</TD>
+</TR>
+</TABLE>

@@ -1,0 +1,42 @@
+Date: Sat Jun  8 09:37:57 JST 1996
+From: ysato@etl.go.jp
+Subject: MIMEヘッダライブラリ関数の仕様について
+
+このディレクトリで make を実行すると、libmimekit.a というライブラリ
+ファイルができます。これは、MIMEヘッダのエンコードとデコード
+(RFC1522の処理)のためのライブラリです。
+
+ヘッダのエンコード／デコードのためのプログラムは"mimehead.c"の中に
+あります。
+
+<<ファイルから入力、ファイルへ出力>>：
+
+　　MIME_headerEncode(inf,outf)          FILE *inf,*outf;
+　　MIME_headerDecode(inf,outf,bodytoo)  FILE *inf,*outf; int bodytoo;
+
+　　　infの指すファイルをエンコード/デコードしてoutfのファイルへ書く。
+
+<<処理結果によるファイルの上書き>>
+
+    MIME_headerEncodeOverwrite(file)   FILE *file;
+    MIME_headerDecodeOverwrite(file)   FILE *file;
+
+      fileの指すファイルをエンコード/デコードしてfileに書く。
+
+<<文字列から入力、文字列へ出力>>：
+
+　　MIME_strHeaderEncode(ins,outs,osize) char *ins,*outs; int osize;
+　　MIME_strHeaderDecode(ins,outs,osize) char *ins,*outs; int osize;
+
+　　　insの指す文字列をエンコード/デコードしてoutsの指す領域へ書く。
+　　　osizeにはoutsの指す領域のバイト数を渡す。
+
+
+MIME_headerDecode()以外は、ヘッダ部に続くボディ部を、（何も変換せず
+に）書き出します。MIME_headerDecode()では、bodytoo引数が非0である
+時だけ、ボディ部を書き出します。
+
+　　　　　　　　　　　　　　　　 @ @
+┰── ─┰─ ┰　　  ／／＼^^　( - ) {サービス、自分のために}
+┠─++佐藤＠ＥＴＬ　／　876m＼ _<   >_
+┸── 　┸　 ┸───────────────────────────★☆

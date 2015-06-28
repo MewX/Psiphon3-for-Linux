@@ -1,0 +1,44 @@
+<FORM>
+<TABLE width="100%">
+<TR>
+<TD bgcolor=#E0E0E0>
+&nbsp;Forward the message to:<BR>
+  <Table>
+  <Tr>
+    <Td>&nbsp;&nbsp;</Td><Td>Your E-mail</Td><Td><INPUT size=40 type=text name=email value=""></Td>
+  </Tr>
+  <Tr>
+    <Td>&nbsp;&nbsp;</Td><Td>Password   </Td><Td><INPUT size=8 type=password name=passw value="">
+                 &nbsp;<INPUT type=submit name=fmt value="Getpass">
+                <!--
+                 &nbsp;<A HREF="?email=${formv.email}&msgid=${art.Message_ID}&Pragma=no-cache&fmt=Getpass">Getpass</A>
+                -->
+                                            </Td>
+  </Tr>
+  <Tr>
+    <Td>&nbsp;</Td>
+    <Td><INPUT type=hidden name=msgid value="${art.Message_ID}">
+        <INPUT type=hidden name=Pragma value="no-cache">
+        <INPUT type=submit name=fmt value="Sendmail">
+    </Td>
+  </Tr>
+  </Table>
+</TD></TR>
+</TABLE>
+</FORM>
+<HR>
+
+${putmenu?
+  <BR><B><BIG>${art.Subject}</BIG></B><BR>
+  ${art.Summary?-- ${art.Summary} --<P>}
+  <DIV align=right>
+  ${art.Date}
+  <I>${hide.href?${art.From}:<A HREF="mailto:${arturl.From}">${art.From}</A>}
+  </I><BR>
+  <I> ${art.Organization} </I>
+  </DIV>
+  <HR>
+}
+<PRE>
+${art.body}
+</PRE>

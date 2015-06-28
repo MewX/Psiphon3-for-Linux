@@ -1,0 +1,127 @@
+#
+# MAPPING for messages in /-/admin/
+# DeleGate管理画面の日本語への変換表
+#
+
+< You are authorized as the administrator.
+> 管理者として認証されています
+< SSL enabled
+> SSLで保護されています
+
+< Admin
+> 管理
+< Logging
+> ログ制御
+< Servers
+> サーバ
+< Configure
+> 構成編集
+< Log
+> ログ
+< Directory
+> ディレクトリ
+< Status
+> 実行状態
+< System
+> ホスト情報
+< Version
+> バージョン
+< Setup
+> 設定
+
+< Customize Administration Display
+> 管理画面のカスタマイズ
+
+< not writable conv.
+> 変換表が書き込み不可です
+
+< SET log level
+> ログレベル設定
+< CAPTURE
+> 取り込み
+< detailed
+> 詳細
+< sec.
+> 秒
+< lines
+> 行
+
+< add
+> 追加
+< set
+> 設定
+< sort
+> ソート
+< refresh
+> 再表示
+< the data is set
+> 設定しました
+< added the data
+> 追加しました
+
+< Realm
+> 変換対象
+< From
+> 変換元
+< To
+> 変換先
+< no data to add
+> 追加するデータを指定して下さい
+< all
+> 全て
+< button
+> ボタン
+< label
+> ラベル
+< text
+> テキスト
+< message
+> メッセージ
+< DeleGate Administration
+> DeleGate管理画面
+< DeleGate Logging Control
+> DeleGateログ制御
+< DeleGate Server Control
+> DeleGateサーバ制御
+< DeleGate Server Configuration
+> DeleGateサーバ構成編集
+< download
+> ダウンロード
+< upload
+> アップロード
+< DeleGate Directories
+> DeleGateディレクトリ
+< DeleGate Status and Statistics
+> DeleGate実行状態
+< Host System Status
+> システム状態
+< title
+> タイトル
+< Create a new server configuration
+> 新しいサーバを作成する
+< Control servers
+> サーバの実行を管理する
+< Edit a configuration
+> サーバの構成を編集する
+< Browse administration data
+> 管理用データを閲覧する
+< Customize
+> カスタマイズ
+< Run
+> 実行中
+< Abo
+> 異常終了
+< Fin
+> 終了
+< Ini
+> 起動途中
+< The authorizaion for administration is NOT yet configured.
+> 管理者認証が設定されていません
+< You are NOT yet authorized as the administrator.
+> 管理者として認証されていません
+< Authenticate
+> 認証
+< Configure
+> 構成
+< NON-SSL!
+> SSLで暗号化されていません！

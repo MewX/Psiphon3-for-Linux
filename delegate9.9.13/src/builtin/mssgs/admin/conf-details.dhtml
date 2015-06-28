@@ -1,0 +1,36 @@
+<TABLE width=100% border=0 cellpadding=0 cellspacing=0><TR>
+<TD align=right>
+
+<small>Directories</small><INPUT align=middle type=checkbox name=Flag-showdir ${admin.formv.Flag-showdir.on?checked}>
+&nbsp;
+
+<FONT ${admin.formv.conf-loglev|admin.formv.conf-logage?color="#0000D0"}>
+<small>Log control</small></FONT><INPUT type=checkbox name=Flag-showlogc ${admin.formv.Flag-showlogc.on?checked}>
+&nbsp;
+
+<FONT ${admin.formv.conf-REL._any,_custom|admin.formv.conf-AUTHORIZER.pam,list,custom?color="#0000D0"}>
+${tag:small:Access control}</FONT><INPUT type=checkbox name=Flag-showaccess ${admin.formv.Flag-showaccess.on?checked}>
+&nbsp;
+
+${tag:small:Maxima}<INPUT type=checkbox name=Flag-showmaxima ${admin.formv.Flag-showmaxima.on?checked}>
+&nbsp;
+
+${tag:small:Timeouts}<INPUT type=checkbox name=Flag-showtimeout ${admin.formv.Flag-showtimeout.on?checked}>
+&nbsp;
+
+${tag:small:Mount}<INPUT type=checkbox name=Flag-showmount ${admin.formv.Flag-showmount.on?checked}>
+&nbsp;
+
+<small>All</small><INPUT type=checkbox name=Flag-showall ${admin.formv.Flag-showall.on?checked}>
+
+</TD>
+</TR></TABLE>
+
+
+${include:conf-directories.dhtml}
+${include:conf-logconf.dhtml}
+${include:conf-accessctl.dhtml}
+${include:conf-MAXIMA.dhtml}
+${include:conf-TIMEOUT.dhtml}
+${include:conf-mount.dhtml}
+${include:conf-dataplus.dhtml}

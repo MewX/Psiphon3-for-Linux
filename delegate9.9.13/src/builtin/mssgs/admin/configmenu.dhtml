@@ -1,0 +1,18 @@
+<TABLE width=100%><TR><TD>
+${admin.act.Editline?
+  <INPUT type=hidden name=act value=Editline>
+  <INPUT type=hidden name=ln value="${admin.editconf.curln}">
+  <INPUT type=submit name=act value=QuitEditline>
+: <INPUT type=submit name=act value=Get>
+  <INPUT type=submit name=act value=Edit ${admin.act.Edit?style="color:green"}>
+  <INPUT type=submit name=act value=Add ${admin.act.Add,Append?style="color:green"}>
+  <INPUT type=submit name=act value=Editline>
+  <INPUT type=submit name=act value=Restart ${admin.act.Restart?style="color:green"}>
+ </TD><TD ALIGN=right>
+  <INPUT type=submit name=act value=Backup>
+  <INPUT type=submit name=act value=Restore>
+  <INPUT type=submit name=act value=Download ${admin.act.Download?style="color:green"}>
+  <INPUT type=submit name=act value=Upload ${admin.act.Upload?style="color:green"}>
+}
+</TD></TR></TABLE>
+

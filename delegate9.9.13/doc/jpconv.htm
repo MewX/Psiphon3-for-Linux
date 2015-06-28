@@ -1,0 +1,364 @@
+<HEAD>
+<TITLE>Japanese character and MIME coding conversion in DeleGate</TITLE>
+</HEAD>
+
+<BODY>
+<I>This manual describes how to manipulate Japanese character coding or
+non-ASCII MIME codings by DeleGate.
+</I>
+<HR>
+<BIG>DeleGateにおける日本語文字コードおよびMIMEコード変換機能</BIG><BR>
+オリジナル: <A HREF=http://www.delegate.org/delegate/doc/jpconv.htm>
+http://www.delegate.org/delegate/doc/jpconv.htm</A><BR>
+<ADDRESS>June 9, 2004, Yutaka Sato</ADDRESS>
+<P>
+DeleGateに内蔵されている、入力テキストの文字コードを変換して出力する機能と、
+MIMEのエンコーディングを変換する機能の使用方法について説明する。
+<P>
+
+<UL>
+<LI><A HREF=#abst>概要</A>
+<LI><A HREF=#jpcode>文字コード変換</A>
+<LI><A HREF=#mimecode>MIMEコード変換</A>
+<LI><A HREF=#example>使用例</A>
+<LI><A HREF=#history>経緯</A>
+</UL>
+
+<P>
+<A NAME=abst>
+<B>1. 概要</B>
+</A>
+<UL>
+<LI><A HREF=#jpcode>文字コード変換</A>
+<P>
+歴史的に日本語の文字を表現する文字セットは一種類だけだったが、これを
+7ビットあるいは8ビットのバイト列にして、日本語テキストを表現するための形式
+(文字コード形式)が3種類併存して来た(ISO-2022-JP, EUC-JP, Shift_JIS)。
+その後さらに、別の文字セットとして日本語文字を含むUnicodeが加わり、現在では
+4種類の文字コードが使われている。
+日本語テキストを処理・表示するプログラムによっては、これらの文字コードの
+うちのいずれかを扱えないものがある。そのような場合に対処するために、
+テキストデータを中継するプロキシや外部プログラムによって、文字コードを
+変換してやることが必要になる。
+<P>
+DeleGate を(プロキシ)サーバとして使用して、テキストデータを中継する際に、
+そのデータの日本語コードを変換することができる。この変換が適用可能な
+プロトコルは、HTTP, SMTP, POP, NNTP, FTP, Telnet, Tcprelay である。
+一方、DeleGateをオフラインコマンドとして使用して、入力ファイルの日本語
+コードを変換するオプションとして、-Fccx がある。また、MIMEコード変換を
+行う際に併せて文字コード変換を行う -FdeMime がある。
+以下に述べる文字コードの変換方法は、
+これらのプロトコルやオプションに共通して適用できる。
+
+<LI><A HREF=#mimecode>MIMEコード変換</A>
+<P>
+インターネット上で交わされるメールの形式はMIMEメッセージと呼ばれ、Subject,
+From, Content-Type などのヘッダと、ボディ(本文)からなる。
+(マルチパート形式のMIMEメッセージでは、ボディ中にさらに複数のヘッダとボディが
+包含されている)。
+MIMEメッセージは、ネット上で交換される際にはMIME規格に従ってエンコード
+された表現形式をとり、メイル読み書きのためのプログラムで処理する際には
+内部での処理に即した形式で表現される。
+以下、前者を外部形式、後者を内部形式と呼ぶ。
+また、外部形式から内部形式への変換を「MIMEデコード」、逆に内部形式から外部
+形式への変換を「MIMEエンコード」と呼ぶ。
+<P>
+外部形式のためのMIMEエンコーディングには、
+ヘッダ中に日本語文字(非ASCII文字)を表現するための形式と、
+ヘッダあるいはボディ中のバイナリデータ(あるいは非ASCII文字)用の
+コーディング(BASE64あるいはQuoted-Printable)が含まれる。
+ヘッダのエンコーディングは非ASCII文字
+<!--(特にRFC822処理系の特殊文字に重複する文字)
+転送経路上で機種異存な変換を被らない安全な文字への変換。
+-->
+をASCII文字にエンコードするためのものであり、
+ボディのエンコーディングは主に8bitデータを7bitの表示可能ASCII文字に
+エンコードするために用いられる。
+DeleGateのMIMEコード変換では、これらヘッダやボディのコーディングの変換
+を行う。
+<P>
+DeleGate を(プロキシ)サーバとして使用して、インターネットメール形式の
+メッセージデータを使用するプロトコル(SMTP, POP, および NNTP) を中継する
+際には、そのメッセージの MIME コードを変換する。
+この場合、サーバへの送信は外部形式への変換(MIMEエンコード)、サーバからの
+受信(クライアントへの中継)では内部形式への変換(MIMEデコード)を行う。
+一方、DeleGateをオフラインコマンドとして使用して、入力ファイルのMIME
+コーディングを変換するオプションとして、-FdeMime と -FenMime がある。
+
+</UL>
+
+<P>
+<A NAME=jpcode>
+<B>2. 文字コード変換</B>
+</A>
+
+<P>
+DeleGateの入力側の文字コードは自動的に認識(推定)される。
+出力側の文字コードを指定するのが CHARSET パラメタで、以下のように指定する。
+
+<UL>
+<TABLE cellpadding=8 width=100%><TR><TD bgcolor=#D0D0D0>
+CHARSET=[<KBD>a-</KBD>][<KBD>r-</KBD>][<KBD>r+</KBD>][文字コード名]
+<P>
+例: CHARSET=a-r-EUC-JP
+</TD></TR></TABLE>
+</UL>
+
+文字コード名の前にオプションで前置される "a-" や "r-" は、文字コードに
+よらず共通に適用できる変換を指定する。
+
+<UL>
+<TABLE cellpadding=8 width=100%><TR><TD bgcolor=#D0D0D0>
+<DL>
+<DT><KBD>a-</KBD>
+<DD>JIS2バイト文字で表現された英数字や記号をASCIIの1バイト文字に変換する
+<BR>例: "<KBD>Ａａ１２　＠＃！</KBD>" → "<KBD>Aa12 @#!</KBD>"
+
+<DT><KBD>r-</KBD>
+<DD>テキスト行末の CRLF を LF に変換する
+
+<DT><KBD>r+</KBD>
+<DD>テキスト行末の LF を CRLF に変換する
+</DL>
+</TD></TR></TABLE>
+</UL>
+
+文字コード名としては以下のものが指定できる。これらの名前は、
+大文字/小文字のどちらで指定しても良い。
+
+<UL>
+<TABLE cellpadding=8 width=100%><TR><TD bgcolor=#D0D0D0>
+<DL>
+<DT>iso-2022-jp または JIS
+<DD>
+日本語文字コードをISO-2022-JPに変換する
+
+<DT>euc-jp または EUC
+<DD>
+日本語文字コードをEUC-JPに変換する
+
+<DT>shift_jis または SJIS
+<DD>
+日本語文字コードをShift_JISに変換する
+
+<DT>utf-8
+<DD>
+日本語文字コードをUTF-8 (Unicodeの8ビット表現) に変換する。
+
+<DT>guess
+<DD>
+変換は行わず、入力テキストの文字コードの推定のみ行う。HTTP中継の際に使用。
+</DL>
+
+</TD></TR></TABLE>
+</UL>
+
+UTF-8への変換のためには、マッピング用テーブルを必要とするが、このための
+データファイルは、DeleGateを CHARSET=utf-8 指定付きで最初に実行した時に、
+http://www.delegate.org/delegate/codemap/
+から自動的にダウンロードされ、DGROOT/lib にキャッシュされる。
+<P>
+文字コード変換がMIMEメッセージやHTTPメッセージに適用された場合、そのボディ
+のテキストの文字コードが変換されるとともに、ヘッダ中のContent-Typeに指示され
+ている文字コードパラメタ(charsetパラメタ)の値として、CHARSETに指示された
+文字コード名が指示される。
+<P>
+CHARSET=guess は、HTTPヘッダ中のContent-Typeに(charsetパラメタで)
+文字セット名が指示されていない場合にのみ意味を持ち、
+入力テキストから推定した文字コード名をそこに出力する。<BR>
+(例: Content-Type: text/html → Content-Type: text/plain; charset=EUC-JP)
+<BR>
+最近のウェブブラウザは「日本語版」でなくても、各種日本語コードを解釈・表示
+することができる。ただそのためには、charsetパラメタに文字コード名が明示
+されている必要がある。しかし、日本語テキストを提供するサーバ側では、
+charsetパラメタを設定していない場合が少なくない。そのような場合に対処する
+ために、クライアント側のプロキシサーバやサーバ側のゲートウェィサーバ
+(リバースプロキシ) において、この CHARSET=guess を使用する。
+<P>
+<!--
+HTTPリクエストメッセージ中の文字コードの変換。FTOSV="-cc-文字コード名"。
+%XXエンコーディングをデコードし、文字コード変換し、再び%XXエンコードして
+中継する。
+クライアント側: Accept-Langueges: (charset=文字コード名)
+送信する。
+-->
+
+</UL>
+
+<P>
+<A NAME=mimecode>
+<B>3. MIMEコード変換</B>
+</A>
+<P>
+DeleGateをプロキシサーバとして使用する場合には、MIMEコード変換機能は
+デフォルトで無効になっており、
+MIMECONVパラメタを明示的に指定するか、CHARSETパラメタを指定する
+(文字コード変換機能を有効にする)ことで、MIMEコード変換が有効になる。
+一方DeleGateをMIMEコード変換コマンドとして使用する場合には(当然)、
+MIMEコード変換は有効になっている。
+
+<!--
+DeleGateがプロキシサーバとしてMIMEメッセージを中継する時、
+日本語文字コードを含むテキストがDeleGateからサーバを経由して外部に送信
+される場合には、その表現形式は適切な外部表現にエンコードされている必要が
+あるため、この場合はMIMEエンコードがデフォルトで適用される。
+一方、サーバから受信したMIMEメッセージをクライアントに中継する際に、
+内部表現に変換する必要性があるか否かは状況によって異なるので、この場合の
+MIMEデコードは明示的に指定された場合にだけ行われる。
+-->
+
+<P>
+<UL>
+<TABLE cellpadding=8 width=100%><TR><TD bgcolor=#D0D0D0>
+<KBD>MIMECONV={all|thru|charcode}</KBD>
+<P>
+<DL>
+<DT><KBD>thru</KBD>
+<DD>無変換。MIMEコード変換、文字コード変換ともに行わない。
+<DT><KBD>all</KBD>
+<DD>MIMEコード変換、文字コード変換を行う。
+<DT><KBD>charcode</KBD>
+<DD>文字コード変換だけ行う。
+<P>
+<DT><KBD>MIMECONV</KBD>のデフォルト値
+<DD>
+ <DL>
+ <DT><KBD>MIMECONV=thru</KBD>
+ <DD>プロキシとして使用する場合で、CHARSET無指定の場合
+ <DT><KBD>MIMECONV=all</KBD>
+ <DD>プロキシとして使用する場合で、CHARSETを指定した場合、または
+ <DD>コード変換コマンドとして使用する場合 (-FdeMime, -FenMime)
+ </DL>
+</DD>
+</DL>
+</TABLE>
+</UL>
+
+MIMEデコードでは、ネット上での転送用の外部形式から、内部での処理用の
+形式への変換を行う。
+<UL>
+<TABLE cellpadding=8 width=100%><TR><TD bgcolor=#D0D0D0>
+MIMEデコード
+<DL>
+<DT>適用対象
+<DD>
+<DL>
+<DT>サーバからクライアントにダウンロードされるメッセージ(NNTP, POP)
+<DT><KBD>-FdeMime</KBD>への入力
+</DL>
+<DT>変換内容
+<DD>
+入力メッセージのヘッダ中に、日本語文字コードがMIMEエンコードされている
+場合には、それをデコードする。
+また、CHARSETパラメタがあわせて指定されている場合には、
+ヘッダおよびボディに対して、指定された文字コード変換を行い、
+ヘッダ中のcharsetパラメタとしてその値を設定する。
+</DL>
+</TD></TR></TABLE>
+</UL>
+
+MIMEエンコードでは、内部での処理用の形式から、ネット上での転送用の
+外部形式への変換を行う。
+
+<UL>
+<TABLE cellpadding=8 width=100%><TR><TD bgcolor=#D0D0D0>
+MIMEエンコード
+<DL>
+<DT>適用対象
+<DD>
+<DL>
+<DT>クライアントからサーバにアップロードされるメッセージ(NNTP, SMTP)
+<DT><KBD>-FenMime</KBD>への入力
+</DL>
+<DT>変換内容
+<DD>
+入力メッセージが日本語文字コードを含んでいる(と推定される)場合には、
+そのヘッダおよびボディ中の文字コードを ISO-2022-JP に変換する。
+ヘッダ中に日本語文字列があれば、それをMIMEエンコードする。
+ヘッダ中のcharsetパラメタとしては、ISO-2022-JPを出力する。
+</DL>
+</TD></TR></TABLE>
+</UL>
+
+文字コード変換が必要なボディが(BASE64またはQuoted-Printableで)エンコード
+されていた場合には、変換の前にそれらがデコードされる。
+<P>
+このMIMEコード変換(および文字コード変換)は、RFC822メッセージ全体だけ
+でなく、
+マルチパートで構成されているMIMEメッセージ中の各パートのヘッダや、
+text型のパートのボディに適用される。
+<P>
+HTTPに対する変換でサポートしている CHARSET=guess は、ここでは未実装。
+
+<P>
+<A NAME=example>
+<B>4. 使用例</B>
+</A>
+<P>
+<UL>
+<DL>
+<DT><KBD>delegated -FdeMime CHARSET=a-r-EUC-JP</KBD>
+<DD>入力ファイル(MIMEメッセージ形式)のヘッダをMIMEデコードするとともに、
+英数字や記号をASCIIに(a-)、行末のコードをLFに(r-)、文字コードをEUC-JPに
+変換して出力する。
+<P>
+
+<DT><KBD>delegated -Fccx -a-r-e</KBD>
+<DD>入力ファイル(テキスト形式)の文字コードをEUC-JPに、
+英数字や記号をASCIIに(a-)、行末のコードをLFに(r-)、文字コードをEUC-JPに(-e)
+変換して出力する。
+<P>
+
+<DT><KBD>delegated CHARSET=Shift_JIS SERVER=http -P8080</KBD> ...
+<DD>HTTPプロキシサーバとして、クライアント向けに送られるテキストの
+文字コードをShift_JISに変換する。
+<P>
+
+<DT><KBD>delegated CHARSET=utf-8 SERVER=http -P80</KBD> ...
+<DD>HTTPオリジンサーバとして、クライアント向けに送られるテキストの
+文字コードをUTF-8に変換する。
+<P>
+
+<DT><KBD>delegated CHARSET=EUC-JP SERVER=nntp -P119</KBD> ...
+<DD>NNTPプロキシサーバとして動作しながら、MIMEデコード/エンコードを行い、
+あわせてクライアント向け文字コードをEUC-JPに変換する。
+<P>
+
+<DT><KBD>delegated SERVER=smtp -P25</KBD> ...
+<DD>
+<P>
+
+<DT><KBD>delegated SERVER=pop -P110</KBD> ...
+<DD>
+
+</DL>
+</UL>
+
+<P>
+<A NAME=history>
+<B>4. 経緯</B>
+</A>
+<P>
+これまで10年間のDeleGateの開発を通じて、DeleGateの文字コード変換やMIME変換
+機能をまとめたドキュメントをこれまで書いたことがない。
+これはただのサボりでもなく、特に文字コード変換機能については極めて短い期間
+に過渡的にしか必要とされないだろうと考えていたことにもよる。
+実際、最近ではすっかり、各種文字コード変換機能やMIME変換機能は
+各種プログラムに組み込みとなって、外部で変換してやる必要があることは
+少なくなった。
+<P>
+ところが最近になって、私自身がとある全文検索エンジン
+（<A HREF=http://www.delegate.org/freyasx/>Freya</A>,
+既に数年前に開発が終了している）の前処理のためにこれを使う必要が起こり、
+文字コード変換機能の拡張が必要になった。
+そこで、上記の CHARSET の a- や r- という機能を今回の版(DeleGate/8.9.5)に
+追加したのを機に、日本語に関わる変換機能についてこの書きものにまとめた。
+<P>
+これら変換機能のデフォルト値は、DeleGateの開発過程の中で、変換の必要性が
+変化したり、また海外への配布を前提にするために、
+途中で変更された経緯があり(特に6.0以降)、
+自分でもはっきり覚えていなかった部分があった(特にMIMECONV)。
+利用者にはなおさら、仕様が不明であったに違いない。。。
+
+<HR>
+</BODY>

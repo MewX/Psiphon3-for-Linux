@@ -1,0 +1,49 @@
+#!shio
+#
+#	SAMPLE SHIO SCRIPT FOR REMOTE DELEGATE INVOCATION
+#
+#	SHIO means sh I/O.
+#	In a SHIO script, The top character at each line means:
+#
+#		#	Comment
+#		o	Output the string
+#		i	Input until the string appears in the input stream
+#		=	Relay I/O transparently
+
+#
+# Select the command to connect remote HOST, and replace the HOST
+# with the real host name.
+#
+
+o telnet HOST\n
+#o cu HOST\n
+#o rlogin HOST\n
+
+
+#
+# Specify the login prompt, and replace the USER with the real user name.
+#
+
+i login: 
+o USER\n
+
+
+#
+# Specify the password prompt, and replace the PASS with the real password.
+#
+
+i Password:
+o PASS\n
+
+
+#
+# Specify the command prompt.
+#
+
+i HOST% 
+
+#o delegated LOGFILE=tunnel.log SERVER=tunnel1 MASTER=delegate-server:8080 \n
+o delegated LOGFILE=tunnel.log SERVER=tunnel1 \n
+i READY\r
+i \n
+=

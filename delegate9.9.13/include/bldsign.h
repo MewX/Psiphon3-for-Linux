@@ -1,0 +1,1 @@
+#define BUILT_SRCSIGN ""

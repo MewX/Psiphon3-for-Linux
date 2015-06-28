@@ -1,0 +1,53 @@
+${setenent}
+${+TITLE=${type:title:DeleGate Status and Statistics}}
+${include:head.dhtml}
+
+<FORM ACTION="${ibase}admin/stats" METHOD=POST>${admin.dump_common}
+<INPUT type=hidden name=form value=StatusCtl>
+<INPUT type=hidden name=serv-confname value=_self_>
+
+<TABLE width=100%><TR><TD>
+${button:submit:com:status:status}
+${button:submit:com:openfiles:openfiles}
+${button:submit:com:params:params}
+${button:submit:com:initlog:initlog}
+${button:submit:com:showall:showall}
+</TD><TD align=right>
+${button:submit:com:version:version}
+</TD></TR><TABLE>
+
+${admin.com.version?<P>${include:version.dhtml}}
+
+${admin.com.showall,status?
+<P>
+The statistics of this DeleGate process
+<P>
+<TABLE cellspacing=0 border=1 width=80% bgcolor="#FFFFFF">
+${admin.foreachconf._self_.
+<TR><TD width=33%%>Started at</TD><TD>%s</TD></TR>
+<TR><TD width=33%%>Last action</TD><TD>%u</TD></TR>
+<TR><TD>Total server processes</TD><TD>%f</TD></TR>
+<TR><TD>Active server processes</TD><TD>%a</TD></TR>
+<TR><TD>Total requests</TD><TD>%q</TD></TR>
+<TR><TD>Load average (RPM)</TD><TD>%L (%l)</TD></TR>
+}
+</TABLE>
+<P>
+${include:serv-longlist.dhtml}
+}
+
+${admin.com.showall,params?
+<P>
+${include:showconf.dhtml}
+}
+
+${admin.com.showall,openfiles?
+<P>Open Files<P>
+${admin.openfiles}
+}
+
+${admin.com.showall,initlog?
+<P>Initialization Log<P>
+<PRE>${admin.show_initlog.serv-confname}</PRE>
+}
+</FORM>

@@ -1,0 +1,39 @@
+#!/bin/sh
+#################### cross compilation of DeleGate ########################
+## This is an example of cross compilation of Zaurus binary on MacOSX
+## XCC = cross compiler
+## DGV = the version of DeleGate
+## ADMIN = the administrator of the binary
+XCC="/Developer/Zaurus-X-gcc/opt/Embedix/tools/arm-linux/bin"
+DGV=delegate9.4.0
+ADMIN=me@mydomain
+
+DGZ=$DGV.tar.gz
+set -x
+
+if [ ! -d dg-host ]; then mkdir dg-host; fi
+gzip -d < $DGZ | tar xf -; (cd $DGV; tar cf - .) | (cd dg-host; tar xf -)
+(
+ cd dg-host
+ make CC=gcc ADMIN=$ADMIN CFLAGS= CFLAGSPLUS=
+ cd src; make ../mkcpp
+)
+XDG=`pwd`/dg-host/src/delegated
+XEMBED=`pwd`/dg-host/src/embed
+if [ ! -f $XDG ]; then exit; fi
+if [ ! -f $XEMBED ]; then exit; fi
+
+if [ ! -d dg-guest ]; then mkdir dg-guest; fi
+gzip -d < $DGZ | tar xf -; (cd $DGV; tar cf - .) | (cd dg-guest; tar xf -)
+(
+ cd dg-guest
+ cp ../dg-host/mk*.exe .
+ cp ../dg-host/filters/mkstab* filters
+ cp ../dg-host/src/embed* src
+ cp ../dg-host/src/.cksum.embed.c src
+ cp ../dg-host/mkcpp .
+ export PATH="$XCC:$PATH"
+ make CC=gcc ADMIN=$ADMIN XDG=$XDG XEMBED=$XEMBED
+)
+###########################################################################
+

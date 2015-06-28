@@ -1,0 +1,38 @@
+${not.admin.formv.Flag-showlogc.on&not.admin.formv.Flag-showall?
+ ${admin.dumpformv.-.conf-loglev,conf-logaging,conf-logagingx,conf-foreground}
+ ${exit}
+}
+
+<TABLE width=100% border=1 cellspacing=0 cellpadding=0 bgcolor=#D0D0F0>
+<TR><TD align=right>
+<TR>
+ <TD align=center width=25%>log level</TD>
+ <TD>
+ <INPUT type=radio name=conf-loglev value="" ${not.admin.formv.conf-loglev?checked}>${tag:small:standard}
+ <INPUT type=radio name=conf-loglev value="d" ${admin.formv.conf-loglev.d?checked}>${tag:small:detailed}
+ <INPUT type=radio name=conf-loglev value="t" ${admin.formv.conf-loglev.t?checked}>${tag:small:terse}
+ <INPUT type=radio name=conf-loglev value="s" ${admin.formv.conf-loglev.s?checked}>${tag:small:silent}
+ </TD>
+</TR>
+<TR>
+  <TD align=center>log aging</TD>
+  <TD>
+    <INPUT type=radio name=conf-logaging value=off
+     ${admin.formv.conf-logaging.off|not.admin.formv.conf-logaging?checked}>${tag:small:off}
+    <INPUT type=radio name=conf-logaging value=byday ${admin.formv.conf-logaging.byday?checked}>${tag:small:year/month/day}
+    <INPUT type=radio name=conf-logaging value=custom ${admin.formv.conf-logaging.custom?checked}>${tag:small:custom}
+    ${admin.formv.conf-logaging.custom?
+    <INPUT type=text name=conf-logagingx value="${_admin.formv.conf-logagingx}">
+    <small> ex. <KBD>%Y-%m/%d</KBD></small>
+    }
+  </TD>
+</TR>
+<!--
+<TR>
+ <TD align=center>foreground</TD>
+ <TD>
+ <INPUT type=checkbox name=conf-foreground value="-f" ${admin.formv.conf-foreground?checked}>Foreground
+ </TD>
+</TR>
+-->
+</TABLE>

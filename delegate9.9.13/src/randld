@@ -1,0 +1,10 @@
+#!/bin/sh
+
+#### FreeBSD 2.2.5
+ld \
+ -Bstatic \
+ -o delegated builtin.o delegated.o commands.o croncom.o remote.o \
+ -L../lib \
+ -ldelegate -lresolvy  -lteleport -lmd5 -lcfi -lrary -lmimekit -lsubst \
+ -e start /usr/lib/crt0.o -lgcc -lc
+

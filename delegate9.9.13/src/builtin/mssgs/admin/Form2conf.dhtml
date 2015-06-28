@@ -1,0 +1,56 @@
+${setenent}
+${admin.com.show?
+ <PRE>${admin.formv.confdata}</PRE>${exit}
+}
+${admin.com.start,stop?
+ ${movedto.eval.${ibase}admin/servers/com=${admin.formv.com}&serv-confname=${admin.formv.conf-newservname}&${admin.dumpformvu.-.conf-checked}}
+ ${exit}
+ }
+${admin.com.clear?${admin.mask-formv}}
+${admin.com.decompose,upload?${admin.decompose_conf.confdata}}
+
+${+TITLE=${type:title:DeleGate Server Configuration}}
+${include:head.dhtml}
+${+ErrBG="#E0D0E0"}
+
+${not.admin.com.help,new,clear,decompose,refresh-list,list,status,edit,load,backup,rename,remove,restore,refresh?${admin.config.form2conf.check}}
+
+${admin.act.Servlist|admin.com.list,refresh-list,status,new,backup,remove,restore,rename,stop?${include:ServerCtl.dhtml}${exit}}
+
+<FORM ACTION=config METHOD=POST>${admin.dump_common}
+<INPUT type=hidden name=act value=Form2conf>
+
+<INPUT type=hidden name=prevcom value="${admin.formv.com.refresh?${_admin.formv.prevcom}:${_admin.formv.com}}">
+
+${admin.com.load?${admin.loadconf.conf-servname}}
+${admin.com.store?
+  ${admin.storeconf.conf-newservname.conf-servname}
+  ${not.admin.conferr?${admin.copyformv.conf-servname.conf-newservname}}
+}
+${+ServName=conf-servname}
+${include:conf-loadsave.dhtml}
+
+${include:conf-mini.dhtml}
+${include:conf-admconf.dhtml}
+${include:conf-details.dhtml}
+
+<P>
+${include:conf-compdecomp.dhtml}
+${include:conf-confdata.dhtml}
+
+<P>
+${define.btm=true}
+${define.ConfName=conf-newservname}
+${admin.formv.com.help,load,store,compose,decompose,upload|admin.formv.prevcom.help,load,store?${include:conf-loadsave.dhtml}}
+
+${admin.formv.com.load,store&admin.respmssg?
+<P>
+<TABLE width=100% border=0 cellspacing=0 cellpadding=0 bgcolor=#F0F0F0>
+<TR><TD width=25% align=center>${admin.formv.com}</TD><TD>
+  <TEXTAREA cols=64 rows=${lines.admin.respmssg} readonly
+  style="border-style:none;color:${admin.conferr?red:blue}">${_admin.respmssg}</TEXTAREA></FONT>
+</TD></TR></TABLE>
+}
+</FORM>
+
+${admin.com.help?<HR>${include:conf-confhelp.dhtml}}

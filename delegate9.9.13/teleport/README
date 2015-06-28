@@ -1,0 +1,143 @@
+//////////////////////////////////////////////////////////////////////////////
+
+                          Teleport-Vehicle/0.0
+
+                                   @ @
+                                  ( - )
+                                 _<   >_
+                June 1995,  Yutaka Sato <ysato@etl.go.jp>
+
+                  AIST-Software-ID: <1995-ETL-E8715-01>
+
+//////////////////////////////////////////////////////////////////////////////
+
+--
+TELEPORT-VEHICLE
+
+Teleport is a transport control protocol on application layer for simple
+message passing.  Vehicle is a interface to applications to use Teleport.
+Teleport-Vehicle is a carrier of DeleGate protocol.
+
+       HTTP, FTP, Telnet, X, etc.
+             ----------
+              DeleGate
+             ----------
+              Vehicle
+             ----------
+              Teleport
+             ----------
+        TCP/IP, UDP/IP, ATM, etc.
+
+--
+TELEPORT MESSAGE
+
+Agents on Teleport send and receive line messages in the following format.
+
+       teleport-message =
+            selector <SP> body <CRLF>
+          | teleport-path <SP> selector <SP> body <CRLF>
+
+       teleport-path =
+           `=>' nodelist
+          |`=<' nodelist
+
+       nodelist =
+            node ! nodelist
+          | node < nodelist
+          | node > nodelist
+
+Message without teleport-path and with teleport-path with empty destination
+node (like =<!node1!node2) are `free-messages'.
+Others are `bound-messages' bound for the path.
+Free-message will be routed by pattern matching with the content of header.
+After an agent send a message
+
+       INVITE selector1
+
+to the Teleport, the agent will receive messages with selector part which
+match with selector1, from the Teleport.
+A free-message can be received by any number of agents, that is,
+message multicasting occurs.
+
+
+--
+VEHICLE MESSAGE
+
+A message with selector `==' shows end of stream to the peer agent.
+Messages for Vehicle on Teleport are represented in QZ encoding described
+bellow.
+
+
+--
+QZ ENCODING
+
+QZ means quoted-printable based byte stream representation with simple
+compression.  QZ encoding is a line by line encoding, where a line is a byte
+stream end with <LF> and includes no <NUL> byte.  Each QZ encoded line ends
+with `=QZ' followed with <LF> or <CR><LF>, otherwise the line is regarded as
+non-QZ encoded line.  Version number `n' of QZ encoding is shown by `=Qn'.
+Receiver can show acceptable version to the server by sending `=Qn=QZ<LF>'
+The default version is Q1.  In the following specification, hd(c) means a
+hexia-decimal encoding of byte value c.
+
+  QZ_BASE: 
+    - byte with value c in [`=', <CR>, <LF>, <NUL>] is quoted by xd(c) like
+      `=hh' where `hh' is xd(c)
+    - the line end with "=QZ" string forllowed by <LF> or <CR><LF>
+  QZ_ZERO:
+    - `=Zn' represents a sequence of <NUL> of length `n', where n is a
+      hexia-decimal encoding the length [1-15].
+  QZ_WORD:
+    - `=Whh' represents a sequence of <NUL>c where `hh' is the xd(c) 
+  QZ_PRINT:
+    - byte with value c in [`=', 0x00-0x1F, 0x7F-0xFF] is quoted by xd(c)
+  QZ_LENG:
+    - encoded line is limited to be shorter than the length of 80 bytes
+
+Q1: QZ_BASE|QZ_PRINT|QZ_ZERO|QZ_WORD|QZ_LENG
+      (default) encoding which is safe for most transport channel
+
+Q2: QZ_BASE|QZ_PRITN|QZ_ZERO|QZ_WORD
+      without line length limit
+
+Q3: QZ_BASE|QZ_ZERO
+      for 8bit clear transport channel
+
+QZ_BASE is the minimal requirement for QZ codes.  More QZ encodings can be
+introduced keeping cmplience with QZ_BASE.
+      
+
+--
+USAGE
+
+A typical usage of Teleport is using it as a `reflector' for application
+protocols on TCP/IP.  Suppose the case where hostA and hostB are not
+IP-reachable to each other, but both hosts are reachable to hostX.
+You can mediate among hostA and hostB by teleportd on hostX.
+
+                         teleportd
+                           hostX
+                            ^ ^
+                            | |
+            +---------------+ +--------------+
+            |                                |
+        delegated                        delegated
+          hostA                            hostB
+           ^                               |   |
+           |                               v   v
+         telnet                       telnetd telnetd
+          hosta                        hostb   hostc
+
+  hostX% teleportd &
+  hostA% delegated -P8888 MASTER=hostX:8000/teleport INVITE=hostb,hostc
+  hostB% delegated -P8888 MASTER=hostX:8000/teleport:hostb,hostc \
+	   SERVER=telnet://-/
+  hosta% telnet hostB 8888
+         Host name: hostb
+
+Parallel sessions of application protocol are carried on a single Teleport
+channel from hostA to hostX and from hostB to hostX.
+Teleportd only passively accept connection from others and never try
+connect to others, so it is a safe server.
+
+//////////////////////////////////////////////////////////////////////////////

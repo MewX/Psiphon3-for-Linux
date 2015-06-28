@@ -1,0 +1,38 @@
+README_SUBIN:
+
+  This directory "subin" contains executable files to be executed under
+the privilege of the super user.  If these optional files are installed,
+a DeleGate invoked by normal user can do privileged operations as follows.
+
+  dgpam    -- PAM authentication
+  dgbind   -- binding a socket to privileged port
+  dgchroot -- changing the root directory
+
+HOW TO INSTALL
+
+  % make           # do make at the root of DeleGate's source
+  % cd subin       # come to this directory
+  % make install   # su password will be asked on the way
+
+  Those executable files "dgpam" and so on are installed at DGROOT/subin/
+  automaticaly by "install.sh" called from Makefile.
+
+
+Each executable file is given ownership and flags like follows: 
+
+  # chown root dgpam
+  # chgrp Group dgpam
+  # chmod 6550 dgpam
+
+where Group is the group ID of the user to be permitted to execute
+this program, which is specified in a DeleGate parameter as
+
+  OWNER=User/Group 
+
+*** about dgchroot:
+ On Linux, shared libraries necessary for chroot are copied automatically
+to DGROOT/lib by "install.sh" too.
+
+--
+15 Aug. 2003, Yutaka Sato
+--

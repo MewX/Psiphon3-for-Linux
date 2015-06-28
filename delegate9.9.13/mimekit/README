@@ -1,0 +1,40 @@
+/////////////////////////////////////////////////////////////////////
+
+         MIMEKIT1.8
+
+              September 10, 1998   Yutaka Sato <ysato@etl.go.jp>
+         Electrotechnical Laboratory, AIST, MITI, Tsukuba, Japan
+
+/////////////////////////////////////////////////////////////////////
+
+HOW TO MAKE
+
+  Just type make, then you will get:
+
+    libmimekit.a  -- common library which is used also in DeleGate.
+    deMime -- MIME to local code decoder (header,CTE, and JIS-code)
+    enMime -- local code to MIME encoder
+
+HOW TO USE
+
+  enMime < infile > outfile  -- encode/decode a MIME message
+  deMime < infile > outfile  --
+
+  enMime [ -b | -q ] < infile > outfile -- encode/decode data in 
+  deMime [ -b | -q ] < infile > outfile -- base64 | quoted printable
+
+FOR OLD USERS
+
+  A patch for nntpd included in the previous version (mimehead1.2.4)
+  is removed, because it is obsoleted by the DeleGate with
+  libmimekit.a which relays NNTP, SMTP and POP protocols as a proxy
+  server, converting relayed messages about MIME encoding, Japanese
+  charcter encoding and HTML character entities.
+
+
+DISTRIBUTION of the latest version:
+
+  ftp://ftp.etl.go.jp/pub/DeleGate/
+  ftp://ftp.etl.go.jp/pub/mime/
+
+/////////////////////////////////////////////////////////////////////

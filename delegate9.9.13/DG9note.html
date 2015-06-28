@@ -1,0 +1,223 @@
+<!--
+Subject: The list of incompatibilities between DeleGate/9 and DeleGate/8
+From: ysato@delegate.org (Yutaka Sato)
+Date: Sat, 25 May 06 18:43:37 JST
+Message-ID: <149H39.ysato@delegate.org>
+-->
+
+<TITLE>DeleGate/9.X and 10.X Release Note</TITLE>
+<BASE HREF="http://www.delegate.org/delegate/">
+
+<PRE><font face="courier new">
+/////////////////////////////////////////////////////////////////////////////
+
+ DeleGate/9.X Release Note
+
+                                               October 29, 2014  Yutaka Sato
+
+/////////////////////////////////////////////////////////////////////////////
+                                                       [<A HREF=http://www.delegate.org/delegate/DGXnote.html>Latest Note</A>][<A HREF=http://www.delegate.org/delegate/updates/>updates</A>]
+
+<B>NEW FEATURES in DeleGate/9</B>
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 9.9.9 disabled tentative non-SSL blocker over SSLtunnel (introduced in 9.0.3)
+ 9.9.8 introduced "DYCONF" for configration dynamic/conditional on request
+ 9.9.8 disabled "PORT Bounce" by default (see the option <A HREF=/delegate/Manual.htm?ftp-bounce>FTPCONF=bounce</A>)
+ 9.9.8 introduced SHUTDOWN={reject,accept} and "ETCDIR/hosts.d/{reject,accept}"
+ 9.9.8 introduced "FTPxHTTP"
+ 9.9.7 introduced "yysh" over yyMUX
+ 9.9.7 introduced "yyMUX" protocol for multiplexed persistent connections
+ 9.9.7 introduced "Y11" protocol to invite remote X11 clients
+ 9.9.6 making without C++ (with CFLAGS=-DQSC)
+ 9.9.6 introduced AUTHORIZER="-map{inPat}{localPat}{fwdPat},..."
+ 9.9.5 NNTPCONF=ondemand to work without making the connection to server
+ 9.9.5 new MountOption "sni=hostname" for TLS by SNI (server name indication)
+ 9.9.4 MOUNT to rewrite HTTP Referer ("referer" and "udst" MountOption)
+ 9.9.3 HTTP connection caching/shareing (-Ecc option)
+ 9.9.1 Transparent proxy with ipfw (FreeBSD and MacOSX)
+ 9.9.1 coped with Win95 (has been disabled since 9.2.4)
+ 9.9.0 HTMUX for bi-directional tunneling over HTTP
+ 9.9.0 CAPSKEY to enable suppressed capabilities (MITM, VSAP, SockMux, ...)
+ 9.8.6 new VSAP (accept request on a remote host) by HTTP ACCEPT
+ 9.8.2 supported AUTHORIZER=-ntht, authentication by NTLM over HTTP (Win32)
+ 9.8.2 NAT based virtual hosting with "odst" MountOption
+ 9.8.2 name based virtual hosting with "nvhost" MountOption
+ 9.8.2 reverse proxy and caching to virtual hosting server with "nvserv"
+ 9.8.2 Transparent proxy by SO_ORIGINAL_DST for any protocols (on Linux)
+ 9.8.2 Telnet/SSH gateway (Telnet client to SSH server)
+ 9.8.2 ported onto Windows Mobile/CE
+ 9.8.0 supported SSL (TLS) server name indication (SNI)
+ 9.8.0 introduced generalized <A HREF=/delegate/Manual.htm?CLUSTER>CLUSTER</A>ing of servers
+ 9.6.0 fast SSL for any protocols using thread
+ 9.6.0 smooth gzip/HTTP streaming using thread
+ 9.4.3 generalized routing to upstream proxies with authentication by <A HREF=/delegate/Manual.htm?FORWARD>FORWARD</A>
+ 9.4.1 transparent cacheing/logging HTTP/FTP/NNTP/SMTP/POP proxy over <A HREF=/delegate/sockstap/>SOCKS</A>
+ 9.4.0 loading <A HREF=/delegate/encrypt/>encrypted</A> parameters in +=enc:... (encrypted by -Fenc)
+ 9.4.0 privileged operations with set-uid-on-exec flag (without "subin")
+ 9.4.0 editing configuration parameters <A HREF=/delegate/implant/>implanted</A> in the executable file (-Fimp)
+ 9.2.5 signing and verifying the executable file of DeleGate
+ 9.2.4 SOCKS,MASTER,PROXY multiplexed over SockMux
+ 9.2.4 SOCKS over SSL
+ 9.2.3 added Man-In-The-Middle mode to peep HTTPS/SSL over HTTP proxy
+ 9.2.3 supported syslog
+<!--
+ 9.2.2 AUTHORIZER="-list{user:pass}" data has come to be encrypted in the memory
+-->
+ 9.8.6 fixed rejection by REJECT=proto:dst:src just by src match (SOCKS,FTP,POP,Telnet,...)
+ 9.2.2 supported MLST and MLSD in a origin-FTP server (not as a caching-proxy)
+ 9.2.2 coped with huge files larger than 4GB in FTP and HTTP DeleGate
+ 9.2.0 <A HREF=/counter/>Access Counter</A> with a client network distribution map
+ 9.2.0 <A HREF=/cookie/>Cookie encryption</A> and filtering to protect stolen Cookies
+ <A HREF=http://www.delegate.org/mail-lists/delegate-en/3156>9.0.6</A> Anonymizing NNTP articles
+ <A HREF=http://www.delegate.org/mail-lists/delegate-en/3087>9.0.5</A> Remote administration and configuration via HTTPS/SSL
+ <A HREF=http://www.delegate.org/mail-lists/delegate-en/3044>9.0.4</A> Gatewaying from a sftp/SSH server to FTP or HTTP clients
+ <A HREF=http://www.delegate.org/mail-lists/delegate-en/3038>9.0.3</A> Detecting and blocking non-HTTPS/SSL protocol via HTTP proxy
+ <A HREF=http://www.delegate.org/mail-lists/delegate-en/2934>9.0.1</A> SSL improvement with increased performance and easier configuration
+ <A HREF=http://www.delegate.org/mail-lists/delegate-en/2921>9.0.0</A> IPv6 support
+
+<B>MAJOR FIXES in DeleGate/9</B>
+~~~~~~~~~~~~~~~~~~~~~~~~~
+ 9.9.12 Fixed REJECT parameter not to reject all access to MOUNTed destination
+ 9.9.11 Fixed rewriting URL for MOUNT (as an HTTP reverse proxy)
+ 9.9.10 <a href=http://www.delegate.org/mail-lists/delegate-en/5091>forwarding any protocol</a> with PROXY=upstream-HTTP-proxy (broken in 9.9.8)
+ 9.9.10 <a href=http://www.delegate.org/mail-lists/delegate-en/5090>revival of yysh</a> (on Windows)
+ 9.9.9 Supported dynamic linking with OpenSSL1.X
+ <a href="http://www.delegate.org/mail-lists/delegate-en/5063">9.9.9</a> Fixed bothering SSL breaking proxy over SSLtunnel
+ 9.9.5 Fixed SSL, gzip and cache on Win32 (especially on Win2K and WinMe)
+ 9.9.4 Fixed freezing/aborting on signal with threads (for SSL or gzip)
+ 9.9.3 Fixed relaying a HTTP response in "Content-Encoding: x-gzip"
+ 9.9.2 Fixed RELAY=nojava to disable EMBED,OBJECT,APPLET (disabled in 7.9.11)
+ 9.8.6 Fixed CFI and external filters, with CMAP, MIME(pop,smtp), MITM, Tcprelay
+ 9.7.1 Fixed SEGV which rarely happens on SIGPIPE
+ 9.3.2 Fixed revealment of the source of CGI / SHML on Win and MacOSX
+ 9.3.2 Fixed SEGV on service STOP on Windows (maybe possible on WinXP)
+ 9.2.4 Fixed truncated HTTP response on simultaneous updates of a cache file
+ 9.2.4 Fixed relaying HTTPS over SSLv2 as a HTTP proxy
+<!--
+ 9.2.1 Fixed writing (log) files by DeleGate running as a service on Windows
+-->
+ 9.2.1 Fixed reduction of Keep-Alive limit to less than specified on Windows
+ 9.0.6 Fixed stopping as a DNS-server with mal-formed DNS messages
+ 9.0.6 Fixed SockMux truncation of data from remote on close at remote side
+ 9.0.6 Fixed HTTP retrying POST on empty response from a server in Keep-Alive
+ 9.0.6 Fixed HTTP supporting partial responses (with "Range: nnn-" header)
+ 9.0.5 Fixed HTTP mounting HTML tags with leading spaces (as HREF=" CDATA")
+ 9.0.5 Fixed crashing by bad time-stamp of a file on Windows
+ 9.0.4 Fixed FTP empty PASV response with MOUNT and login error
+ 9.0.3 Fixed freezing on high-loaded Windows
+ 9.0.3 Fixed HTTP generating broken response in gzip with FTOCL MountOption
+ 9.0.2 Fixed possible infinite loop in debugger on EMERGENCY STOP on Unix
+
+<B>INCOMPATIBILITIES BETWEEN DeleGate/9 and DeleGate/8</B>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+DeleGate/9 has incompatible behavior with DeleGate/8 mainly because to make
+it safer from possible abuses, and easier to configure for typical usage.
+Most of them can be ignored as long as you don't encounter a problem,
+but you are recommended to read the list classified into "SECURITY" groups
+bellow.
+
+SECURITY
+
+ <A HREF=http://www.delegate.org/mail-lists/delegate-en/3038>9.0.3</A> HTTP-DeleGate for SSL-tunneling has come to reject non-HTTPS/SSL.
+
+   So called "SSL-tunneling" feature of HTTP proxies invoked with the
+   CONNECT method allows relaying any data over it.  Thus it can be used to
+   relay arbitrary protocols on it which are not intended to be permitted
+   by the administrator of the DeleGate.  DeleGate/9 as a SSL-tunnel
+   tries to detect data of non-HTTPS/SSL protocol, like Skype or a
+   tunneling protocols for a VPN, then shutdowns the connection.
+   You can suppress this feature to permit arbitrary protocols by adding
+   "ssltunnel" to the REMITTABLE parameter (ex. <KBD><A HREF=http://www.delegate.org/delegate/Manual.htm?REMITTABLE>REMITTABLE</A>="+,ssltunnel"</KBD>)
+
+ <A HREF=http://www.delegate.org/mail-lists/delegate-en/3038>9.0.3</A> HTTP-DeleGate has come to permit WebDAV methods by default.
+
+   We have come to see many Forbidden errors for WebDAV access via a
+   HTTP-DeleGate.  Since it seems not add so much dangers by allowing
+   the methods for WebDAV (in RFC2518), they have become allowed by default.
+   You can reject WebDAV methods by adding "-webdav" to the allowed
+   methods list (ex. <KBD><A HREF=http://www.delegate.org/delegate/Manual.htm?HTTPCONF>HTTPCONF</A>=methods:"+,-webdav"</KBD>)
+
+ <A HREF=http://www.delegate.org/mail-lists/delegate-en/2944>9.0.2</A> HTTP-DeleGate obsoleted X-Locking header to the upstream DeleGate.
+
+
+FUNCTIONALITY
+
+ 9.2.0 cache for escaped URLs has come to be unified
+
+   The names of files to cache a response message of a URL with escaped
+   character which can be in upper or lower case like %7E or %7e have
+   come to be unified into the upper case one.
+   This unification can be disabled with CACHE="do,nounify".
+
+ 9.2.0 proxy HTTP-DeleGate has come to do reverse MOUNTing
+
+   DeleGate used as a HTTP proxy (not a gateway) by a client has come to
+   rewrite URLs in the response message, when the request message is
+   rewritten by a MOUNT rule with full-URL, as this for example:
+     MOUNT="http://https.* https://*" STLS=fsv:https
+   This rewriting can be disabled with HTTPCONF="bugs:px-thruresp".
+
+ <A HREF=http://www.delegate.org/mail-lists/delegate-en/3156>9.0.6</A> HTTP-DeleGate has come not to cache mal-formed response message.
+
+   - a response with multiple Content-Length fields in the header
+   - a response with headers ending not with CRLF
+   When such response is detected, DeleGate does not cache it and stop
+   Keep-Alive with the server because it might break the connection to
+   the client, or it might be the result of a trial of the HRS attack.
+
+ 9.0.3 HTTP-DeleGate has come to return default /favicon.ico if not found.
+
+   We have come to see so many repetitive "Not Found" errors for
+   "/favicon.ico" which is not always provided by the origin server.
+   Thus DeleGate/9 returns substituted favicon.ico if the origin server
+   returns errors for it.
+   You can disable the automatic substitution with <KBD><A HREF=http://www.delegate.org/delegate/Manual.htm?MOUNT>MOUNT</A>="/favicon.ico ="</KBD>
+
+ 9.0.3 HTTP-DeleGate has come to convert Japanese charset in the request
+       uploaded to the server.
+
+   The conversion of Japanese character set (or encoding) of the text in a
+   response message to the client (with a parameter like <A HREF=http://www.delegate.org/delegate/Manual.htm?CHARCODE>CHARSET</A>="utf-8")
+   may cause a problem when a text is uploaded to the servers, typically as
+   search engines or BBS.  The browser will encode the text in the charset
+   of a response (which is specified in CHARSET), so it should be converted
+   to the original charset of the server.  DeleGate/9 with a CHARSET parameter
+   generates a Cookie in the response to hold the original charset of the
+   server (with the attribute name "DeleGate-SVCC"), and automatically
+   converts upstream request data into the charset indicated in the Cookie.
+
+ 9.0.3 Telnet-DeleGate has come to relay Timing-Mark before Data-Mark.
+
+
+INSTALLATION / CONFIGURATION
+
+ 9.2.2 <A HREF=http://www.delegate.org/delegate/Manual.htm#RES_WAIT>waiting for resolvers</A> to be ready before staring initialization
+
+ <A HREF=http://www.delegate.org/mail-lists/delegate-en/3087>9.0.5</A> SERVER=https has come to be automatically set with STLS=fcl
+       when it is specified together with SERVER=http
+
+ <A HREF=http://www.delegate.org/mail-lists/delegate-en/2934>9.0.1</A> External SSLway command has come to be unused if dynamic linking
+       library of OpenSSL is available.
+
+ <A HREF=http://www.delegate.org/mail-lists/delegate-en/2921>9.0.0</A> IPv6 address come to be retrieved when IPv4 address is not found.
+    The retrieval of IPv6 address can be suppressed with <KBD><A HREF=http://www.delegate.org/delegate/Manual.htm?RES_AF>RES_AF</A>="4"</KBD>
+
+
+WARNINGS
+
+ 9.0.3 Enlarged the criteria of warning for long request line to 1024 bytes.
+    HTTP requests with long header lines have become usual nowadays, thus
+    the criteria to put a warning in errors.log is enlarged to 1024 from 256.
+    You can set the criteria smaller as <KBD><A HREF=http://www.delegate.org/delegate/Manual.htm?HTTPCONF>HTTPCONF</A>="warn-reqline:256"</KBD>
+
+/////////////////////////////////////////////////////////////////////////////
+</font></PRE>
+
+<TABLE cellspacing=0 width=100%><TR align=right bgcolor="#B8C0C0"><TD>
+<KBD><small>
+<!--#echo var=PAGE_COUNT fmt="PageViews: %,U <A HREF=../stats/hits.shtml>hits</A> / %N <A HREF=../stats/nets.shtml>nets</A>" -->
+</small></KBD>
+</TD></TR></TABLE>
+
+<hr>
+<small><i>Yutaka Sato @ AIST.GO.JP</i></small>

@@ -1,0 +1,19 @@
+<TABLE width=100%><TR><TD align=center>
+<IMG ALIGN=middle SRC=${icon.next}>
+${button:submit:com:compose:compose:style="font-size:100%;background-color:#B0B0FF${not.admin.com.compose?:;color:green}"}
+${tag:small:synthesize/analize configuration data}
+
+<IMG ALIGN=middle SRC=${icon.prev}>
+${button:submit:com:decompose:decompose:style="font-size:100%;background-color:#B0B0FF${not.admin.com.decompose?:;color:green}"}
+</TD></TR></TABLE>
+
+${admin.respmssg&not.admin.com.load,store?
+  <P>
+  <TABLE width=100% border=0 cellspacing=0 cellpadding=0 bgcolor=#F0F0F0>
+  <TR><TD width=25% align=center style="color:${admin.conferr?red:blue}">
+   ${admin.formv.com}</TD><TD>
+    <TEXTAREA cols=64 rows=${lines.admin.respmssg} readonly
+    style="border-style:none;color:${admin.conferr?red:blue}">${_admin.respmssg}</TEXTAREA></FONT>
+  </TD></TR></TABLE>
+  <P>
+}

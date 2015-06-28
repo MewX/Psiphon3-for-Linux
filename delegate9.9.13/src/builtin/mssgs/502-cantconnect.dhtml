@@ -1,0 +1,44 @@
+<TITLE> Cannot Connect </TITLE>
+
+<H2>Cannot Connect</H2>
+${mounted?
+Connection to the target server failed.<P>
+:
+Connection failed by DeleGate on `<X-D T=HOSTPORT W=MYSELF>'
+<P>
+Tried from the <I>client</I> <X-D T=HOSTPORT W=CLIENT>
+        to the <I>server</I> <X-D T=PROTOCOL W=SERVER>://<X-D T=HOSTPORT W=SERVER>.
+}
+
+<UL>
+${cantconn.unknown?
+<P><LI>The host name <B>${_server.host}</B> seems <B>unknown</B>.<BR>
+Are you sure that the server host name is correct?<BR>
+If so, the name server may have some (possibly temporary) problem...
+}
+${cantconn.refused?
+<P><LI>Connection to the port on the server host is <B>refused</B>.<BR>
+Are you sure that the server port number is correct?<BR>
+If so, the server may be down now (temporarily)...
+}
+${cantconn.unreach?
+<P><LI>The server host <B>${_server.host}</B> seems <B>unreachable</B>
+from this delegate.<BR>
+There seems no (direct) IP route to reach the server...
+}
+${cantconn.timeout?
+<P><LI>Connection to the server <B>timed out</B>.<BR>
+The server or the network route to the server may be in congestion,
+or they might be blocking your access...
+}
+${cantconn.noroute?
+<P><LI>No route seems applicable toward <B>${_server.host}</B>.<BR>
+The miss-configuration of CONNECT parameter or so of this DeleGate
+could cause this failure.
+}
+</UL>
+
+<P>
+The Administrator of this DeleGate --
+<A HREF="mailto:${ADMIN}?Subject=help"><BIG><I>&lt;<X-D T=ADMIN>&gt;</I></BIG></A>
+-- may help you...<BR>

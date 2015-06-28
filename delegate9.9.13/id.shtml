@@ -1,0 +1,8 @@
+<HR>
+<PRE><!--#exec cmd="uname -a" -->
+<!--#exec cmd="ls -l src/delegated" -->
+<!--#exec cmd="size src/delegated" -->
+<!--#exec cmd="src/delegated -Fver" -->
+sendFd: <!--#echo var="delegate_opt_sendfd" -->
+</PRE>
+<HR>

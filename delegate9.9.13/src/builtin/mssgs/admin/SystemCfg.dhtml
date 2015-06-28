@@ -1,0 +1,41 @@
+${setenent}
+${+TITLE=${type:title:Host System Status}}
+${include:head.dhtml}
+
+<FORM ACTION="${ibase}admin/system" METHOD=POST>${admin.dump_common}
+${admin.formv.auto-refresh?${evaleval.refresh.10.${ibase}admin/system/${~admin.dumpformvu.-.act,com,lang,auto-refresh}}}
+
+<TABLE width=100%><TR><TD>
+ ${button:submit:com:uptime:uptime}
+ ${button:submit:com:df:diskfree}
+ ${button:submit:com:ps:process}
+</TD><TD>
+ <INPUT type=checkbox name=auto-refresh ${admin.formv.auto-refresh.on?checked}>${tag:small:auto refresh}
+</TD><TD align=right>
+ ${button:submit:com:netstat:netstat}
+ ${button:submit:com:route:route}
+ ${button:submit:com:ifconfig:ifconfig}
+ ${admin.com.netstat,route,ifconfig?
+  ${not.admin.com.netstat,route,ifconfig&admin.sysauthok.-.sys-pass?
+   <INPUT type=hidden name=sys-pass value="${admin.formv.sys-pass}">
+  :${not.admin.sysauthok.-.sys-pass?
+     ${tag:small:password}
+     <INPUT type=password name=sys-pass size=8>
+     ${admin.putrespmssg.- required the password to peep the system}
+   }
+  }
+ }
+</TD></TR></TABLE>
+
+<TABLE width=100% border=0 bgcolor="#F0E0E0"><TR><TD>
+</TD></TR></TABLE>
+
+${admin.com.netstat,route,ifconfig&not.admin.sysauthok.-.sys-pass?
+:<PRE>${admin.system}</PRE>
+}
+
+<TABLE width=100% border=0 bgcolor="#F0E0E0"><TR><TD>
+<PRE>${admin.respmssg?${admin.respmssg}}</PRE>
+</TD></TR></TABLE>
+<HR>
+</FORM>

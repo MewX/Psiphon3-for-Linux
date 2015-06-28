@@ -1,0 +1,8 @@
+<A HREF="${abase}config?${admin.url_common}&act=Form2conf"><FONT color=#${admin.admact.config?60A060:6060FF}>${type:button:Configure}</FONT></A> |
+
+<A HREF="${abase}ca?${admin.url_common}"><FONT color=#${admin.admact.ca?60A060:6060FF}>${type:button:CA}</FONT></A> |
+
+<A HREF="${abase}servers?${admin.url_common}&act=ScreenCtl"><FONT color=#${admin.act.ScreenCtl?60A060:6060FF}>${type:button:Screen}</FONT></A> |
+
+<A HREF="${abase}system?${admin.url_common}"><FONT color=#${admin.admact.system?60A060:6060FF}>${type:button:System}</FONT></A> |
+

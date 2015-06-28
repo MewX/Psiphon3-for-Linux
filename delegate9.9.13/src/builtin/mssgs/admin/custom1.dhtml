@@ -1,0 +1,21 @@
+${admin.formv.mode.customize?
+
+<FORM ACTION="${abase}" METHOD=POST>
+<TABLE width=100% border=0 cellspacing=0 cellpadding=4 bgcolor=yellow>
+<TR><TD align=right>
+ <TABLE width=90% border=0 cellspacing=4 cellpadding=4>
+ <TR><TD align=right>From</TD><TD><INPUT type=text size=70 name=conv-from></TD></TR>
+ <TR><TD align=right>To</TD><TD>  <INPUT type=text size=70 name=conv-to></TD></TR>
+ </TABLE>
+<P>
+
+<INPUT type=hidden name=act value=customize>
+<INPUT type=hidden name=lang value="${admin.formv.lang}">
+${button:submit:com:addconv:add}
+
+<A HREF="${ibase}admin/?act=customize&lang=${admin.formv.lang}"><FONT color=red><B>${type:button:Customize}</B></FONT></A>
+
+</TD></TR></TABLE>
+</FORM>
+
+}

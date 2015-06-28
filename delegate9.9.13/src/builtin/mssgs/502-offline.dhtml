@@ -1,0 +1,6 @@
+<TITLE>Not in Cache</TITLE>
+<H2>Not in Cache</H2>
+This DeleGate is running under <I>cache-only</I> mode.<BR>
+Click <A HREF="http://${hostport.vhost}/FR-_-${^request.url}">
+<IMG ALT=connectButton SRC="${icon.Remote}">here</A>
+to load from the remote server.

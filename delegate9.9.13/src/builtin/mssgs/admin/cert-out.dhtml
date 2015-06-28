@@ -1,0 +1,21 @@
+${not.admin.respmssg?:
+ ${tag:small:command and result}:<BR>
+ <TEXTAREA cols=90 rows=${inc2.lines.admin.respmssg} readonly ${admin.formv.cert-error?style="color:red;background-color:pink"}>
+ ${admin.respmssg}
+ </TEXTAREA>
+ <P>
+}
+
+${not.admin.com.resetCA?
+<TABLE border=0 cellspacing=0 cellpadding=0>
+<TR><TD align=right>
+<INPUT type=text size=50 align=right name=cert-lastout value="${admin.formv.cert-lastout?${admin.formv.cert-lastout}:${admin.formv.cert-email}}" style="background-color:transparent">
+${button:submit:com:download:Download}
+</TD></TR>
+<TR><TD>
+<TEXTAREA cols=90 rows=${inc2.lines.admin.openssl.lastout} readonly>
+${admin.openssl.lastout}
+</TEXTAREA>
+</TD></TR>
+</TABLE>
+}

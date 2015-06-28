@@ -1,0 +1,30 @@
+<P>
+<TABLE width=100% border=1 cellpadding=0 cellspacing=0><TR bgcolor="#B0B0FF">
+${admin.formv.com?<TD align=right bgcolor=#E0E0E0 width=5%>
+ ${tag:small:check} ${button:submit:com:checkall:all:style="font-size:small;background-color:#E0E0E0"}</TD>}
+<TD ${admin.com.edit?bgcolor="#8080FF"} align=center> &nbsp;${tag:small:Configuration name}</TD>
+ ${tag:TD align=center:${tag:small:locked}}
+ ${tag:TD align=center:${tag:small:updated}}
+${auth.authorized_pass?
+<TD align=left>&nbsp;<small>summary</small</TD>
+}
+</TR>
+
+${admin.foreachconf._self_,sav-cnf.<TR bgcolor="#F0F0FF">
+${admin.formv.com?<TD align=right ${admin.conferr.conf-checked?bgcolor=pink}><INPUT type=checkbox name=conf-checked value="%N" %C></TD>}
+<TD>%{button:submit:action:act=Form2conf&com=load&conf-servname=%N:%N:style="width:100%;border-style:none;background-color:transparent" onmouseover="this.style.backgroundColor='#B0B0FF'" onmouseout="this.style.backgroundColor='transparent'"}</TD>
+<TD align=center>${tag:small:%K}</TD>
+<TD align=center>${tag:small:%T}</TD>
+${auth.authorized_pass?<TD>&nbsp;${tag:small:%X}</TD></TR>}
+}
+
+${admin.com.new&not.admin.formv.conf-newservname?
+<TR bgcolor="#F0F0FF">
+<TD align=right><INPUT type=checkbox name=com value="new" checked></TD>
+<TD><INPUT tabindex=0 type=text name=conf-newservname value="" style="width:100%;background-color:#FFC0C0" onmouseover="this.style.backgroundColor='#FFE0E0'" onmouseout="this.style.backgroundColor='#FFC0C0'"></TD>
+<TD align=center>&nbsp;</TD><TD align=center>&nbsp;</TD>
+${auth.authorized_pass?
+<TD>&nbsp;<FONT color=green>${tag:small:(new configuration to be created)}</FONT></TD></TR>
+}
+}
+</TABLE>

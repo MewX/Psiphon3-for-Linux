@@ -1,0 +1,97 @@
+To: feedback@ml.delegate.org
+Subject: DeleGate/9.9.12 (STABLE) -- fixed access control and MIME header encoding
+From: feedback@delegate.org (Yutaka Sato)
+Reply-To: feedback@delegate.org
+Organization: The DeleGate Project
+Message-Id: <1KA0ZF.feedback@delegate.org>
+
+DeleGate/9.9.12 STABLE is released including fixes about
+access control for reverse proxy, MIME header encoding, improvement of
+SSI, and yysh on Windows.
+
+Access Control (REJECT parameter for reverse proxy or origin server)
+  -- Fixed REJECT parameter not to unconditionally reject accesses
+     to destination servers (as a reverse proxy) or local files
+     (as an origin server) regardless of a specified protocol.
+  -- The REJECT parameter is for rejecting specified access with the
+     format as follows:
+       REJECT=protocolList:serverList:clientList
+     It is the antonym of PERMIT that allows specified access.
+  -- A modification in version 8.4.0 (Sep. 2003!) made a bad side effect
+     that if a REJECT parameter is given, protcolList part is neglected
+     so that any access of any protocol other than the specified one is
+     rejected unconditionally.
+     For example, configure a reverse proxy with a MOUNT parameter:
+       MOUNT="/* http://server/*"
+     and then restrict this MOUNT point not to be accessible from hosts
+     in "*.outer.domain" by a REJECT parameter as follows:
+       REJECT="http:server:*.outer.domain"
+     But it works as if specified as follows:
+       REJECT="*:server:*.outer.domain"
+     Thus if other MOUNT points that should be allowed like
+       MOUNT="/anonftp/* ftp://server/*"
+     is also rejected by the REJECT.
+  -- Fortunately this has not been problematic for most users because
+     this kind of configuration seems not used X-)
+  -- There is no workaround for this problem in older versions.
+
+MIME header encoding (broken multi-bytes character and MIME header)
+  -- Fixed 8bits multi-bytes character not to be split into two
+     MIME-encoded words (since the original code in 1992).
+     This will break the decoded text by inserting a white space in
+     the middle of the character code of a multi-bytes character.
+     This problem occurs in EUC-JP, Shift_JIS and UTF-8.
+  -- Fixed concatenation of adjacent encoded-word makes broken continued
+     line without leading space (since v9.9.9, July 2014).
+
+HTTP filter (extracting a part of HTML and generating hyper-link)
+  -- Added a feature to generate hyper-link for words in HTML.
+  -- DeleGate as an origin server has a feature to provide a part
+     of HTML file. When a HTML file of name "xxx.html" is required by
+     a client with URL as "xxx.html?partname", the part of the HTML
+     file named with <A NAME=partname>...</A> is extracted and
+     returned to the client. An example:
+     <URL:http://www.delegate.org/delegate/Manual.htm?DGROOT>
+  -- In an extracted HTML file, all of internal reference of
+     <A HREF=#label> format are converted to <A HREF=xxx.html?label>
+     so that clicking the anchor becomes extracting the part again.
+  -- In 9.9.12, a tentative feature to generate a hyper-link for
+     a word of capital character only like "DGROOT". Such word is
+     converted to a hyper-link as <A HREF=Manual.htm?DGROOT>DGROOT</A>
+     automatically.
+  -- This feature is very specialized to DeleGate Reference Manual 
+     including so many such words for parameter names because all of
+     parameters of DeleGate are capital only :-)
+     This feature might be generalized in future.
+
+yysh (default HOME directory of DeleGate remote shell)
+  -- Modified to use appropriate default home directory if it is not
+     specified explicitly by YYCONF="HOME:path"
+     The default depends on where the DeleGate service for yysh is invoked.
+     It follows HOME=path environment variable when invoked from Cygwin
+     terminal while it is %HOMEDRIVE%%HOMEPATH% (as C:\Users\username)
+     when invoked from the command prompt.
+  -- When DeleGate is running in foreground, the default home directory
+     is the current working directory where the DeleGate is invoked.
+
+Service on Windows (invocation of program of relative name)
+  -- Fixed to get the path of the executable file of DeleGate
+     appropriately so that a programs of which path is relative to the
+     path of the executable of DeleGate running as a service.
+  -- In the command prompt of Windows, a command can be invoked by the
+     file name in the current directory even if the PATH environment
+     does not include ".".  Since older DeleGate did get the path of
+     executable file of itself using a function common to Unix, based
+     on PATH environment, it fails to get it.  And the working
+     directory of DeleGate as a service changes from it invocation time,
+     a program of which path is relative to the working directory fails
+     because DeleGate does not know the path of itself.
+     It is fixed simply to use the provided function on Windows API.
+
+Cheers from Japan,
+Yutaka
+--
+  9 9   Yutaka Sato { Do the more with the less -- B. Fuller }
+ ( ~ )  National Institute of Advanced Industrial Science and Technology
+_<   >_ 1-1-4 Umezono, Tsukuba, Ibaraki, 305-8568 Japan
+

@@ -1,0 +1,104 @@
+<TITLE>Short Tutorial for Beginners of DeleGate</TITLE>
+<BODY>
+<H2>DeleGate初心者向け手引き簡略版</H2>
+
+<A HREF="http://www.delegate.org/delegate/tutorial/tutorial-jp.html">これ</A>
+はごく手短かな<A HREF="http://www.delegate.org/delegate/">DeleGate</A>
+の初心者向け手引きです。詳しくはリファレンスマニュアル
+<A HREF="ftp://www.delegate.org/pub/DeleGate/Manual.htm">Manual.htm</A>と
+<A HREF="http://www.delegate.org/delegate/">関連ドキュメント</A>を
+参照して下さい。
+
+<H2>最小限これだけは知っときたい</H2>
+
+a. DeleGateをHTTP用プロキシとして8080番ポートで使用するには以下のようにします:
+<PRE>
+    delegated -P8080 SERVER=http
+</PRE>
+ここで、-Pxxxx はクライアントからの要求を受け付けるポート番号を、
+SERVER=yyyy はクライアントと通信するためのプロトコル名を指定しています。
+<P>
+b. キャッシュの有効期限や保存期限は、EXPIRE および CRON パラメタで制御できます:
+<PRE>
+    EXPIRE=1d CRON="0 * * * * -expire 2d"
+</PRE>
+c. DeleGate は暗黙的に、DeleGate のホストと同一のネットワークからのアクセス
+のみを受理します。以下のようにPERMITパラメタで、許可すべきホストやネット
+ワーク、ドメインを明示的に指定できます:
+<PRE>
+    PERMIT="*:*:host1,123.123.123.123/255.255.255.0,*.my.domain,!bad.my.domain"
+</PRE>
+
+<H2>ちょっと詳しく知っときたい</H2>
+01. デバッグモードで実行する (フォアグラウンドで実行,ログをコンソールに出力):
+<PRE>
+    delegated -v ...
+</PRE>
+02. 8080番ポートで動作しているDeleGateサーバを終了させる:
+<PRE>
+    delegated -P8080 -Fkill
+</PRE>
+03. 設定パラメタを指定したURLからロードして使用する:
+<PRE>
+    delegated +=http://server/path/of/parameters.txt
+</PRE>
+04. クライアントからの要求を受理するネットワークインターフェイスを限定する:
+<PRE>
+    delegated -Phostname:8080 SERVER=http
+</PRE>
+05. ホスト名/IPアドレスの検索に用いるレゾルバの試行順序を制御する:
+<PRE>
+    RESOLV=dns,nis,file
+</PRE>
+06. サイト外のサーバには、Socksサーバ経由で接続する:
+<PRE>
+    CONNECT="cache,socks:*:!*.my.domain" SOCKS=sockshost
+</PRE>
+07. 全ての要求を他のプロキシに転送する:
+<PRE>
+    PROXY="proxyHost:8080:*"
+</PRE>
+08. 特定の目的サーバ向けの要求だけ他のプロキシに転送する:
+<PRE>
+    PROXY="proxyHost:8080:!*.my.domain,!*.near.domain"
+</PRE>
+09. 任意のTCPプロトコルを特定のサーバへ中継する:
+<PRE>
+    SERVER=tcprelay://serverName:portNumber/
+</PRE>
+10. 任意のTCPプロトコルによる通信を他のDeleGateに転送する:
+<PRE>
+    MASTER="delegateHost:8080:*"
+</PRE>
+11. 任意のUDPプロトコルを特定のサーバへ中継する:
+<PRE>
+    SERVER=udprelay://serverName:portNumber/
+</PRE>
+12. DeleGateの目的サーバを固定し、DeleGateを元サーバとしてクライアントに見せる:
+<PRE>
+    delegated -P80 SERVER=http://httpserver/
+</PRE>
+13. クライアントに中継するニュースグループを限定する:
+<PRE>
+    delegated -P8119 SERVER=nntp://nntpserver/comp,misc,news
+</PRE>
+14. 複数のサーバを併合して仮想的に一つのサーバとしてクライアントに提供する:
+<PRE>
+    SERVER=nntp MOUNT="= nntp://serv1/comp" MOUNT="= nntp://serv2/misc,news"
+</PRE>
+15. HTTPクライアントをNNTPサーバにアクセスさせるゲートウェイ:
+<PRE>
+    SERVER=http MOUNT="/news1/* nntp://ns1/*" MOUNT="/news2/* nntp://ns2/*"
+</PRE>
+16. DeleGateをHTTPの元サーバとして使用する:
+<PRE>
+    -P80 SERVER=http MOUNT="/* /usr/local/www/*" REMITTABLE=file
+</PRE>
+17. このDeleGate経由で到達可能な目的ホスト/ネット/ドメインを制限する:
+<PRE>
+    PERMIT="*:*.reachable.domain:*"
+</PRE>
+<HR>
+<I><A HREF="http://www.etl.go.jp/~ysato/">Yutaka Sato</A>
+&lt;ysato AT delegate DOT org&gt;</I>
+</BODY>

@@ -1,0 +1,130 @@
+To: feedback@ml.delegate.org
+Date: 11 May 2014 17:00:00 +0900
+Subject: DeleGate/9.9.8 (STABLE) -- fixes and extensions especially around FTP
+From: feedback@ml.delegate.org (Yutaka Sato)
+Reply-To: feedback@delegate.org
+Organization: The DeleGate Project
+Message-Id: <20140511170000+0900.feedback@delegate.org>
+References: <_A4680@delegate-en.ML_> <_A4780@delegate-en.ML_>
+
+Dear DeleGate users,
+
+I inform you of the new release of DeleGate available as follows:
+--------------------------------------------------------------------------
+DeleGate/9.9.8 (STABLE) -- fixes and extensions especially around FTP
+
+This release includes many fixes and extensions especially around FTP.
+
+New features:
+
+  FTP over HTTP -- tunneling FTP connection over (connectionless) HTTP
+    "FTPxHTTP" is a HTTP server which can be used for tunneling the FTP
+    protocol over HTTP by a (connectionless) sequence of usual HTTP requests
+    (not by CONNECT but by GET and POST). It can be relayed by another
+    HTTP proxy for forwarding, filtering or so.
+    See <URL:http://www.delegate.org/delegate/Manual.htm#serv_FTPxHTTP>
+
+  FTP Bounce -- rejecting "FTP Bounce" attack by PORT connection
+    See <URL:http://www.delegate.org/mail-lists/delegate-en/04896>
+        <URL:http://www.delegate.org/delegate/Manual.htm#FTPCONF>
+
+  DYCONF -- Dynamic configuration of DeleGate.
+    "DYCONF specifies configuration parameters to be loaded dynamically
+    on the beginning of relaying application protocol after the acception
+    of a TCP connection from a client before starting a session over it. ..." 
+    See <URL:http://www.delegate.org/delegate/Manual.htm#DYCONF>
+        <URL:http://www.delegate.org/mail-lists/delegate-en/04921>
+
+Protocol Specific Fixes and Extensions
+
+  - FTPxHTTP: fixed the error on first command after CWD
+  - FTP: fixed data-connection error on first PASV after toggling from PORT
+  - FTP: fixed SEGV on upload (STOR) with cached file
+  - FTP: fixed STOR as an origin FTP server with client over SSL
+  - FTP: fixed STOR failure with STLS=fsv:ftp <URL:http://www.delegate.org/mail-lists/delegate-ja/502>
+  - FTP: introduced FTPCONF=doeprt:sv to force using EPRT with server
+  - FTP: introduced FTPCONF=doeprt:sv tp force using EPRT with server
+  - FTP/SSL: enabled STLS=fsv:"ftps" as well as STLS=fsv:"ftp"
+  - FTP/SSL: enabled SERVER=ftps STLS=fcl:ftps STLS=fsv:ftp
+  - FTP/SSL: fixed slow upload (16sec.) by FTP/SSL with PORT
+  - FTP/SSL: introduced CMAP="/:FTPWD:ftp:*:*" suppressing PWD on the session start <URL:http://www.delegate.org/mail-lists/delegate-ja/540>
+  - sftp/FTP: fixed login failure with -fv option <URL:http://www.delegate.org/mail-lists/delegate-ja/426>
+  - sftp/FTP: fixed logging-in via sftp with multiple authentication methods
+  - sftp/FTP: fixed "Too many open files" <URL:http://www.delegate.org/mail-lists/delegate-en/4825>
+  - sftp/FTP: introduced waitput=T MountOption to avoid truncation of uploaded data <URL:http://www.delegate.org/mail-lists/delegate-en/4934>
+  - sftp/FTP: termination on disconnection from SFTP server <URL:http://www.delegate.org/mail-lists/delegate-en/4933>
+  - SSL: showing corrent cipher description with TLSCONF=-vd <URL:http://www.delegate.org/mail-lists/delegate-en/5000>
+  - SSL: revival of FSV="sslway -cert file" <URL:http://www.delegate.org/mail-lists/delegate-en/04821>
+  - MITM/HTTP/SSL: fixed not to apply default URL rewriting for MITM
+  - HTTP: fixed SEGV by HTTPCONV="methos:+,a,b"
+  - HTTP: fixed MOUNT for a HTTPS server with "nvserv" <URL:http://www.delegate.org/mail-lists/delegate-ja/515>
+  - HTTP: supported relaying POST body in chunked encoding
+  - HTTP: fixed suppressing Set-Cookie rewriting by URICONV <URL:http://www.delegate.org/mail-lists/delegate-en/05024>
+  - HTTP: fixed broken binary response from CGI with CHARCODE=guess
+  - HTTP: detecting a URL in JavaScript as ({url:"..."
+  - HTTP: rewriting URL in (') escaped as "&#39;"
+  - HTTP: fixed slow relay of large text
+  - HTTP: enabled rejecting CONNECT by MOUNT="HostPortPattern = forbidden" MountOption
+  - HTTP: immediate exit of response relaying with cache by HTTPCONF="takeover:0"
+  - HTTP: introduced HTTPCONF=bugs:thru-304 and HTTPCONF=bugs:gen-304 to enable 304 response with FTOCL <URL:http://www.delegate.org/mail-lists/delegate-ja/449>
+  - SMTP: fixed not to repeat (reuse cached one) EHLO after STLS <URL:http://www.delegate.org/mail-lists/delegate-en/04881>
+  - SMTPGATE: inheriting common configuration as SMTPGATE/admin/@common/conf
+  - IMAP: redirecting to a IMAP server hinted in ALERT
+  - POP: coped with STLS=fcl + SERVER=pop (not SERVER=pop://server)
+  - DNS: disabled unneccessary on-memory cache of RR record in DNS server
+  - UDPrelay: fixed SERVER=dns://host:port on BSD
+  - UDPrelay: fixed proxying DNS by UDPrelay with PERMIT <URL:http://www.delegate.org/mail-lists/delegate/14418>
+  - Xflash: gateway for X11-client to Flash as a X server
+  - yysh/YYMUX: so many fixes
+
+Platform Specific Fixes and Extensions:
+
+  - Windows: added hinting message on the failure of startup as a service
+  - Winwods: fixed server's pid in PIDFILE
+  - Windows: enabled -Fkill for foreground DeleGate server on Windows 
+  - Windows: fixed detection of isatty() when DeleGate is used as a console command
+  - Windows: "win32-dg.exe" changed its default HTTP port from -Q80 to -Q2080
+  - Ubuntu: fixed linking DeleGate on Ubuntu
+  - Solaris: fixed compilation on SOlaris11 (with gcc 4.8.2)
+
+Fixes and extensions in basic common:
+
+  - Resolver: fixed SEGV with searching 255.255.255.255.in-addr.arpa
+  - Resolver: fixed scanning search list separated by "," <URL:http://www.delegate.org/mail-lists/delegate-ja/00473>
+  - Resolver: introduced NIS timout (3 seconds, can be defined with TIMEOUT=nis:T)
+  - Resolver: coped with a long host name longer than 70 characters (ex. on Windows Azure)
+  - Resolver: modified not to use SOCKS by FORWARD by no-circuit-level proxy
+  - Resolver: introduced (but seems incomplete) RES_EXPIRE=F/M/R to expire resover cache
+  - Resolver: modified to expire DNS-RR cache on memory by the TTL
+  - Resolver: enabled binding DNS resolver port with SRCIF=Host:Port:dns <URL:http://www.delegate.org/mail-lists/delegate-en/04842>
+  - Screeing: rejecting clients lightly with SCREEN=reject <URL:http://www.delegate.org/mail-lists/delegate/14443>
+  - Using DGROOT="${STARTDIR}/DGROOT" if the directory exists
+  - Defining timeout of connection cache with TIMEOUT=cc:T
+  - Suppressed "VStr overflow" message when invoked on a host with long long name 
+  - Fixed SEGV on unexpected date format string
+  - Become multi-thread safer (MOUNT, fclose, Strdup)
+  - Closing /dev/null on restart by HUP
+  - Closing the file descriptor for localtime() on restart by HUP
+  - Disabling multiple incomming ports as -Q80/off,-Q443/off ...
+
+--------------------------------------------------------------------------
+
+  SITE: <URL:ftp://ftp.delegate.org/pub/DeleGate/>
+  FILE: delegate9.9.8.tar.gz
+  DATE: May 12 14:44 JST 2014
+  TAR-SIZE: 8591360 bytes
+  TAR-MD5:  106d8dac767dd0840689e58b50aa101c
+  PUBLIC-KEY: http://www.delegate.org/rsa-pubkey.pem
+  SRCSIGN=9.9.8:20140512144458+0900:cf698c21f61a8af3
+  TAR-MD5-SIGN:
+    HA8YLifvJsnAAtg0qjHgo5sHakysPiY1LdxL+uHB4pigFjW+vWQuIhZddYy2gjBVRXIw64Zj
+    DwQoQ3jTQnQjFlgk7xz/MOdF/8ucp4QTpsLg86/og7JNYfsTSU60NA6UkSTr4UDNYXyhDyh+
+    MdJXdGXyAEDZYzDbTWHS8HiyT98=
+
+Cheers,
+Yutaka
+--
+  9 9   Yutaka Sato <y.sato@delegate.org> http://delegate.org/y.sato/
+ ( ~ )  National Institute of Advanced Industrial Science and Technology
+_<   >_ 1-1-4 Umezono, Tsukuba, Ibaraki, 305-8568 Japan
+Do the more with the less -- B. Fuller

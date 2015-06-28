@@ -1,0 +1,21 @@
+<TITLE> NNTP/HTTP DeleGate </TITLE>
+
+<H2> NNTP to HTTP DeleGate </H2>
+
+<ISINDEX>
+
+<H2>Usage</H2><UL>
+ <LI>Jump to <A HREF=./>Top</A><P>
+ <LI>Search newsgroups by name
+  <UL>
+   <LI> <I>news.group</I> ... newsgroups of name <I>news.group.*</I>
+   <LI> <I>*group</I> .. newsgroups with the partial name <I>group</I>
+ </UL><P>
+ <LI>Jump to articles
+  <UL>
+   <LI> <I>news.group</I>/ ... the latest articles of <I>news.group</I>
+   <LI> <I>news.group</I>/<I>articleNumber</I>
+   <LI> <I>news.group</I>/<I>number1</I> - <I>number2</I>
+  </UL>
+</UL>
+<HR>

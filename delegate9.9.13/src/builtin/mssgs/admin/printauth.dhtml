@@ -1,0 +1,14 @@
+Automatic auth.: ${auth.withident?
+ You are <I>&lt;${client.ident}@${client.host}&gt;</I> who is
+  ${auth.iauthorized?:not} authorized by the DeleGate.
+:You seem from <I>${client.host}</I> without Identd.}<BR>
+Callback auth.: ${auth.with_pass?
+ ${auth.bad_pass?
+  Your authentication as <I>&lt;${auth.fauth}&gt;</I> failed.
+ :${auth.rej_pass?
+   You as <I>&lt;${auth.fauth}&gt;</I> are not authorized by the DeleGate.
+  :${auth.authorized_pass?
+   You as <I>&lt;${auth.fauth}&gt;</I> are authorized by the DeleGate.
+   :${auth.fauthmsg}}}}
+: Your authentication information is empty.
+}

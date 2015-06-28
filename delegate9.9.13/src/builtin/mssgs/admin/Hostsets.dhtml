@@ -1,0 +1,39 @@
+${setenent}
+
+${define.TITLE=${type:title:DeleGate Screen Management}}
+${include:head.dhtml}
+<FORM ACTION=servers METHOD=POST>${admin.dump_common}
+<INPUT type=hidden name=act value=ScreenCtl>
+
+${admin.formv.com.hostset-add?${admin.hostset-add.hostset-name.hostset-host}}
+${admin.formv.com.hostset-del?${admin.hostset-del.hostset-name.hostset-host}}
+
+<TABLE width=100%><TR><TD VALIGN=top>
+Hostset name<BR>
+<INPUT type=text size=15 name=hostset-name value="${admin.formv.hostset-name?${admin.formv.hostset-name}:screen}">
+&nbsp;
+${button:submit:com:none:Show}
+<P>
+Description:<BR>
+<TEXTAREA cols=30 rows=15 readonly style="border:0;background-color:transparent">${admin.formv.hostset-name.screen|not.admin.formv.hostset-name?
+"screen" for blocking malicious clients.  It is the default set of client hosts to be rejected immediately after the TCP connection from a client is established.
+}
+</TEXTAREA>
+
+</TD><TD VALIGN=top>
+<P>
+Host name or address<BR>
+<INPUT type=text size=15 name=hostset-host value="${admin.formv.hostset-host?${admin.formv.hostset-host}}">
+
+</TD><TD VALIGN=top width=1%>
+${button:submit:com:hostset-add:Append:style=width:80}
+${button:submit:com:hostset-del:Delete:style=width:80}
+${button:submit:com:hostset-undo:Undo:style=width:80;color:gray}
+
+</TD><TD VALIGN=top>
+<TEXTAREA cols=17 rows=10>
+${admin.hostset-get.hostset-name}
+</TEXTAREA>
+</TD></TR></TABLE>
+
+</FORM>

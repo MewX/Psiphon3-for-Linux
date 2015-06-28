@@ -1,0 +1,128 @@
+------------------------------------------------------------------------------
+ DeleGate/6.1 RELEASE NOTE
+
+ Date: March 3, 2000
+ Author: Yutaka Sato <ysato AT delegate DOT org>
+ <URL:http://www.delegate.org/delegate/>
+------------------------------------------------------------------------------
+
+Note that some default behaviors are not compatible with DeleGate/5.9 or
+former versions.
+
+CONSIDERABLE INCOMPATIBILITY WITH DeleGate/5.X AND FORMERS
+
+  The root directory of DeleGate on Unix
+    - appropriate DGROOT on Unix is set automatically by default
+    - can be compatible with former versions by DGROOT=""
+
+  Permissions of directory/file
+    - created directory/file is set non-writable by others by default
+    - can be compatible with former versions by SHARE=""
+
+  Private-MASTER process for HTTP-DeleGate
+    - no default private-MASTER will be
+    - can be compatible with former versions by MASTERP=""
+
+  MIME conversion
+    - no default Japanese code conversion, body decoding, for SMTP,POP,NNTP 
+    - can be compatible with former versions by MIMECONV=""
+
+  Socks client version
+    - act as SocksV5 client by default
+    - specify SOCKS="host:port/-4" if the server supports only SocksV4
+
+  Visibility of command line arguments
+    - only arguments before the option "--" are visible as "ps-title"
+    - append "--" as the last option to be compatible with former versions
+
+OTHER MAJOR CHANGES FROM DeleGate/5.X
+
+  Search path of library files
+    - library file will be searched in multiple locations specified by LIBPATH
+    - applied for +=parameterFile, filter program, *.cfi, *.ccx, sslway(*.pem)
+    - DGROOT/lib can be the recommended common location of library files
+
+  HTTP/1.1 support
+    - "chunked" transfer encoding of HTTP/1.1 is supported
+    - implicit "keep-alive" in HTTP/1.1 is supported
+    - "keep-alive" connection to HTTP server will be tried by default
+
+  Supervising DeleGate processes
+    - immediately sweeping zombi processes of DeleGate (-S option)
+    - trap and defeat execve() which can be a tool for intrusion (-Tx option)
+
+  Remote administration
+    - http://delegate/-/admin/ for arbitrary protocol-DeleGate (except tcprelay)
+
+  New file types interpreted as origin HTTP server
+    - *.shtml -- server side include (SSI)
+    - *.dgp   -- parameter list of DeleGate to be MOUNTed here as CGI program
+    - *.dhtml -- like built-in scripts under src/builtin/mssgs/*.dhtml
+
+  URL rewriting (Mount)
+    - "normalize" and "partialize" URLs in response by default (URICONV)
+    - base URL of icons as in-line IMG become controllable (BASEURL)
+
+  User definable "auto-MOUNT" points
+    - MOUNT="/path/* http://*"
+
+  Refreshing FTP cache "if-modified"
+    - cached file will not be re-loaded if it's not changed
+
+  Character code conversion
+    - charcter code conversion for request URL string (FTOSV)
+    - utf8 support for Japanese characters
+
+  Variable sized tables
+    - table sizes of PERMIT,MASTER,etc. become variable
+
+CHANGED PARAMETERS
+
+  DGROOT (on Unix)
+    The default value of DGROOT is set by searching available directory in
+    the following order:
+      (1) ${HOME}/delegate/  (at the home directory of OWNER)
+      (2) /var/spool/delegate-${OWNER}
+      (3) /tmp/delegate-${OWNER}
+
+    NOTE: if you will explicitly specify DGROOT and some other parameters
+      (OWNER, CHROOT, SHARE, UMASK), those parameters must be given outside of
+      parameter file (with "+=parameterFile" notation), that is as
+      command line arguments or environment variables.
+
+  ADMIN
+    - this parameter has become mandatory to invoke DeleGate for any protocol
+
+  CACHE
+    - CACHE="do" is introduced to create CACHEDIR if not present
+
+  MASTERP
+    - become usable not only for HTTP-DeleGate but for any protocol-DeleGate
+
+  MOUNT
+    - MOUNT with "moved" or "useproxy" won't be used for response rewriting
+
+  URICONV
+    - URICONV="mount,normalize,partialize" by default
+
+  BASEURL
+    - Ex. BASEURL=http://www ... the URL of a HTTP server who redirects to me
+
+  FTOSV
+    - Ex. FTOSV="-cc-euc" converts Japanese characters in request URL to EUC
+
+  SERVER
+    - SERVER="tunnel1" become necessary to work as a TUNNEL destination server
+
+NEWLY INTRODUCED PARAMETERS
+
+  LIBPATH -- .:${STARTDIR}:${LIBDIR}:${EXECDIR} by default
+  LIBDIR  -- ${DGROOT}/lib by default
+  SHARE   -- specify name pattern of directory/file to be publically writable
+  UMASK   -- at startup, set "umask" to control file permission
+
+OBSOLETED PARAMETERS
+
+  MANAGER -- totally replaced by ADMIN
+
+------------------------------------------------------------------------------

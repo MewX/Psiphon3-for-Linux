@@ -1,0 +1,30 @@
+#
+# DGCA configuration
+#
+
+RANDFILE               = .rand
+
+[ req ]
+prompt                 = no
+default_bits           = 1024
+distinguished_name     = req_distinguished_name
+
+[ ca ]
+default_ca             = CA_default
+prompt                 = no
+
+[ policy_any ]
+countryName            = optional
+stateOrProvinceName    = optional
+localityName           = optional
+organizationName       = optional
+organizationalUnitName = optional
+commonName             = optional
+emailAddress           = supplied
+
+[ CA_default ]
+default_md             = md5
+default_days           = 365
+serial                 = serial
+new_certs_dir          = certs
+database               = dgcaidx.txt

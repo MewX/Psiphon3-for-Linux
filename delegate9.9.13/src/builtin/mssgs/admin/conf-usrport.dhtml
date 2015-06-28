@@ -1,0 +1,11 @@
+  <TR><TD align=center>${admin.conferr.conf-usrport?<FONT color=red>*</FONT>}user port number</TD>
+  <TD><INPUT ${admin.conferr.conf-usrport?style="background-color:#FFD0F0"} type=text name=conf-usrport maxlength=6 size=7 value="${_admin.formv.conf-usrport}">${tag:small: ex. 8080}
+<INPUT type=checkbox name=conf-usrpadrx ${admin.formv.conf-usrpadrx.on?checked}>
+  ${tag:small:restrict interface}
+  </TD></TR>
+  ${admin.formv.conf-usrpadrx?
+    <TR><TD align=center>user port interface</TD><TD>
+    <INPUT type=text name=conf-usrpadr value="${_admin.formv.conf-usrpadr}">
+    ${tag:small: ex. 192.168.1.1 or localhost}
+    </TD></TR>
+  }

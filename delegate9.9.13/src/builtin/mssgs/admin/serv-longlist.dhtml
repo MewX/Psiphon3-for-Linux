@@ -1,0 +1,54 @@
+<TABLE border=0 cellpadding=0 cellspacing=0><TR>
+${admin.altcolor.E0E0E0,C0FFC0.<TD><TABLE border=0 cellpadding=0 cellspacing=0>
+<!RB><INPUT type=text readonly size=12 style="font-size:small;border-style:none;background-color:transparent" value=Name><!RE>
+<!RB>Status<!RE>
+<!RB><small><small>PID</small></small><!RE>
+<!RB><small><small>Started</small></small><!RE>
+<!RB><small><small>Updated</small></small><!RE>
+<!RB>Idle sec.<!RE>
+<!RB>Load ave.<!RE>
+<!RB>Requests<!RE>
+<!RB>Processes<!RE>
+<!RB>Active<!RE>
+<!RB>User CPU<!RE>
+<!RB>System CPU<!RE>
+${with.rusage?
+ <!RB>Data Sent<!RE>
+ <!RB>Data Recv<!RE>
+ <!RB>Signals<!RE>
+ <!RB>Input<!RE>
+ <!RB>Output<!RE>
+ <!RB>Context Sw.<!RE>
+}
+<!RB><small>Version</small><!RE>
+<!RB><small>Exe. CRC32</small><!RE>
+<!RB><small><small>Exe. date</small></small><!RE>
+}
+</TD></TABLE>
+${admin.foreachserv._self_,sav-cnf.<TD>
+<TABLE border=0 cellpadding=0 cellspacing=0>
+<!RB align=right><INPUT type=text align=right size=12 value="%xn" style="font-size:small;border-style:none;background-color:transparent"><!RE>
+<!RB align=right>%t&nbsp;<!RE>
+<!RB align=right><small><small>%p&nbsp;</small></small><!RE>
+<!RB align=right><small><small>&nbsp;%s&nbsp;</small></small><!RE>
+<!RB align=right><small><small>&nbsp;%u&nbsp;</small></small><!RE>
+<!RB align=right>%i&nbsp;<!RE>
+<!RB align=right>%L&nbsp;<!RE>
+<!RB align=right>%q&nbsp;<!RE>
+<!RB align=right>%f&nbsp;<!RE>
+<!RB align=right>%a&nbsp;<!RE>
+<!RB align=right>%Ru&nbsp;<!RE>
+<!RB align=right>%Rs&nbsp;<!RE>
+${with.rusage?
+ <!RB align=right>%RS&nbsp;<!RE>
+ <!RB align=right>%RR&nbsp;<!RE>
+ <!RB align=right>%Rg&nbsp;<!RE>
+ <!RB align=right>%Ri&nbsp;<!RE>
+ <!RB align=right>%Ro&nbsp;<!RE>
+ <!RB align=right>%Rx&nbsp;<!RE>
+}
+<!RB align=right><small>%xv&nbsp;</small><!RE>
+<!RB align=right><small>%xX&nbsp;</small><!RE>
+<!RB align=right><small><small>%xd&nbsp;</small></small><!RE>
+</TABLE></TD>}
+</TR></TABLE>

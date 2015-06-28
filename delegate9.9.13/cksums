@@ -1,0 +1,85 @@
+if [ "$XDG" = "" -o ! -x "$XDG" ]; then
+	if [ -f ../dgx.exe ]; then
+		XDG=../dgx.exe
+	fi
+fi
+if [ "$XDG" = "" -o ! -x "$XDG" ]; then
+	XDG1=`which dgx`
+	if [ $? = 0 -a -x "$XDG1" ]; then
+		XDG="$XDG1"
+	else
+		XDG1=`which dg.exe`
+		if [ $? = 0 -a -x "$XDG1" ]; then
+			XDG="$XDG1"
+		fi
+	fi
+fi
+if [ "$XDG" = "" -o ! -x "$XDG" ]; then
+	XDG=src/dg.exe
+fi
+echo `$XDG -Fhostid`" (XDG=$XDG)A"
+
+echo "cksum: "`hostname`
+rm subin/.cksum.* */.cksum.*_dl.c
+rm resolvy/.cksum.ntod.c
+
+./mkmake.exe -cksum maker/mkmake.c  ##for XCC without compilation of mkmake.c
+
+sed -n '1,/DIGEST-OFF/p' rary/windows.c|$XDG -Fcksum > rary/.cksum.windows.c
+sed -n '1,/DIGEST-OFF/p' rary/wince.c  |$XDG -Fcksum > rary/.cksum.wince.c
+sed -n '1,/DIGEST-OFF/p' rary/winmo.c  |$XDG -Fcksum > rary/.cksum.winmo.c
+sed -n '1,/DIGEST-OFF/p' rary/winnat.c |$XDG -Fcksum > rary/.cksum.winnat.c
+sed -n '1,/DIGEST-OFF/p' rary/winsspi.c|$XDG -Fcksum > rary/.cksum.winsspi.c
+sed -n '1,/DIGEST-OFF/p' rary/pilsner.c|$XDG -Fcksum > rary/.cksum.pilsner.c
+
+sed -n '1,/DIGEST-OFF/p' src/spinach.c |$XDG -Fcksum >  src/.cksum.spinach.c
+sed -n '1,/DIGEST-OFF/p' src/caps.c    |$XDG -Fcksum >  src/.cksum.caps.c
+sed -n '1,/DIGEST-OFF/p' src/stls.c    |$XDG -Fcksum >  src/.cksum.stls.c
+sed -n '1,/DIGEST-OFF/p' src/sox.c     |$XDG -Fcksum >  src/.cksum.sox.c
+sed -n '1,/DIGEST-OFF/p' src/vsap.c    |$XDG -Fcksum >  src/.cksum.vsap.c
+sed -n '1,/DIGEST-OFF/p' src/htaccept.c|$XDG -Fcksum >  src/.cksum.htaccept.c
+
+ls -d */.cksum.* | $XDG -Fsort > .files
+FILES=`cat .files`
+$XDG -Fcksum -n -l $FILES
+
+if [ "$XCCDG" != "" ]; then
+	XXCC="XCC-$XCCDG "
+fi
+CKSUMS=`cat $FILES |$XDG -Fsort| $XDG -Fcksum`
+HOST="$XXCC"`hostname`" "`uname`
+
+if [ -x src/delegated.exe ]; then
+	DGEXE=src/delegated.exe
+elif [ -x src/delegated ]; then
+	DGEXE=src/delegated
+elif [ -x src/delegated.exe ]; then
+	DGEXE=src/delegated.exe
+elif [ -f src/wince-dg.exe ]; then
+	DGEXE=src/wince-dg.exe
+else
+	DGEXE=src/dg.exe
+fi
+
+if [ -x ../dgx ]; then
+	YDG=../dgx
+elif [ -x ../../dgx ]; then
+	YDG=../../dgx
+elif [ -x src/delegated ]; then
+	YDG=src/delegated
+fi
+SIGN=`$YDG -Fesign -vs $DGEXE`
+HID=`$YDG -vs -Fhostid`
+if [ "$SIGN" = "" ]; then
+	SIGN=`$XDG -Fesign -vs $DGEXE`
+	HID=`$XDG -vs -Fhostid`
+fi
+
+echo "CkSUM: $CKSUMS $SIGN $HOST $HID"
+echo "CKSUM: $CKSUMS $SIGN $HOST"
+echo "CkSum: $CKSUMS $HOST ($HTTP_HOST <= $REMOTE_HOST)"
+
+echo "$HOST XDG=$XDG"
+echo "$HOST YDG=$YDG"
+
+./bench stat

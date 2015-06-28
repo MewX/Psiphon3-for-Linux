@@ -1,0 +1,24 @@
+<TR>
+ <TD align=center width=25%>user authentication</TD>
+ <TD>
+ <INPUT type=radio name=conf-AUTHORIZER value=none ${not.admin.formv.conf-AUTHORIZER|admin.formv.conf-AUTHORIZER.none?checked}>${tag:small:none}
+ <INPUT type=radio name=conf-AUTHORIZER value=pam  ${admin.formv.conf-AUTHORIZER.pam?checked}>${tag:small:PAM}
+ ${admin.formv.conf-AUTHORIZER.pam? ${tag:small:service} <INPUT type=text name=conf-servlist size=16 value="${admin.formv.conf-servlist?${_admin.formv.conf-servlist}:passwd}">}
+ <INPUT type=radio name=conf-AUTHORIZER value=list ${admin.formv.conf-AUTHORIZER.list?checked}>${tag:small:list}
+ ${admin.formv.conf-AUTHORIZER&not.admin.formv.conf-AUTHORIZER.none,pam,list?
+ <INPUT type=radio name=conf-AUTHORIZER value=custom checked>${tag:small:custom}
+ }
+ </TD>
+</TR>
+
+${admin.formv.conf-AUTHORIZER&not.admin.formv.conf-AUTHORIZER.none,pam,list?
+<TR><TD align=center>custom authorizer</TD><TD>
+ <INPUT type=text size=60 name=conf-AUTHORIZER value="${admin.formv.conf-AUTHORIZER}">
+</TD></TR>
+}
+
+${admin.formv.conf-AUTHORIZER.list?
+ <TR><TD align=center>user and password</TD>
+ <TD><INPUT type=text size=48 name=conf-userlist value="${_admin.formv.conf-userlist}"> ${tag:small:ex. user1:pass1,...}</TD>
+ </TR>
+}

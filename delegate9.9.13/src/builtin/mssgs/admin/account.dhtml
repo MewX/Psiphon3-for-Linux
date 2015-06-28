@@ -1,0 +1,36 @@
+${+TITLE=DeleGate Account Mangement}
+${include:head.dhtml}
+
+<BR>
+<FORM ACTION="${ibase}admin/account" METHOD=POST>
+<KBD>Username</KBD>:
+ <INPUT TYPE=TEXT NAME=username VALUE="${_admin.user}" SIZE=20>
+&nbsp;
+<KBD>Domain</KBD>:
+<INPUT TYPE=TEXT NAME=domain VALUE="${_admin.domain}" SIZE=20>
+<P>
+<KBD>Password</KBD>:
+<!--
+ <INPUT TYPE=PASSWORD NAME=password SIZE=20><BR>
+-->
+ <INPUT TYPE=TEXT NAME=password SIZE=20>
+<P>
+<INPUT TYPE=CHECKBOX NAME="digest" VALUE="1" ${admin.digest?CHECKED}>
+ for Digest Authentication
+<P>
+<INPUT TYPE=submit NAME=button VALUE=" add ">
+<INPUT TYPE=submit NAME=button VALUE=" delete ">
+<INPUT TYPE=submit NAME=button VALUE=" verify ">
+</FORM>
+<HR>
+
+${admin.stat?
+<P>COMMAND<UL><PRE>${_admin.command}</PRE></UL>
+<P>RESULT <UL><PRE>${_admin.result}</PRE></UL><HR>}
+
+This is a HTTP interface for the account management function "-Fauth".
+${clif.withssl?:
+<BR>
+Note that this feature should be used over HTTPS/SSL, with
+STLS=-fcl parameter.
+}

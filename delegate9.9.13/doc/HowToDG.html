@@ -1,0 +1,924 @@
+<BASE HREF=http://www.delegate.org/delegate/HowToDG.html>
+<STYLE>
+kbd { font-family:courier new; }
+pre { font-family:courier new; }
+body { font-family:courier new; }
+</STYLE>
+
+<TITLE>DeleGate Usage Examples</TITLE>
+
+<BODY>
+<H2>
+DeleGate Usage Examples
+</H2>
+&copy;<I>2006, Yutaka Sato, AIST, Japan</I><BR>
+<small>[ Last-Modified: 2008-September-2 ]</small>
+
+<P>
+<A HREF=http://www.delegate.org/>DeleGate</A> is a multi-purpose proxy
+server for multiple application protocols running on multiple platforms.
+The aim of this document is to provide an introduction to how to use DeleGate
+by a collection of usage examples with a short tutorial for beginners.
+Details of configuration parameters should be referred to the
+<A HREF=http://www.delegate.org/delegate/Manual.htm>Reference Manual</A>.
+This document is written based on the specification of the latest version
+of DeleGate version 9.
+<P>
+<TABLE width=100%><TR><TD align=right>
+[<A HREF=http://www.delegate.org/delegate/HowToDG.html><small>Latest</small></A>]
+[<A HREF=http://www.delegate.org/delegate/><small>Home</small></A>]
+[<A HREF=Manual.htm><small>Manual</small></A>]
+[<A HREF=/delegate/tutorial/><small>Tutorial</small></A>]
+[<A HREF=/delegate/download/><small>Download</small></A>]
+[<A HREF=#install><small>Install</small></A>]
+[<A HREF=ftp://ftp.delegate.org/pub/DeleGate/COPYRIGHT><small>Copyright</small></A>]
+</TD></TR></TABLE>
+
+<B>Index</B>
+<OL>
+<LI><A HREF=#tutorial>A Short Tutorial</A>
+<LI><A HREF=#alproxy>DeleGate as an Application Level Proxy</A>
+<LI><A HREF=#clproxy>DeleGate as a Circuit Level Proxy</A>
+ <small>(SOCKS, TCP, UDP)</small>
+<LI><A HREF=#sslgateway>DeleGate as a Gateway Between TLS/non-TLS clients/servers</A>
+<LI><A HREF=#ipv64gateway>DeleGate as a Gateway Between IPv6 and IPv4</A>
+<LI><A HREF=#alrouter>DeleGate as an Application Level Router</A>
+<LI><A HREF=#alvpn>DeleGate as an Application Level VPN Router</A>
+<LI><A HREF=#orgserver>DeleGate as an Origin Server</A>
+ <small>(HTTP, FTP, DNS, NNTP)</small>
+<LI><A HREF=#sigateway>DeleGate as an Server-Integration Gateway</A>
+<LI><A HREF=#ptgateway>DeleGate as a Protocol Translation Gateway</A>
+<LI><A HREF=#caching>DeleGate as a Caching Proxy</A>
+<LI><A HREF=#filtering>DeleGate as a Filtering Proxy</A>
+<LI><A HREF=#authproxy>DeleGate as an Authenication Proxy</A>
+<LI><A HREF=#accessctrl>Access Control</A>
+<LI><A HREF=#install>Installation</A>
+<LI><A HREF=#subin>Privileged operations without being super-user</A>
+</OL>
+
+<A NAME=tutorial>
+<B>A Short Tutorial</B>
+<UL>
+<HR>
+<TABLE border=0 cellspacing=0 cellpadding=0><TR><TD>
+</TD></TR><TR><TD>
+<KBD>%</KBD> -- implies a command prompt for a non-privileged user
+ (<A HREF=#subin>subin</A>)
+<BR>
+<KBD><A HREF=http://www.delegate.org/delegate/Manual.htm?terminology>delegated</A></KBD>
+-- the name of an executable file of DeleGate
+(<A HREF=http://www.delegate.org/delegate/download/>download</A>)
+<BR>
+<KBD><A HREF=http://www.delegate.org/delegate/Manual.htm?opt_P>-P<I>port</I></A></KBD>
+-- the port on which DeleGate accepts requests from clients (<A HREF=#subin>install</A>)
+<BR>
+<KBD><A HREF=http://www.delegate.org/delegate/Manual.htm?SERVER>SERVER</A>=<I>proto</I></KBD>
+-- the protocol in which DeleGate communicate with clients
+<BR>
+<KBD><A HREF=http://www.delegate.org/delegate/Manual.htm?opt_v>-v</A></KBD>
+-- the option to run DeleGate in foreground putting the log to console
+<BR>
+<KBD><A HREF=http://www.delegate.org/delegate/Manual.htm?ADMIN>ADMIN</A>=<I>you</I>@<I>your.domain</I></KBD>
+-- the E-mail address of the administrator of the DeleGate
+<BR>
+<KBD><A HREF=http://www.delegate.org/delegate/Manual.htm?term_SUBSTITUTION>+=<I>filename</I></A></KBD>
+-- loading command line arguments from a file
+</TD></TR><TR><TD>
+</TD></TR></TABLE>
+<HR>
+</UL>
+
+<UL>
+<P>
+The simplest command to run DeleGate as a HTTP proxy is as follows:
+<UL>
+<KBD>% delegated -P8080 SERVER=http</KBD>
+</UL>
+
+<P>
+To test a command  observing the progress,
+use "-v" option to make DeleGate run in foreground with logging on the console.
+<UL>
+<KBD>% delegated -P8080 SERVER=http -v</KBD>
+</UL>
+
+<P>
+You will be asked the E-mail address of the administrator
+(it should be yourself)
+if your delegated is got as the
+<A HREF=ftp://ftp.delegate.org/pub/DeleGate/download.html>binary distribution</A>.
+It can be specified in the ADMIN argument.
+<UL>
+<KBD>% delegated -P8080 SERVER=http -v ADMIN=<I>you</I>@<I>your.domain</I></KBD>
+</UL>
+
+<P>
+A list of command line arguments can be loaded from a file with
+"<A HREF=http://www.delegate.org/delegate/Manual.htm?term_SUBSTITUTION>+=<I>filename</I></A>" option.  The file contains an argument per line.
+<UL>
+<TABLE border=0><TR><TD valign=top>
+<KBD>% delegated +=dg.conf</KBD>
+</TD><TD>&nbsp;&nbsp;</TD><TD><BR>
+<KBD>[the content of dg.conf]</KBD><BR><KBD>
+-P8080<BR>
+SERVER=http<BR>
+-v<BR>
+ADMIN=<I>you</I>@<I>your.domain</I><BR>
+</KBD>
+</TD></TR></TABLE>
+</UL>
+
+<P>
+When you use DeleGate on the privileged port (of number lower than 1024)
+on Unix, you need to run DeleGate with the privilege of the super-user.
+<UL>
+<KBD>% sudo delegated -P80 SERVER=http ...</KBD>
+</UL>
+<P>
+But running DeleGate under the super-user's privilege is not recommended
+in the consideration of security.
+You should install <A HREF="#subin">subin</A> to escape the problem.
+
+</UL>
+</A>
+
+<P>
+<!-------------------->
+<A NAME=alproxy>
+<B>DeleGate as an Application Level Proxy</B>
+<UL>
+
+<LI>how to use DeleGate as a <A HREF=Manual.htm?serv_HTTP>HTTP</A> proxy (possibly as a "transparent proxy")
+<KBD>(*1)</KBD>
+<BR>
+<UL><KBD>
+% delegated -P8080 SERVER=http
+</KBD></UL>
+<BR>
+
+<LI>how to use DeleGate as a HTTP gateway (or "reverse proxy")
+<BR>
+<UL><KBD>
+% delegated -P80 SERVER=http://<I>server</I>/
+</KBD></UL>
+<BR>
+
+<LI>how to use DeleGate as a HTTP caching proxy
+<BR>
+<UL><KBD>
+% delegated -P8080 SERVER=http <A HREF=Manual.htm?CACHE>CACHE</A>=do
+</KBD></UL>
+<BR>
+
+<LI>how to use DeleGate as a <A HREF=Manual.htm?serv_FTP>FTP</A> proxy (for FTP client)
+<KBD>(*2)</KBD>
+<BR>
+<UL><KBD>
+% delegated -P8021 SERVER=ftp
+</KBD></UL>
+<BR>
+
+<LI>how to use DeleGate as a <A HREF=Manual.htm?serv_POP>POP3</A> proxy
+<BR>
+<UL><KBD>
+% delegated -P8110 SERVER=pop
+</KBD></UL>
+<BR>
+
+<LI>how to use DeleGate as a <A HREF=Manual.htm?serv_IMAP>IMAP</A> proxy
+<BR>
+<UL><KBD>
+% delegated -P8143 SERVER=imap
+</KBD></UL>
+<BR>
+
+<LI>how to use DeleGate as a <A HREF=Manual.htm?serv_LDAP>LDAP</A> proxy
+<BR>
+<UL><KBD>
+% delegated -P389 SERVER=ldap
+</KBD></UL>
+<BR>
+</A>
+
+<LI>how to use DeleGate as a <A HREF=Manual.htm?serv_Telnet>Telnet</A> proxy
+<BR>
+<UL><KBD>
+% delegated -P8023 SERVER=telnet
+</KBD></UL>
+<BR>
+</A>
+
+<LI>how to use DeleGate as a <A HREF=Manual.htm?serv_SMTP>SMTP</A> server
+<BR>
+<UL><KBD>
+% delegated -P25 SERVER=smtp
+</KBD></UL>
+<BR>
+
+<LI>how to use DeleGate as a <A HREF=Manual.htm?serv_DNS>DNS</A> (proxy) server
+<BR>
+<UL><KBD>
+% delegated -P53 SERVER=dns
+</KBD></UL>
+<BR>
+
+<HR>
+<KBD>(*1)</KBD>
+So called "transparent proxy" can be realized by two phases; (a) detecting
+and forwarding a TCP/IP packet in HTTP protocol to a HTTP proxy server and
+(b) a HTTP proxy server which forwards a message to the server indicated
+by the "Host:" field in its.
+DeleGate as a HTTP proxy allows (b) by default for the client hosts in
+its local-network.  This behavior can be controlled by
+<KBD><A HREF=Manual.htm?RELAY>RELAY</A>=vhost</KBD> parameter.
+<P>
+<KBD>(*2)</KBD>
+Proxies for application protocols except HTTP do not have an inherent
+sub-protocol to realize a proxy server which supports to connect to
+an arbitrary server specified by a client.
+Therefore to access arbitray server in FTP, POP and IMAP is realized by
+accepting <KBD><I>user</I>@<I>host</I>:<I>port</I></KBD> instread of
+<KBD><I>username</I></KBD> as a login name.
+<HR>
+
+</UL>
+
+<!-------------------->
+<A NAME=clproxy>
+<B>DeleGate as a Circuit Level Proxy</B>
+<UL>
+<LI>how to use DeleGate as a <A HREF=Manual.htm#serv_Socks>SOCKS</A> proxy
+<BR>
+<UL><KBD>
+% delegated -P1080 SERVER=socks
+</KBD></UL>
+<BR>
+
+<LI>how to use DeleGate to relay <A HREF=Manual.htm?serv_udprelay>UDP</A> packets
+<BR>
+<UL><KBD>
+% delegated -P<I>port</I> SERVER=udprelay://<I>svhost</I>:<I>svport</I>
+</KBD></UL>
+<BR>
+
+<LI>how to use DeleGate to relay UDP packets via a <A HREF=Manual.htm?SOCKS>SOCKS</A> proxy
+<BR>
+<UL><KBD>
+% delegated -P<I>port</I> SERVER=udprelay://<I>svhost</I>:<I>svport</I> SOCKS=<I>socksHost</I>:<I>socksPort</I>
+</KBD></UL>
+<BR>
+
+<LI>how to use DeleGate to relay <A HREF=Manual.htm?serv_tcprelay>TCP</A> connections
+<BR>
+<UL><KBD>
+% delegated -P<I>port</I> SERVER=tcprelay://<I>svhost</I>:<I>svport</I>
+</KBD></UL>
+<BR>
+
+<LI>how to use DeleGate as a tunnel for TCP connections via a <A HREF=Manual.htm?SOCKS>SOCKS</A> proxy
+<BR>
+<UL><KBD>
+% delegated -P<I>port</I> SERVER=tcprelay://<I>svhost</I>:<I>svport</I> SOCKS=<I>socksHost</I>:<I>socksPort</I>
+</KBD></UL>
+<BR>
+
+<LI>how to use DeleGate as a tunnel for TCP connections via a HTTP proxy (SSL-tunnel)
+<BR>
+<UL><KBD>
+% delegated -P<I>port</I> SERVER=tcprelay://<I>svhost</I>:<I>svport</I> <A HREF=Manual.htm?SSLTUNNEL>SSLTUNNEL</A>=<I>proxyHost</I>:<I>proxyPort</I>
+</KBD></UL>
+<BR>
+</UL>
+</A>
+
+<A NAME=sslgateway>
+<!-------------------->
+<B>DeleGate as a Gateway Between <A HREF=/delegate/tls/>TLS</A> clients (servers) and non-TLS servers (clients)</B>
+<UL>
+
+<LI>how to use DeleGate as a SSL or <A HREF=/delegate/tls/>TLS</A> wrapper
+for an arbitrary protocol on TCP
+<BR>
+<UL><KBD>
+% delegated -P<I>port</I> SERVER=tcprelay://<I>svhost</I>:<I>svport</I> <A HREF=Manual.htm?STLS>STLS</A>=fcl
+</KBD></UL>
+<BR>
+
+<LI>how to use DeleGate as a gateway for HTTPS clients to a HTTP server
+<B><KBD>(*1)</KBD></B>
+<BR>
+<UL><KBD>
+% delegated -P443 SERVER=https MOUNT="/* http://<I>server</I>/*" <A HREF=Manual.htm?STLS>STLS</A>=fcl
+</KBD></UL>
+<BR>
+
+<LI>how to use DeleGate as a gateway for HTTP clients to a HTTPS server
+<BR>
+<UL><KBD>
+% delegated -P80 SERVER=http MOUNT="/* https://<I>server</I>/*" <A HREF=Manual.htm?STLS>STLS</A>=fsv:https
+</KBD></UL>
+<BR>
+
+<LI>how to use DeleGate as a POP over HTTPS gateway
+<BR>
+<UL><KBD>
+% delegated -P443 SERVER=https MOUNT="/mail/* pop://<I>server</I>/*" STLS=fcl
+</KBD></UL>
+<BR>
+
+<LI>how to use DeleGate as a gateway for FTP clients to a FTPS server
+<B><KBD>(*2)</KBD></B>
+<BR>
+<UL><KBD>
+% delegated -P21 SERVER=ftp MOUNT="/* ftps://<I>server</I>/*" STLS=fsv
+</KBD></UL>
+<BR>
+
+<LI>how to use DeleGate as a gateway for FTPS clients to a FTP server
+<BR>
+<UL><KBD>
+% delegated -P990 SERVER=ftps MOUNT="/* ftp://<I>server</I>/*" STLS=fsv
+</KBD></UL>
+<BR>
+
+ <HR>
+<P>
+<B><KBD>(*1)</KBD></B>
+ You need to use <KBD>SERVER=https</KBD> instead of <KBD>SERVER=tcprelay</KBD>
+ to relay between HTTP and HTTPS.  This is necessary to map URLs,
+ transferred in HTTP messages,
+ appropriately following to the mapping of protocol and host-name
+ from <KBD>"http://server/"</KBD> to <KBD>"https://dghost/"</KBD>.
+ It is also necessary to enable <A HREF=Manual.htm?CACHE>caching</A>
+ of response messages.
+
+<P>
+<B><KBD>(*2)</KBD></B>
+ You need to use <KBD>SERVER=ftp</KBD> instead of <KBD>SERVER=tcprelay</KBD>
+ because the FTP protocol uses data-connections to be created dynamically
+ of which usage is negotiated in the protocol, which needs to be interpreted
+ by DeleGate of <KBD>SERVER=ftp</KBD>.
+ <HR>
+</UL>
+</A>
+
+<!-------------------->
+<A NAME=ipv64gateway>
+<B>DeleGate as a Gateway Between <A HREF=/delegate/IPv6NOTE.txt>IPv6</A> and IPv4</B>
+<UL>
+
+<LI>how to use DeleGate as a SOCKS proxy from IPv4 clients to IPv6 servers
+<BR>
+<UL><KBD>
+% delegated -P1080 SERVER=socks
+</KBD></UL>
+<BR>
+
+<LI>how to use DeleGate as a HTTP proxy from IPv4 clients to IPv6 servers
+<BR>
+<UL><KBD>
+% delegated -P8080 SERVER=http
+</KBD></UL>
+<BR>
+
+<LI>how to use DeleGate to accept connections on IPv6 port
+<BR>
+<UL><KBD>
+% delegated -P__:80 SERVER=http
+</KBD></UL>
+<BR>
+
+<LI>how to use DeleGate as a gateway from IPv6 clients to a IPv4 server
+<BR>
+<UL><KBD>
+% delegated -P__:80 SERVER=http://192.168.1.1/
+</KBD></UL>
+<BR>
+
+<LI>how to use DeleGate as a gateway from IPv4 clients to a IPv6 server
+<BR>
+<UL><KBD>
+% delegated -P192.168.1.1:80 SERVER=http://fe80__12_34%en0/
+</KBD></UL>
+<BR>
+</UL>
+</A>
+
+<!-------------------->
+<A NAME=alrouter>
+<B>DeleGate as an Application Level Router</B>
+<UL>
+
+<LI>how to use DeleGate as a proxy to switch upstream proxy by destination site
+<BR>
+<UL><KBD>
+% delegated -P8080 SERVER=http
+ <A HREF=Manual.htm?PROXY>PROXY</A>="<I>proxy</I>:8080</I>:<I>*.dom1,*.dom2</I>"
+</KBD></UL>
+<BR>
+
+<LI>how to use DeleGate as a proxy to switch upstream proxy based on URL path
+<BR>
+<UL><KBD>
+% delegated -P8080 SERVER=http
+<NOBR><A HREF=Manual.htm?MOUNT>MOUNT</A>="http://host/path1/* = PROXY=<I>proxy</I>:8080"</NOBR>
+</KBD></UL>
+<BR>
+
+<LI>how to use DeleGate as a proxy to switch upstream proxies based on protocol
+<BR>
+<UL><KBD>
+% delegated -P8080 SERVER=http
+ <A HREF=Manual.htm?PROXY>PROXY</A>="<I>proxy</I>:8080</I>"
+ <A HREF=Manual.htm?SOCKS>SOCKS</A>="<I>socks</I>:1080</I>"
+ <A HREF=Manual.htm?CONNECT>CONNECT</A>="proxy:http,socks:ftp,direct"
+</KBD></UL>
+<BR>
+
+<LI>how to use DeleGate as a proxy to switch upstream proxies by destination
+<BR>
+<UL><KBD>
+% delegated -P8080 SERVER=http
+ <A HREF=Manual.htm?PROXY>PROXY</A>="<I>proxy</I>:8080</I>"
+ <A HREF=Manual.htm?SOCKS>SOCKS</A>="<I>socks</I>:1080</I>"
+ <A HREF=Manual.htm?CONNECT>CONNECT</A>="proxy:*:*.dom1,socks:*:*.dom2,direct"
+</KBD></UL>
+<BR>
+
+<LI>how to use DeleGate as a proxy to switch upstream DNS server based on query
+<BR>
+<UL><KBD>
+% delegated -P53 SERVER=dns
+ <A HREF=Manual.htm?RESOLV>RESOLV</A>="dns:192.168.1.123:*.localdomain,dns:192.168.1.1"
+</KBD></UL>
+<BR>
+
+</UL>
+</A>
+
+<!-------------------->
+<A NAME=alvpn>
+<B>DeleGate as an Application Level VPN Router</B>
+<UL>
+
+<LI>how to chain DeleGate to relay SOCKS over SSL
+<UL><KBD>
+hostA% delegated -P1080 <A HREF=Manual.htm?STLS>STLS</A>=fsv <A HREF=Manual.htm?serv_Socks>SERVER=socks</A> <A HREF=Manual.htm?SOCKS>SOCKS</A>=hostB:2080<BR>
+hostB% delegated -P2080 STLS=fcl SERVER=socks
+</KBD></UL>
+<BR>
+
+<LI>how to chain DeleGate to relay SOCKS over SSL (two hops)
+<UL><KBD>
+hostA% delegated -P1080 SERVER=socks SOCKS=hostB:2080 STLS=fsv<BR>
+hostB% delegated -P2080 SERVER=socks SOCKS=hostC:2080 STLS=fcl,fsv<BR>
+hostC% delegated -P2080 SERVER=socks STLS=fcl
+</KBD></UL>
+
+</UL>
+</A>
+
+<!-------------------->
+<A NAME=orgserver>
+<B>DeleGate as an Origin Server</B>
+<UL>
+
+<LI>how to use DeleGate as an origin HTTP server
+<BR>
+<UL><KBD>
+% delegated -P80 SERVER=http MOUNT="/* file:/path/of/www/*"
+</KBD></UL>
+<BR>
+
+<LI>how to use DeleGate as an origin FTP server
+<BR>
+<UL><KBD>
+% delegated -P21 SERVER=ftp MOUNT="/* file:/path/of/ftp/*"
+</KBD></UL>
+<BR>
+
+<LI>how to use DeleGate as an origin DNS server
+<BR>
+<UL><KBD>
+% delegated -P53 SERVER=dns RESOLV=file:/etc/hosts
+</KBD></UL>
+<BR>
+
+<LI>how to use DeleGate as an origin NNTP server
+<BR>
+<UL><KBD>
+% delegated -P119 SERVER=nntp://-.-
+</KBD></UL>
+<BR>
+</UL>
+</A>
+
+<!-------------------->
+<A NAME=sigateway>
+<B>DeleGate as an Server-Integration Gateway</B>
+<UL>
+
+<LI>how to use DeleGate as a HTTP gateway (or "reverse proxy")<KBD>(*1)</KBD>
+<BR>
+<UL><KBD>
+% delegated -P80 SERVER=http <NOBR><A HREF=Manual.htm?MOUNT>MOUNT</A>="/p1/* http://<I>sv1</I>/*"</NOBR> <NOBR>MOUNT="/p2/* http://sv2/*"</NOBR>
+</KBD></UL>
+<BR>
+
+<LI>how to use DeleGate as a HTTP virtual hosting server <KBD>(*1)</KBD>
+<BR>
+<UL><KBD>
+% delegated -P80 SERVER=http MOUNT="/* http://<I>sv1</I>/* vhost=-www1" MOUNT="/* http://<I>sv2</I>/* vhost=-www2"
+</KBD></UL>
+<BR>
+
+<LI>how to use DeleGate as a FTP gateway (for FTP client)
+<BR>
+<UL><KBD>
+% delegated -P21 SERVER=ftp MOUNT="/sv1/* ftp://sv1/*" MOUNT="/sv2/* ftp://sv2/*"
+</KBD></UL>
+<BR>
+
+<LI>how to use DeleGate as a <A HREF=Manual.htm?serv_NNTP>NNTP</A> proxy to merge multiple servers
+<BR>
+<UL><KBD>
+% delegated -P119 SERVER=nntp <NOBR><A HREF=Manual.htm?MOUNT>MOUNT</A>="* nntp://<I>sv1</I>/*"</NOBR> <NOBR>MOUNT="* nntp://<I>sv2</I>/*"</NOBR>
+</KBD></UL>
+<BR>
+
+<HR>
+(*1) The features of DeleGate for "reverse proxy", "virtual hosting" and
+"transparent proxy" are totally revised in DeleGate/9.8.2 as described in
+<A HREF=http://www.delegate.org/delegate/nvproxy/>http://www.delegate.org/delegate/nvproxy/</A>
+<HR>
+<BR>
+</UL>
+</A>
+
+<!-------------------->
+<A NAME=ptgateway>
+<B>DeleGate as a Protocol Translation Gateway</B>
+<UL>
+
+<LI>how to use DeleGate as a gateway for HTTP clients to other protocols
+<BR>
+<UL><KBD>
+% delegated -P80 SERVER=http
+ <A HREF=Manual.htm?MOUNT>MOUNT</A>="/file/* ftp://<I>ftpsv</I>/*"
+ MOUNT="/mail/* pop://<I>popsv</I>/*"
+</KBD></UL>
+<BR>
+
+<LI>how to use DeleGate as a gateway for FTP client to <A HREF=http://www.delegate.org/delegate/ssh/>sftp/SSH</A> server
+<BR>
+<UL><KBD>
+% delegated -P21 SERVER=ftp MOUNT="/* sftp://<I>server</I>/*"
+</KBD></UL>
+<BR>
+
+<LI>how to use DeleGate as a gateway for FTP or FTPS client to <A HREF=http://www.delegate.org/delegate/ssh/>sftp/SSH</A> server
+<BR>
+<UL><KBD>
+% delegated -P21 SERVER=ftp MOUNT="/* sftp://<I>server</I>/*" STLS=-fcl
+</KBD></UL>
+<BR>
+
+<LI>how to use DeleGate as a gateway for DNS client to NIS server
+<BR>
+<UL><KBD>
+% delegated -P53 SERVER=dns RESOLV=nis
+</KBD></UL>
+<BR>
+
+<LI>how to use DeleGate as a PASV/EPSV/PORT/EPRT translation gateway
+<BR>
+<UL><KBD>
+% delegated -P8021 SERVER=ftp
+</KBD></UL>
+<BR>
+
+<LI>how to use DeleGate as a PASS / APOP translation gateway
+<BR>
+<UL><KBD>
+% delegated -P8110 SERVER=pop
+</KBD></UL>
+<BR>
+
+<LI>how to use DeleGate as a gateway for TCP clients to a UDP server
+<BR>
+<UL><KBD>
+% delegated -P<I>port</I> SERVER=<A HREF=Manual.htm?serv_tcprelay>tcprelay</A>://<I>svhost</I>:<I>svport</I> CONNECT=udp
+</KBD></UL>
+<BR>
+
+<LI>how to use DeleGate as a gateway for UDP clients to a TCP server
+<BR>
+<UL><KBD>
+% delegated -P<I>port</I> SERVER=<A HREF=Manual.htm?serv_udprelay>udprelay</A>://<I>svhost</I>:<I>svport</I> CONNECT=tcp
+</KBD></UL>
+<BR>
+</UL>
+</A>
+
+<!-------------------->
+<A NAME=caching>
+<B>DeleGate as a Caching Proxy</B>
+<UL>
+
+<LI>How to use DeleGate for caching HTTP messages
+<UL><KBD>
+% delegated -P8080 SERVER=http <A HREF=Manual.htm?CACHE>CACHE</A>=do
+</KBD></UL>
+<BR>
+
+<LI>How to use DeleGate for caching FTP directories and files
+<UL><KBD>
+% delegated -P8021 SERVER=ftp CACHE=do
+</KBD></UL>
+<BR>
+
+<LI>How to use DeleGate for caching <A HREF=Manual.htm?serv_NNTP>NNTP</A> articles
+<UL><KBD>
+% delegated -P8119 SERVER=nntp://<I>server</I> CACHE=do
+</KBD></UL>
+<BR>
+
+</UL>
+<A>
+
+<!-------------------->
+<A NAME=filtering>
+<B>DeleGate as a Filtering Proxy</B>
+<UL>
+
+<LI>How to use DeleGate for filtering response data to the client
+<UL><KBD>
+% delegated -P<I>port</I> SERVER=<I>protocol</I> <A HREF=Manual.htm?FTOCL>FTOCL</A>=<I>filterCommand</I>
+</KBD></UL>
+<BR>
+
+<LI>How to use DeleGate for filtering request data to the server
+<UL><KBD>
+% delegated -P<I>port</I> SERVER=<I>protocol</I> <A HREF=Manual.htm?FTOCL>FTOSV</A>=<I>filterCommand</I>
+</KBD></UL>
+<BR>
+
+<LI>How to use DeleGate for <A HREF=http://www.delegate.org/delegate/filtering/>filtering HTTP</A> request header fields
+<UL><KBD>
+% delegated -P8080 SERVER=http <A HREF=Manual.htm?HTTPCONF>HTTPCONF</A>=<A HREF=Manual.htm?httpconf_killhead>kill-qhead</A>:Referer,Via,From,Cookie
+</KBD></UL>
+<BR>
+
+<LI>How to use DeleGate for filtering HTTP response header fields
+<UL><KBD>
+% delegated -P8080 SERVER=http HTTPCONF=kill-rhead:Server,Set-Cookie
+</KBD></UL>
+<BR>
+
+<LI>How to use DeleGate for filtering HTML tags in a HTTP response
+<UL><KBD>
+% delegated -P8080 SERVER=http HTTPCONF=kill-tag:SCRIPT,APPLET
+</KBD></UL>
+<BR>
+
+</UL>
+<A>
+
+<!-------------------->
+<A NAME=authproxy>
+<B>DeleGate as an Authenication Proxy</B>
+<UL>
+
+<LI>How to use DeleGate as a HTTP proxy which asks authentication
+<UL><KBD>
+% delegated -P8080 SERVER=http <A HREF=Manual.htm?AUTHORIZER>AUTHORIZER</A>=-pam
+</KBD></UL>
+<BR>
+
+<LI>How to use DeleGate as a HTTP proxy which asks authentication for POST
+<UL><KBD>
+% delegated -P8080 SERVER=http MOUNT="http://<I>server</I>/* = AUTHORIZER=-pam://POST"
+</KBD></UL>
+<BR>
+
+<LI>How to use DeleGate as a <A HREF=Manual.htm?serv_SMTP>SMTP</A> proxy which asks authentication
+<UL><KBD>
+% delegated -P25 SERVER=smtp://<I>server</I> AUTHORIZER=-pam
+</KBD></UL>
+<BR>
+
+<LI>How to use DeleGate as a SMTP proxy which sends authentication by proxy
+<UL><KBD>
+% delegated -P25 SERVER=smtp://<I>server</I> <A HREF=Manual.htm?MYAUTH>MYAUTH</A>=<I>username</I>:<I>password</I>
+</KBD></UL>
+<BR>
+
+</UL>
+</A>
+
+<!-------------------->
+<HR>
+<A NAME=accessctrl>
+<B>Access Control</B>
+<UL>
+<P>
+When using DeleGate as a proxy on a multi-homed host, with different network
+interface for an external (<KBD>xx.xx.xx.xx</KBD>) and an internal
+(<KBD>ii.ii.ii.ii</KBD>) network respectively,
+the simplest configuration to allow access only from the inside is
+specifying the interface of port to accept clients as this:
+<UL>
+<KBD><A HREF=Manual.htm?opt_P>-Pii.ii.ii.ii</A>:8080</KBD>
+</UL>
+
+<P>
+By default, DeleGate allows access from a client-host only if the host is on
+"local network".
+What the "local network" is is pre-defined as the special host-list
+named <KBD>"<A HREF=Manual.htm#localnet>.localnet</A>"</KBD>.
+It can be redefined with a <KBD>HOSTLIST</KBD> parameter as this for example:
+<UL>
+<KBD><A HREF=Manual.htm?HOSTLIST>HOSTLIST</A>=.localnet:127.0.0.1,192.168.1.0/24</A>
+</UL>
+
+<P>
+When it is difficult or insufficient to control access based on the IP
+address or host-name of clients, you can use password based authentications,
+or certificate based authentication when using SSL.
+For example, PAM based password authentication can be done as this:
+<UL>
+<KBD><A HREF=Manual.htm?AUTHORIZER>AUTHORIZER</A>=-pam</A>
+</UL>
+
+<P>
+To enable the certificate based authentication, specify "-Vrfy" option
+of the <A HREF=http://www.delegate.org/delegate/ssl/>SSLway</A> filter.
+<UL>
+<KBD>
+<A HREF=Manual.htm?STLS>STLS</A>="fcl,sslway -Vrfy -CAfile <I>file</I>"
+</KBD>
+</UL>
+
+<!--
+<P>
+You can test "Email" attributes in a certificate to be matched with a
+specified pattern, with <KBD>"*@delegate.org"</KBD> for example as this:
+<UL>
+<KBD>
+<A HREF=Manual.htm?PERMIT>PERMIT</A>="*:*:.localnet,-a/*@delegate.org"
+</KBD>
+</UL>
+-->
+
+<P>
+When using DeleGate as a "reverse proxy", it should be configured
+not to be utilized to access arbitrary ports and/or hosts not amied by the
+administrator.  The <KBD>REACHABLE</KBD> parameter can be used combined
+with any application protocols to restrict reachable host (and port).
+<UL>
+<KBD><A HREF=Manual.htm?REACHABLE>REACHABLE</A>=192.168.1.1:80,127.0.0.1</A>
+</UL>
+
+<P>
+A HTTP proxy server is designed to allow very wide range of protocols
+over it.  So it should be configured not to be utilized in the way
+which you don't aimed.
+Therefore, by default, DeleGate restricts the protocols to be carried
+over it when it acts as a HTTP proxy.
+It can be configured to allow only access strictly to HTTP and HTTPS
+servers on each statndard port as this:
+<UL>
+<KBD><A HREF=Manual.htm?REMITTABLE>REMITTABLE</A>=http/80,https/443</A>
+</UL>
+
+<P>
+See the <A HREF=Manual.htm#acl>reference manual</A> for more details
+about access control.
+</UL>
+</A>
+
+<HR>
+<A NAME=install>
+<B>Installation</B>
+<UL>
+The minimum installation of DeleGate is just getting the executable file
+of DeleGate and putting it to somewhere on your host.
+<P>
+When you created it from the
+<A HREF=http://www.delegate.org/delegate/download/>source distribution</A>,
+you will get an executable file named <KBD>delegated</KBD>
+(or <KBD>delegated.exe</KBD> on Windows)
+under the <KBD>src/</KBD> directory.
+Or you can get it from
+<A HREF=ftp://ftp.delegate.org/pub/DeleGate/download.html>binary distributions</A>
+for several platforms (MacOSX, Linux, FreeBSD, Windows, Zaurus, and OS/2).
+Each executable file for each platform is named as
+<KBD>macosx-dg</KBD>, <KBD>dg9_2_0.exe</KBD> or so.
+You can rename it to any name like <KBD>delegated</KBD> or <KBD>dg.exe</KBD>.
+<P>
+On the first invocation of DeleGate, it creates directories to hold
+files for log, cache, administration data, and so on under a directory.
+The root directory of DeleGate is called
+<A HREF=Manual.htm?DGROOT><KBD>DGROOT</KBD></A>.
+<KBD>DGROOT</KBD> can be specified as a command line option as
+<KBD>DGROOT=<I>path</I></KBD>.
+Otherwise it is selected automatically depending on the platform and
+user of DeleGate.  See the start-up message from
+DeleGate to see which directory is selected as <KBD>DGROOT</KBD>.
+<P>
+<UL><KBD>
+ % delegated -P8080 SERVER=http<BR>
+ <DeleGate/9.1.1> [12345] -P8080 READY<BR>
+ <B>DGROOT</B>=/home/dgowner/delegate<BR>
+ </KBD>...<BR>
+</UL>
+Optionally, you should install <A HREF=#subin><KBD>DGROOT/subin/</KBD></A>
+when you use DeleGate on Unix, in a usage requiring super-user's privilege.
+<P>
+To use SSL with DeleGate, using the latest version of shared libraries for SSL
+might be desirable.
+If the host's standard libraries is not installed, or not the latest,
+install the library files under <KBD>DGROOT/lib/</KBD>.
+The
+<A HREF=ftp://ftp.delegate.org/pub/DeleGate/download.html>binary distribution</A>
+of DeleGate contains the binary of shared libraries of OpenSSL
+under directories named "<KBD>sslway/</<KBD>".
+See the note about <A HREF=http://www.delegate.org/delegate/tls/>TLS</A>
+for more details if necessary.
+<P>
+It is desirable to execute DeleGate in an isolated file space to be safer
+from possible attacks.  For example,
+<KBD><A HREF=Manual.htm?CHROOT>CHROOT</A>="/"</KBD> lets the
+<KBD>DGROOT</KBD> as the root of file system on Unix.
+You need to copy some library files and devices to the new root from
+the original root.  Files need to be copied and created depend on each
+platform. An example for MacOSX and Linux is in
+"<KBD>subin/install.sh</KBD>" in the source distribution.
+</UL>
+</A>
+
+<HR>
+<A NAME=subin>
+<B>Privileged operations without being super-user</B> --
+<B>Installing <A HREF=Manual.htm?subin>subin</A></B>
+<UL>
+On Unix, DeleGate needs the privilege of super-user when it use privileged
+port number as <KBD>-P80</KBD>,
+PAM based authentication with
+<KBD><A HREF=Manual.htm?AUTHORIZER>AUTHORIZER</A>=-pam</KBD>, or
+changing the root directory with
+<KBD><A HREF=Manual.htm?CHROOT>CHROOT</A>=<I>path</I></KBD>.
+<P>
+The straight forward way to do so is running DeleGate with the privilege
+of the super-user
+(with <KBD><A HREF=Manual.htm?OWNER>OWNER</A>=root</KBD>).
+But running DeleGate under the super-user's privilege is not recommended
+in the consideration of security.
+You can escape the problem by installing files under
+<KBD><A HREF=Manual.htm?DGROOT>DGROOT</A>/subin/</KBD>.
+<P>
+For example, the command <KBD>subin/dgbind</KBD> is invoked from DeleGate
+when a privileged port is required as <KBD>-P80</KBD>, or to bind
+the source port of a FTP data-connection.
+A file descriptor of an unbound socket is created by DeleGate and inherited
+to dgbind with the argument indicating the port number to be bound.
+On the invocation of dgbind, the effective user-ID of the process is set
+to the one of the super-user (root) so that it can execute the bind()
+system call for privileged ports.
+<P>
+Those executable files in subin is created automatically when you created
+DeleGate from the source distribution.
+They are available in the
+<A HREF=ftp://ftp.delegate.org/pub/DeleGate/download.html>binary distribution</A>
+for several platforms too.
+<P>
+To let the executable files in subin, <KBD>dgbind</KBD> for example,
+be executed with the privilege of the super-user,
+let the files be owned by root, and set
+the "set-user-ID-on-execution" bit and the "set-group-ID-on-execution" bit.
+<P>
+<UL>
+<KBD>% su</KBD><BR>
+<KBD># chown root dgbind</KBD><BR>
+<KBD># chmod 6550 dgbind</KBD><BR>
+</UL>
+</P>
+The <I>group</I> ownership of the executable files in subin must be
+the same with the run-time group-ID of your DeleGate (delegated) process.
+<UL>
+<P>
+<KBD># chgrp <I>group</I> dgbind</KBD>
+</UL>
+</UL>
+</A>
+</P>
+<HR>
+&copy;<I><small>2006, Yutaka Sato, AIST, Japan</small></I>
+
+<TABLE cellspacing=0 width=100%><TR align=right bgcolor="#B8C0C0"><TD>
+<KBD><small>
+<!--#echo var=PAGE_COUNT fmt="PageViews: %,U <A HREF=../stats/hits.shtml>hits</A> / %N <A HREF=../stats/nets.shtml>nets</A>" -->
+</small></KBD>
+</TD></TR></TABLE>
+
+</BODY>

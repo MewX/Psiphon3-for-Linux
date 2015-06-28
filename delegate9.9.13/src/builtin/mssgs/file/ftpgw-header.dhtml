@@ -1,0 +1,9 @@
+${isdir?
+ <TITLE> FTP Directory ${anonymous?${site}:${site.hidepass}} ${path} </TITLE>
+ <I> FtpDirectory </I>
+:
+ <TITLE> FTP File ${anonymous?${site}:${site.hidepass}} ${path} </TITLE>
+ <I> FtpFile </I>
+}
+<B>${anonymous?${ancestor}:${ancestor.hidepass}}</B><HR>
+<PRE><font face="courier new">\

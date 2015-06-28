@@ -1,0 +1,81 @@
+-------------------------------------------------------------------------
+  HOW TO INSTALL DeleGate                  (Yuatka Sato, 31 Oct, 2014)
+-------------------------------------------------------------------------
+Some part of the following description has become obsolete.
+To get up-to-date description, see:
+  http://www.delegate.org/delegate/newbies.shtml (in English) or
+  http://www.delegate.org/delegate/newbies-ja.shtml (in Japanese).
+
+-------------------------------------------------------------------------
+  HOW TO INSTALL DeleGate                  (Yutaka Sato, Aug18-2003)
+-------------------------------------------------------------------------
+1. Getting the latest source codes of DeleGate
+
+  Download the latest version DeleGate/X.Y.Z in the file:
+  <URL:ftp://ftp.delegate.org/pub/DeleGate/delegateX.Y.Z.tar.gz>
+
+    - DeleGate in development status is placed at "alpha/" directory:
+      <URL:ftp://ftp.delegate.org/pub/DeleGate/alpha/delegateX.Y.Z.tar.gz>
+    - Alternative download sites are shown at:
+      <URL:http://www.delegate.org/delegate/download/>
+    - Read "README" and the following page about changes in each version:
+      <URL:http://www.delegate.org/delegate/updates/>
+
+2. Creating an executable of DeleGate
+
+  Expand, extract and and make as follows:
+
+    % gzip -d < delegateX.Y.Z.tar.gz | tar xfv -
+    % cd delegateX.Y.Z
+    % make
+
+  Your E-mail address will be asked at the beginning of the make.
+  After the make finished, the executable is left as "src/delegated"
+
+3. Setting up the run-time files of DeleGate (OPTIONAL)
+
+  Install optional subsidiary components if necessary.
+  You can postpone this until you encounter the necessity.
+
+  (All of run-time files of DeleGate are placed under the directory referred 
+  as "DGROOT".  The default location of DGROOT is $HOME/delegate/ for
+  normal users on Unix, while it is "\Program Files\DeleGate" on MS-Windows.
+  The DGROOT directory is created automatically if it does not exist.)
+
+    - DGROOT/lib/{sslway, server.pem, ...} -- to enable SSL encoding/decoding
+                           <URL:http://www.delegate.org/delegate/sslway/>
+    - DGROOT/lib/gzip -- to enable gzip encoding/decoding on HTTP
+    - DGROOT/lib/lib*.so.* -- to enable chroot
+    - DGROOT/subin/{dgpam, dgchroot, dgbind} -- to achieve privileged operation
+                           by DeleGate of normal users <subin/README_SUBIN>
+
+4. Setting up a DeleGate server
+
+  Start the executable with necessary parameters.
+  For example to use DeleGate as a HTTP proxy server in debugging mode:
+
+    % delegated -v -P8080 SERVER=http
+
+    - Read the short tutorial "doc/tutor-en.htm" first.
+      <URL:http://www.delegate.org/delegate/tutorial/tutor-en.htm>
+    - Read the "doc/Manual.htm" for details.
+      <URL:http://www.delegate.org/delegate/Manual.htm>
+    - Examples (protocol specific examples):
+      <URL:http://www.delegate.org/delegate/Manual.htm#ProtoSpec>
+    - Platform specific issues (how to start as a daemon or a service):
+      <URL:http://www.delegate.org/delegate/Manual.htm#Platforms>
+
+5. Asking your questions
+
+  To share efforts of questions and answers among users and the author,
+  your question is expected to be sent to the open forum.
+
+  - in English:
+    <URL:mailto:feedback@delegate.org>
+    <URL:http://www.delegate.org/feedback/>
+
+  - in Japanese:
+    <URL:mailto:goiken@delegate.org>
+    <URL:http://www.delegate.org/delegate/goiken/>
+
+-------------------------------------------------------------------------

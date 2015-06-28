@@ -1,0 +1,48 @@
+${setenent}
+${admin.com.misc?${include:admin-misc.dhtml}${exit}}
+${admin.act.customize?${include:CustomCfg.dhtml}${exit}}
+
+${+TITLE=${type:title:DeleGate Administration}}
+${include:head.dhtml}
+
+${not.auth.authorized?
+  ${admin.admact.unauth?
+    <TABLE width=100% bgcolor=#FFE0E0><TR><TD>
+    Do <A HREF=authenticate><FONT color=red><B>Authenticate</B></FONT></A>
+    First
+    </TD></TR></TABLE>
+    <small>
+  }
+  <small>
+ }
+<UL>
+<LI> <A HREF="servers?act=Servlist&com=servers&lang=${admin.formv.lang}">${type:title:Control servers}</A>
+  <small> -- status | start | restart | stop | pause </small>
+<LI> <A HREF="logging">${type:title:Control logging}</A>
+<LI> <A HREF="config?act=Form2conf&com=new">${type:title:Create a new server configuration}</A>
+  <small> -- new</small>
+<LI> <A HREF="config?act=Form2conf">${type:tilte:Edit a configuration}</A>
+  <small> -- compose | decompose</small>
+<LI> <A HREF="showdir/DGROOT/">${type:title:Browse administration data}</A>
+<LI> <A HREF="servers?act=Servlist&com=showinit&serv-confname=${admin.conf-selfname}">Show startup log</A>
+<LI> <A HREF="?com=misc">Miscellaneous</A>
+</UL>
+<P>
+${include:serv-list.dhtml}
+<FORM ACTION="${ibase}admin/servers" METHOD=POST>
+${include:conf-list.dhtml}
+</FORM>
+
+<P>
+${auth.authorized?:</small>}
+<small>${include:printauth.dhtml}</small>
+<P>
+<FORM>
+<small>
+Recent Admin Login:<BR>
+<TEXTAREA NAME=authlog cols="120" rows=10 wrap=off style="font-size:100%;background-color:#F0F0FF">
+${admin.authlog.5000}
+</TEXTAREA>
+<small>
+</FORM>
+</BODY>

@@ -1,0 +1,4 @@
+${define.TITLE=${type:title:Terminated}}
+${include:head.dhtml}
+
+Terminated

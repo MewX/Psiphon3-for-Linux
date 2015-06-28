@@ -1,0 +1,51 @@
+${setenent}
+${+TITLE=${type:title:Certicicate Management}}
+${include:head.dhtml}
+${include:cert-coms.dhtml}
+
+<FORM ACTION="${request.url}" METHOD=POST>${admin.dump_common}
+<TABLE width=100% border=0 cellspacing=0 cellpadding=0><TR>
+<TD align=right>
+<A HREF="${ibase}admin/showdir/DGROOT/adm/dgca/">DGCA Directory</A>
+</TD></TR></TABLE>
+
+${not.admin.openssl.isCA?${include:cert-DGCA.dhtml}}
+${not.admin.openssl.isCA?<P>}
+<TABLE width=100% border=1 cellspacing=0 cellpadding=0>
+
+<TR><TD width=20%>&nbsp; Email Address</TD><TD>
+<INPUT type=text size=50 name=cert-email value="${admin.formv.cert-email}" ${admin.formv.cert-error.cert-email?style="background-color:pink"}>
+</TD></TR>
+</TABLE>
+
+<INPUT type=checkbox name=Flag-certopts ${admin.formv.Flag-certopts.on?checked}>
+<small>show optional attributes</small>
+${admin.formv.Flag-certopts.on?${include:cert-attrs.dhtml}}
+${button:submit:com:refresh:refresh}
+
+<P>
+<small>Create a Email certificate and sign it with the ADMIN's certificate</small><BR>
+<TABLE width=100% border=1 cellspacing=0 cellpadding=0>
+${include:cert-opts.dhtml}
+</TABLE>
+
+<TABLE width=100% border=1 cellspacing=0 cellpadding=0>
+<TR><TD width=20%>
+<NOBR>&nbsp; Validity
+</TD><TD>
+<INPUT type=text size=5 align=right name=cert-days value="${admin.formv.cert-days?${admin.formv.cert-days}:365}"> <small>days</small>
+&nbsp;
+<small>Start</small>${button:text:cert-startdate:${admin.formv.cert-startdate}::size=15 ${admin.formv.cert-error.cert-startdate?style="background-color:pink"}}
+<small>End</small>${button:text:cert-enddate:${admin.formv.cert-enddate}::size=15 ${admin.formv.cert-error.cert-enddate?style="background-color:pink"}}
+<small>(eg, 05&nbsp;1231&nbsp;2359&nbsp;59)</small>
+</NOBR>
+</TD></TR>
+</TABLE>
+
+${admin.openssl.isCA?${include:cert-DGCA.dhtml}}
+
+${admin.formv.com?
+<P>
+${include:cert-out.dhtml}
+}
+</FORM>

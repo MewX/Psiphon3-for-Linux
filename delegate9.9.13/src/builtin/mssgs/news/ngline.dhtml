@@ -1,0 +1,7 @@
+${grp.Layered?
+    ${%08grp.Nact1} / ${%05grp.Nchild1}
+    ${1<grp.Nchild1? <A HREF="${grp.Group1}"><B>${_grp.Group1}</B></A>
+                   : <A HREF="${grp.Group1}">${_grp.Group1}</A>}
+:   ${%06grp.Min1} - ${%06grp.Max1}
+                     <A HREF="${grp.Group1}/">${_grp.Group1}/</A>
+}<BR>

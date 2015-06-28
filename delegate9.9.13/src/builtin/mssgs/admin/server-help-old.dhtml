@@ -1,0 +1,15 @@
+<UL>
+<LI> Automatic authentication will be done with <B>Identd</B>
+     protocol if you have a Identd server running on your host.<P>
+<LI> Callback authentication using FTP server.
+    If you know the <I>password</I> to login <I>user@host</I> then
+    you are supposed to be <I>user@host</I>.  Let the DeleGate
+    inspect it sending an authorization information as follows:<BR>
+    <UL>
+      Username: <I>user@host</I><BR>
+      Password: <I>password</I> for the <I>user@host</I><BR>
+    </UL>
+    If DeleGate succeed to login the <I>host</I> with given
+    <I>user</I> name and <I>password</I>, then you are proved to be
+    <I>user@host</I>.
+</UL>

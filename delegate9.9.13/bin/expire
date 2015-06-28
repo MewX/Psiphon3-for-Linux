@@ -1,0 +1,47 @@
+#!/bin/sh
+
+#  RECOMENDATION [after DeleGate/4.3.0]:
+#  DeleGate will do expiration by itself given a parameter like follows:
+#
+#    CRON="0 3 * * * -expire 7"
+#
+#  The target directory of expiration is its CACHEDIR, and
+#  the expiration log is recorded in EXPIRELOG (LOGDIR/expire.log).
+
+#######################################################################
+#       EXPIRE DeleGate CACHE FILES (Ver.3)
+#               ysato@etl.go.jp / July 8, 1997
+#
+#       Recommendation:
+#               Insert the line like follows into the crontab:
+#                       0 3 * * * /The/path/of/this/script
+#               which means doing expiration at 3:00 every morning.
+#######################################################################
+
+VAR=/var/spool/delegate      #### top directory of DeleGate's data-base
+DIR=$VAR/cache               #### top directory of cache files
+LOG=$VAR/log/expire.log      #### expire log
+PERIOD=7                     #### expire period in days
+DG=delegated                 #### DeleGate
+DF=df                        ####
+
+if [ "$1" != "" ]; then DIR=$DIR/$1; fi
+chdir $DIR
+if [ $? != 0 ]; then exit 1; fi
+DIR=`pwd`
+(
+    echo "CACHEDIR: $DIR"
+    date; $DF $DIR; $DF -i $DIR
+    echo "===="
+    echo "List of expired files fillows."
+    echo "----"
+
+    $DG -Fexpire $DIR -atime +$PERIOD -rm -lslsu -sum
+
+    echo "===="
+    date; $DF $DIR; $DF -i $DIR
+    echo "===="
+) > $LOG
+exit 0
+
+#######################################################################

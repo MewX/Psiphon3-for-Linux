@@ -1,0 +1,48 @@
+<HEAD>
+<TITLE>${?TITLE} ${?SUBTITLE}</TITLE>
+</HEAD>
+
+<BODY bgcolor=#E0E0FF>
+
+<FORM ACTION="${request.url}" METHOD=POST>${admin.dump_common}
+<TABLE width=100% border=0 cellpadding=0 cellspacing=0><TR>
+<TD width=5%>
+ <H2><A HREF="${admin.admact?${abase}:${ibase}}"><IMG SRC="${icon.frog9LTW}" ALIGN=middle BORDER=0></A>
+</TD>
+<TD>
+  &nbsp;<BIG><BIG><B>${?TITLE}</B></BIG></BIG>
+</TD>
+
+<!-- -->
+<TD align=right>
+<INPUT type=hidden name=act value="${admin.formv.act}">
+<INPUT type=hidden name=com value="${admin.formv.com}">
+ <small>${nowfmt.%H:%M:%S %y-%m-%d}</small><BR>
+ <TABLE cellpadding=0 cellspacing=0 border=0><TR><TD>
+  ${button:submit:lang:${admin.formv.lang.ja?en:ja}:${admin.formv.lang.ja?${type:button:Japanese}:${type:button:English}}:style="padding:0;background-color:transparent;border-style:none;color:${admin.formv.lang.ja?red:blue};font-size:small"}
+  ${button:submit:lang:${admin.formv.lang.ja?en:ja}:^:style="width:16;height:16;margin:0;padding:0;border:1;background-color:#8080FF;font-size:small;font-color-white;color:white"}
+ </TD></TR></TABLE>
+</TD>
+<!-- -->
+</TR></TABLE>
+
+${auth.admin_enabled?:
+<P><FONT color=red>
+<B>CAUTION</B></FONT>: disabled remote administration
+(<B>AUTH=admin</B> parameter is not given)
+[<A HREF=${ibase}builtin/mssgs/admin/server-help.dhtml>HELP</A>]
+<HR>
+}
+
+${auth.admin_enabled?:
+ ${type:message:The authorizaion for administration is NOT yet configured.}
+  [<A HREF=${ibase}builtin/mssgs/admin/server-help.dhtml><FONT color=red><B>${type:button:Configure}</B></FONT></A>]<BR>
+}
+${auth.authorized?: ${type:message:You are NOT yet authorized as the administrator.}
+  [<A HREF=authenticate><FONT color=red><B>${type:button:Authenticate}</B></FONT></A>]
+  <BR>
+}
+
+${include:menu.dhtml}
+<HR>
+</FORM>

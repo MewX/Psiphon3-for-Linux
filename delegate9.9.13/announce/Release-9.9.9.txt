@@ -1,0 +1,62 @@
+To: feedback@ml.delegate.org
+Date: Fri Jun 13 13:58:40 JST 2014
+Subject: DeleGate/9.9.9 (STABLE) -- fixes around SSL
+From: feedback@ml.delegate.org (Yutaka Sato)
+Reply-To: feedback@delegate.org
+Organization: The DeleGate Project
+Message-Id: <1JcdEa.feedback@delegate.org>
+References: <_A5062@delegate-en.ML_> <_A5063@delegate-en.ML_>
+	<_A5084@delegate-en.ML_>
+
+Dear DeleGate users,
+
+I inform you of the new release of DeleGate available as follows:
+--------------------------------------------------------------------------
+DeleGate/9.9.9 (STABLE) -- fixes around SSL
+
+This release includes fixes and extensions especially around SSL.
+Users of DeleGate as a HTTP proxy are strongly recommended to
+move to this version.
+
+SSL (HTTSP/SSL relay over SSL tunnel)
+  It could be almost no use to use DeleGate to relay HTTSP/SSL as
+  a HTTP proxy, that is as a SSL-tunnel, where clients are long distant
+  from DeleGate, since DeleGate/9.0.3 (July 2005).  This is because
+  older DeleGate intentionally dropped SSL connections which seems mal-use
+  of SSL-tunnel to relay non-SSL protocols.  For example, Gogole mail was
+  almost no use via older DeleGate because of so often drop of connections.
+  <URL:http://www.delegate.org/mail-lists.delegate-en/05063>
+
+SSL (linking with OpenSSL-1.X)
+  - made SSLv2_* optional (for dynamic link with OpenSSL-1.X)
+  - added lib*.so.1.0.0 to the library name patterns (for OpenSSL nowadays)
+  <URL:http://www.delegate.org/mail-lists/delegate-en/05073>
+
+FTP (relative path toward another directory)
+  - make relative path only if under cur. dir (not for RETR ../anotherDir/...)
+  <URL:http://www.delegate.org/mail-lists/delegate-ja/00596>
+
+CFI (handling huge mail header)
+   - enlarged acceptable MIME header (128K <- 64K) <include/config.h>
+   <URL:http://www.delegate.org/mail-lists/delegate-ja/00597>
+   - coped with Output/Content-Type to make header larger
+   - fixed duplicated ".CRLF" for pipelined responses
+
+MIME-header-encoding (encoded-word with character code conversion)
+   - removed dust (like ^B) generated into MIMEencoded-word
+   - enabled catenating e-words of the same charset in base64
+   - enabled char. code conv. for multipart head. with CHARCODE=Charset:tosv
+
+Windows (running as a service)
+   - distinguished -Pxxx.udp from -Pxxx.tcp as service name on Windows
+   - enabled defining the service name with SERVCONF="name:Service Name"
+   - enabled -Pxxx/tcp with SERVER=udprelay on Windows service
+   - introduced showing version and parameters in the service description
+   <URL:http://www.delegate.org/mail-lists/delegate-en/05070>
+
+Cheers from Japan,
+Yutaka
+--
+  9 9   Yutaka Sato { Do the more with the less -- B. Fuller }
+ ( ~ )  National Institute of Advanced Industrial Science and Technology
+_<   >_ 1-1-4 Umezono, Tsukuba, Ibaraki, 305-8568 Japan

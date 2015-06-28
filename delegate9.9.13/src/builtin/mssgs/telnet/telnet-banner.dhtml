@@ -1,0 +1,9 @@
+--
+--  @ @  ${host.clif} PROXY-telnet server DeleGate/${ver}
+-- ( - ) { Hit '?' or enter `help' for help. }
+${verdate}
+${copyright}
+WWW: ${homepage}
+-- -- -- This (proxy) service is maintained by '${ADMIN}'
+${getccx?-- -- -- preset CHARCODE=${setccx}${NL}}\
+${include.silent:telnet-banner-postfix.dhtml}\

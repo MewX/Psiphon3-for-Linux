@@ -1,0 +1,38 @@
+<TABLE width=100% border=0 cellpadding=0 cellspacing=0><TR>
+<TD align=right>
+${tag:small:main}<INPUT type=radio name=conf-type value=main ${not.admin.formv.conf-type|admin.formv.conf-type.main?checked}>
+${tag:small:sub}<INPUT type=radio name=conf-type value=sub  ${admin.formv.conf-type.sub?checked}>
+</TD>
+${admin.formv.conf-type.sub?</TR></TABLE>${exit}}
+
+<TD align=right>
+${tag:small:Hide the minimum configuration information of the server}
+<INPUT type=checkbox name=Flag-hidemini ${admin.formv.Flag-hidemini.on?checked}>
+</TD></TR></TABLE>
+
+${+CONFH=<INPUT type=hidden name=conf}
+${admin.formv.Flag-hidemini.on&not.admin.conferr.conf-usrport,conf-usrpadr?
+ ${admin.dumpformv.-.conf-protocol,conf-ssl,conf-usrport,conf-usradd,conf-usrpadrx,conf-ADMIN,conf-serverx,conf-server}
+ ${exit}
+}
+
+${+SSLSW=&nbsp;<INPUT align=middle type=radio name=conf-ssl value}
+<TABLE width=100% border=1 cellpadding=0 cellspacing=0 bgcolor=#D0D0F0>
+  <TR><TD width=25% align=center>client protocol</TD>
+   <TD>
+   ${include:protomenu.dhtml}
+   <small>
+   ${?SSLSW}=no     ${not.admin.formv.conf-ssl.accept,only?checked}>nonSSL
+   ${?SSLSW}=accept ${admin.formv.conf-ssl.accept?checked}>acceptSSL
+   ${?SSLSW}=only   ${admin.formv.conf-ssl.only?checked}>SSLonly
+   </small>
+   </TD>
+  </TR></TD></TR>
+
+  ${include:conf-usrport.dhtml}
+
+  <TR ${admin.conferr.conf-ADMIN?bgcolor=${?ErrBG}}><TD align=center>administrator</TD>
+  <TD><INPUT type=text name=conf-ADMIN value="${admin.formv.conf-ADMIN?${_admin.formv.conf-ADMIN}:${ADMIN}}" size=40>
+   ${tag:small:your E-mail address}</TD></TR>
+  ${include:conf-destserv.dhtml}
+</TABLE>

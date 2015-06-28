@@ -1,0 +1,18 @@
+<TABLE width=100% border=0><TR>
+<TD align=right>${type:label:Realm} : </TD><TD>
+<INPUT type=checkbox name=conv-realm value=all ${admin.formvs.conv-realm.all?checked}>${type:label:all}
+<INPUT type=checkbox name=conv-realm value=button ${admin.formvs.conv-realm.button?checked}>${type:label:button}
+<INPUT type=checkbox name=conv-realm value=label ${admin.formvs.conv-realm.label?checked}>${type:label:label}
+<INPUT type=checkbox name=conv-realm value=title ${admin.formvs.conv-realm.title?checked}>${type:label:title}
+<INPUT type=checkbox name=conv-realm value=text ${admin.formvs.conv-realm.text?checked}>${type:label:text}
+<INPUT type=checkbox name=conv-realm value=message ${admin.formvs.conv-realm.message?checked}>${type:label:message}
+<INPUT type=checkbox name=conv-realm value=href ${admin.formvs.conv-realm.href?checked}>${type:label:href}
+</TD></TR>
+<TR><TD align=right>${type:label:From} : </TD>
+<TD> <INPUT type=text size=70 name=conv-from></TD></TR>
+<TR><TD align=right>${type:label:To} : </TD>
+<TD>   <INPUT type=text size=70 name=conv-to></TD></TR>
+</TABLE>
+<P>
+<IMG ALIGN=middle SRC=${icon.next}>
+${button:submit:com:addconv:${type:button:add}}

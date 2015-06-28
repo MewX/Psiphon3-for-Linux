@@ -1,0 +1,19 @@
+<TITLE> Authorization for anonymous FTP </TITLE>
+<H2> Authorization for anonymous FTP </H2><BR>
+
+This DeleGate server requires authorization information as follows:
+
+<MENU>
+  Username: <I>your E-mail address</I><BR>
+  Password:
+    ${anonftpAuth.nopass?
+     Any <I>password</I> will be accepted.
+    :<I>password</I> for the DeleGate</I><BR>
+    }
+</MENU>
+
+${anonftpAuth.nopass?
+:
+ Ask the administrator of this server: <I>&lt;${ADMIN}&gt;</I>
+ about necessary password to pass the DeleGate.
+}

@@ -1,0 +1,6 @@
+${admin.com.setupCA?${admin.openssl.req -new -x509}}
+${admin.com.resetCA?${admin.openssl.resetCA}}
+${admin.com.newCert?${admin.openssl.req -new}}
+${admin.com.signCA?${admin.openssl.ca -batch -policy policy_any}}
+${admin.com.refresh&admin.formv.cert-email?${evaleval.admin.setformv.cert-lastout.${admin.formv.cert-email}}}
+

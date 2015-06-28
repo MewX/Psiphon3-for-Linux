@@ -1,0 +1,80 @@
+Change history of MIMEKIT library
+--------------------------------------------------------------------------------
+1.8 980910 mimecodes.c: original coder. stop using NSB's code (config.h,codes.c)
+1.8 980312 mimehead.c: don't decode encoded-text including '\0' charcter
+1.8 980221 mime.c: .CRLF at the end of decoded base64 <manyabu.nabe@ooi.co.jp>
+1.8 980204 JIS.c: Hankaku (JISX0201-kana) to Zenkaku (JISX0208) conversion
+1.8 971224 JIS.c: stop "fixing" "</" in text/plain <saka@sonic.nm.fujitsu.co.jp>
+1.8 970804 mime.c: stop unconditional relay of .CRLF after multipart
+1.8 970903 mimehead.c: NL after head lost if SP NLNL <allice@flab.fujitsu.co.jp>
+1.8 970620 codes.c: decoding soft line break =<CR><LF> <gotoh@taiyo.co.jp>
+
+1.7 970619 {fcntl,file,windows0,pgp}.c: porting to OS/2(EMX) <zodiac@ibm.net>
+1.7 970604 pgp.c: STDIO for system("pgp") on {Windows,OS/2} <zodiac@ibm.net>
+1.7 970218 rfc822.c: insert Content-Type before .<CR><LF> <a9011443@waseda>
+1.7 970218 pgp.c: fixed compile error <sakanaga@pln.kyoto.omronsoft.co.jp>
+
+1.6 970217 rfc822.c: wrong MIME-Version: 1.5 <makoto@komekome.bay.prug.or.jp>
+
+1.5 970215 pgp.c: make line end mark {LF,CRLF} of output from input
+1.5 970215 mimehead.c: enc. LWSPs among non-ASCIIs<makoto@komekome.bay.prug.or.jp>
+1.5 970213 {pgp,rfc822}.c: generate MIME-Version also when generate Cotent-Type
+1.5 970213 pgp.c: simplified .<CR><LF> relay for SMTP/POP/NNTP
+
+1.4   970212 pgp.c: PGP=vrfy, verify then insert the result into the header
+1.4   970212 pgp.c: sign/verify based on detached signature in PGP/MIME
+1.4   970212 rfc822.c: generate Content-Type: text/plain to insert charset
+
+1.3   970210 mimehead.c: folding 2B text containing 1B LWSP<okura@osa.ncs.co.jp>
+1.3   970208 {mime,pgp}.c: PGP/MIME encoder / decoder
+1.3   970102 ported to Windows (VC++)
+1.3   970101 JIS.c: ignore 0xA0 (Non-breaking Space) in Japanese code
+
+1.2   961231 ported to OpenNT (POSIX)
+1.2   960608 removed obsoleted README.jp (guide for patch for nntpd and inews)
+1.2   960608 mimehead.c: erase any LWSPs between encoded-words
+
+1.1   951202 -- RELEASED MimeKit1.1 --
+1.0   951030 annexed multipart encode/decode functions of DeleGate
+1.0   951030 annexed JIS code conversion functions of DeleGate
+1.0   951029 -- RENAMED mimehead1.2.4 => mimekit1.0 --
+
+1.2.4 950914 *.c: "r"/"w" mode for str_fopen() not to overwrite input data
+1.2.3 950518 Makefile: reduced system dependency <kondo@shpcsl.sharp.co.jp>
+1.2.3 950518 {Makefile,mkranlib}: automatic configuration of RANLIB
+1.2.3 950517 codes.c: fromqp() become robust to mul-formed quoted-printable
+--------------------------------------------------------------------------------
+HISTORY from mimehead.c:
+
+1.2.4 950914 ignore (don't decode) too long (illegal) encoded text
+1.2.4 950914 don't decode TOOLONG encoded text
+1.2.3 950518 non-MIME-enc. line have folded depending on uninit. var X-<
+
+1.2.2 941002 repaired strncasecmp() function
+1.2.1 940521 preserve line terminator (LF or CRLF) <anaka@mrit.mei.co.jp>
+1.2   940224 passing CHAR with charset to DE_FPUTC(mainly for encoded space)
+1.1   940223 encode LWSP between ewords
+      940222 escaped 'trigraph sequence replacement' of '?\?' in sprintf()
+      940219 experimental encoding rule "B-1.0" (ISO-2022-JP local)
+
+      931228 changed type ch->int to detect EOF at disp_word on RS6000/AIX
+      931227 added parameter decl. for DEC-Alpha(Thanks to <ko@soum.co.jp>)
+      931116 extracted from mmsencode.c
+      931105 finally fixed the "infinite loop on folding.." in encode_word()
+      931103 decoded E-W come always terminate in ASCII at the end of line
+      931029 infinite loop on folding to avoid encode_word()<MIN_ENCODEDLEN
+      931022 fixed the tmpHeaderEncode which skips message body
+      931007 fixed the DE_FPUTC bug which eats the spaces at the top of body
+      930927 removed folding in noencode_word except preceeded encode-word
+      930927 removed generation of empty encoded-text in encode-word
+      930925 added output flush on FORMFEED code
+      930925 added folding in ascii text "noencode_word"
+      930925 removed LWSP BETWEEN encoded word rather than AFTER
+      930925 moved unfolding operation from DE_FGETC() to DE_FPUTC()
+      930915 added LWSP_CHAR -> liner-white-space translation in EN_FPUTC()
+      930826 added DecodeOverwrite()
+
+      920930 added switch to ASCII at the end of splitted encoded-text
+      920516 added MIME header encoder/decoder for ISO-2022-JP
+      920515 extracted from mmsclient.c of MMS
+--------------------------------------------------------------------------------

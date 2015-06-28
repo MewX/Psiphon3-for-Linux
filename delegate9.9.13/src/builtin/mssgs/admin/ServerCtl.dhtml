@@ -1,0 +1,58 @@
+${setenent}
+
+${admin.act.ScreenCtl?${include:Hostsets.dhtml}${exit}}
+
+${not.admin.act.Form2conf?}
+<FORM ACTION=servers METHOD=POST>${admin.dump_common}
+<INPUT type=hidden name=act value=Servlist>
+  ${admin.com.edit?
+   ${admin.putrespmssg.* click a configuration name to edit it}
+  }
+
+${admin.com.edit&admin.formv.conf-checked?
+  ${admin.copyformv.conf-servname.conf-checked}}
+
+${include:serv-coms.dhtml}
+
+<INPUT type=hidden name=com value=>
+
+<INPUT type=hidden name=prevcom value="${admin.com.status,refresh?${admin.formv.prevcom}:${admin.formv.com}}">
+
+${admin.com.status,refresh-list?${admin.dumpformv.lang,act,com,prevcom,xcom,help,conf-servname,conf-newservname,conf-checked,serv-showall,auto-refresh}}
+${not.admin.com.status?${admin.dumpformv.-.Flag-showback}}
+
+${include:serv-startstop.dhtml}
+
+${admin.com.start,restart,stop,status,showinit,servers|admin.formv.prevcom.start,restart,stop,status,showinit,servers?${evaleval.define.byline=${admin.formv.conf-checked}}${include:serv-list.dhtml}}
+${admin.com.status?<P>${include:serv-longlist.dhtml}}
+
+${admin.com.showinit?<PRE>${admin.show_initlog.serv-confname}</PRE>}
+
+${not.admin.formv.auto-refresh?
+  ${include:conf-list.dhtml}
+}
+
+${admin.com.status&admin.formv.conf-checked._self_?<P>${include:showconf.dhtml}}
+
+${not.admin.com.status?
+ <P>
+ ${admin.com.upload,download?
+  ${include:conf-upload.dhtml}
+  ${exit}
+ }
+ ${include:conf-listxcom.dhtml}
+}
+${not.admin.formv.auto-refresh&not.ifdef.Embed?
+ ${admin.respmssg?
+ <PRE><FONT color="${admin.config.error|admin.conferr?red:green}">${admin.respmssg}</FONT></PRE>
+ :<BR><BR>
+ }
+}
+${admin.com.stop? ${include:stop-self.dhtml}}
+
+${ifdef.Embed?${exit}}
+
+</FORM>
+
+${not.admin.com.servers,start,restart,stop,status,new,rename,upload,download?${include:conf-backup.dhtml}}
+${admin.com.help?<HR>${include:conf-listhelp.dhtml}}

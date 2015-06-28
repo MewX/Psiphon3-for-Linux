@@ -1,0 +1,31 @@
+<TABLE width=100% border=1 cellspacing=0 cellpadding=0>
+<TR><TD width=20%>&nbsp; Common Name </TD><TD>
+<INPUT type=text size=40 name=cert--CN value="${admin.formv.cert--CN}">
+<small>(eg, your name)</small>
+</TD></TR>
+
+<TR><TD width=20%>&nbsp; Organization Unit</TD><TD>
+<INPUT type=text size=40 name=cert--OU value="${admin.formv.cert--OU}">
+<small>(eg, section)</small>
+</TD></TR>
+
+<TR><TD width=20%>&nbsp; Organization Name </TD><TD>
+<INPUT type=text size=40 name=cert--O value="${admin.formv.cert--O}">
+<small>(eg, company)</small>
+</TD></TR>
+
+<TR><TD width=20%>&nbsp; Locality Name </TD><TD>
+<INPUT type=text size=30 name=cert--L value="${admin.formv.cert--L}">
+<small>(eg, city)</small>
+</TD></TR>
+
+<TR><TD width=20%>&nbsp; State or Province </TD><TD>
+<INPUT type=text size=30 name=cert--ST value="${admin.formv.cert--ST}">
+<small></small>
+</TD></TR>
+
+<TR><TD width=20%>&nbsp; Country Name </TD><TD>
+<INPUT type=text size=5 name=cert--C value="${admin.formv.cert--C}">
+<small>(2 letter code)</small>
+</TD></TR>
+</TABLE>

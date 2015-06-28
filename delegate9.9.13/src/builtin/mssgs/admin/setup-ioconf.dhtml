@@ -1,0 +1,18 @@
+<TABLE width="100%" border=0 cellspacing=0 cellpadding=0 bgcolor=#C0C0C0>
+<TR><TD align=right>
+send
+<INPUT type=checkbox name=ioconf-sock-sndnodelay
+			${ioconf.sock.sndnodelay?checked}>nodelay
+<INPUT type=checkbox name=ioconf-sock-sndmutex
+			${ioconf.sock.sndmutex?checked}>mutex
+&nbsp;
+&nbsp;
+buff
+<INPUT type=text size=5 name=ioconf-sock-sndbuf
+		    value="${ioconf.sock.sndbuf}">
+wait
+<INPUT type=text size=3 name=ioconf-sock-sndwait
+		    value="${ioconf.sock.sndwait}">
+</TD></TR>
+</TD></TR>
+</TABLE>

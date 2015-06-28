@@ -1,0 +1,3 @@
+#!/bin/sh
+
+sed -e '/^A\./d' -e '/^Rivest/d' -e '/^RFC/d' -e '//d' -e '/^$/d'

@@ -1,0 +1,4 @@
+Not Authorized: ${_request.line}<BR>
+<B>Authorization</B> required.<P>
+
+${genauth.genauth?${genauth.genuser}}

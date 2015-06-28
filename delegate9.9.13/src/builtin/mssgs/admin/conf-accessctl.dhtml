@@ -1,0 +1,27 @@
+${not.admin.formv.Flag-showall.on?
+${not.admin.formv.Flag-showaccess.on&not.admin.conferr.conf-REL?
+  <INPUT type=hidden name=conf-reliable value="${_admin.formv.conf-reliable}">
+  ${admin.dumpformv.-.conf-REL,conf-RELIABLE,conf-AUTHORIZER,conf-servlist,conf-userlist,conf-REACH,conf-REACH-list}
+  ${exitfile}
+}
+}
+
+<TABLE width=100% border=1 cellspacing=0 cellpadding=0 bgcolor=#D0D0F0>
+<TR><TD align=right>
+<TR>
+ <TD align=center width=25%>client hosts</TD>
+ <TD>
+ <INPUT type=radio name=conf-REL value=_localnet ${not.admin.formv.conf-REL|admin.formv.conf-REL._localnet?checked}>${tag:small:local network only}
+ <INPUT type=radio name=conf-REL value=_any ${admin.formv.conf-REL._any?checked}>${tag:small:any hosts}
+ <INPUT type=radio name=conf-REL value=_custom ${admin.formv.conf-REL._custom?checked}>${tag:small:custom}
+ </TD>
+${admin.formv.conf-REL._custom?
+  <TR><TD align=center>list of clients</TD>
+  <TD><INPUT type=text name=conf-RELIABLE size=60 value="${_admin.formv.conf-RELIABLE}"></TD>
+  </TR>
+}
+</TR>
+
+${include:conf-authorizer.dhtml}
+${include:conf-reachable.dhtml}
+</TABLE>

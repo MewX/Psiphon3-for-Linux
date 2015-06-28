@@ -1,0 +1,89 @@
+======================================================================
+These icons are duplicated from the CERN W3 Software in public domain.
+======================================================================
+
+		 THIS IS A DISTRIBUTION OF PRECOMPILED
+		CERN HTTPD AND RELATED UTILITY PROGRAMS
+
+Quote from "Statement Concerning CERN W3 Software Release Into Public
+Domain", dated 3 May, 1993:
+
+	Declaration
+
+	The following CERN software is hereby put into the public
+	domain:
+		- W3 basic ("line-mode") client
+		- W3 basic server
+		- W3 library of common code.
+
+	CERN's intention in this is to further compatibility, common
+	practices, and standards in networking and computer supported
+	collaboration.  This does not constitute a precedent to be
+	applied to any other CERN copyright software.
+
+	CERN relinquishes all intellectual property rights to this
+	code, both source and binary form and permission is granted
+	for anyone to use, duplicated, modify and redistribute it.
+
+	CERN provides absolutely NO WARRANTY OF ANY KIND with respect
+	to this software.  The entire risk as to the quality and
+	performance of this software is with the user.  IN NO EVENT
+	WILL CERN BE LIABLE TO ANYONE FOR ANY DAMAGES ARISING OUT THE
+	USE OF THIS SOFTWARE, INCLUDING, WITHOUT LIMITATION, DAMAGES
+	RESULTING FROM LOST DATA OR LOST PROFITS, OR FOR ANY SPECIAL,
+	INCIDENTAL OR CONSEQUENTIAL DAMAGES.
+
+
+THIS PACKAGE INCLUDES:
+  * Programs in bin/
+	- httpd, CERN hypertext server
+	- cgiparse, for use by CGI scripts to parse the input passed
+	  by the server
+	- cgiutils, for use by CGI scripts to construct valid HTTP
+	  replies to the client [like the Expires: field]
+	- htadm, a program for maintaining password files for the
+	  server
+
+  * CGI programs in cgi-bin/
+	- htimage used to handle clickable image requests
+
+  * Sample configuration files for httpd in config/
+	- httpd.conf for normal use as HTTP server
+	- prot.conf for normal use as HTTP server with access control
+	- proxy.conf for proxy use without caching
+	- caching.conf for proxy use with caching
+	- all.conf that contains all the configuration directives
+	  understood by httpd
+
+  * Sample icons in icons/
+	- to be used for directory listings, and also for ftp listings
+	  when using httpd as a proxy
+	- simplist way to make use of the icons is to define the
+	  server root directory to be this directory [where this
+	  README file sits], by specifying in the configuration file:
+
+		ServerRoot  /what/ever/server_root
+
+
+ONLINE DOCUMENTATION for this software is in:
+
+	http://info.cern.ch/httpd/
+
+SOURCE CODE for this software is available from:
+
+	ftp://info.cern.ch/pub/www/src/cern_httpd.tar.Z
+
+If you have any PROBLEMS with this software, or find a BUG, contact:
+
+	httpd@info.cern.ch
+
+Remember to run httpd in VERBOSE MODE [with the -v or -vv command line
+option] when things seem to be going wrong and attach the output to
+your mail message.  This will make our job a lot easier.
+
+If httpd crashes and a core image is generated, run "dbx /path/httpd"
+and say "where" to see where the execution was when the program
+crashed.
+
+Have fun!
+

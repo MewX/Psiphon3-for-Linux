@@ -1,0 +1,33 @@
+#!/bin/sh
+#
+#	Mosaic/DeleGate		March 1994 <ysato@etl.go.jp>
+#
+
+DHOST=etlcom
+DPORT=2080
+MOSAIC=Jmosaic
+
+#
+#
+#
+
+DELEGATE="$DHOST:$DPORT"
+DELEGATE_URL="s#//#//$DELEGATE/=@=:#"
+MYNAME=`basename $0`
+
+STDHOME="http://www.ncsa.uiuc.edu/SDG/Software/Mosaic/NCSAMosaicHome.html"
+
+if [ "$1" != "" ]; then
+	HOMEPAGE="$1"
+else
+if [ "$HOMEPAGE" = "" ]; then
+	HOMEPAGE=$STDHOME
+fi
+fi
+
+echo ">>>>>>>> $MYNAME: DeleGated Mosaic <<<<<<<<"
+echo "-- DELEGATE=$DELEGATE"
+echo "-- MOSAIC=$MOSAIC"
+echo "-- HOMEPAGE=$HOMEPAGE $*"
+HOMEPAGE=`echo $HOMEPAGE | sed $DELEGATE_URL`
+exec $MOSAIC "$HOMEPAGE" $*

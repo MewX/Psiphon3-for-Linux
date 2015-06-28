@@ -1,0 +1,65 @@
+#!/bin/sh
+echo "///////////////////////////////////////////////////////////////"
+echo " CHECK IF THIS IS THE APPROVED ORIGINAL CODE FROM DeleGate.ORG "
+echo "                            November 2006, y.sato@delegate.org "
+echo "///////////////////////////////////////////////////////////////"
+
+DG=delegated
+RSAVRFY="openssl rsautl -verify -pubin -inkey"
+
+TMP=/tmp/dgvrfy
+if [ ! -d $TMP ]; then
+	mkdir $TMP
+fi
+DGKEY=$TMP/dgkey.pem
+DGRSA=$TMP/srcsign.rsa
+DGSIG=$TMP/srcvrfy.out
+echo "TMP: $TMP"
+
+VERDATE=`grep SRCSIGN= srcsign.c|sed -e 's/.*SRCSIGN=//' -e 's/:.$//'`
+grep '\\r\\n' srcsign.c | sed -e 's/.r.n.$//' > $DGRSA
+
+echo "#### approved DeleGate version and the sign in srcsign.c:"
+echo $VERDATE
+echo SIGN:
+cat $DGRSA
+
+echo ""
+echo "#### getting DeleGate public key, it shuld be as this:"
+cat<<EOF
+-----BEGIN PUBLIC KEY-----
+MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDb/8XpXTswqHMXW0teUA+8nYRS
+nT01WzFEcrNWxD43Zx6jqBSq3741RGpa6aYnXBpowbJBs4dIy3YrXHhoGKWtXfvN
+iaDXL4z+x+oRvaQulEFUFOdZxFMYDL7AgXN/wFoRktkbrd6I0HdMoPPdekJC6216
+m5E5y+hrNTxYSOMP/QIDAQAB
+-----END PUBLIC KEY-----
+EOF
+
+$DG -Fdget ftp://ftp.delegate.org/rsa-pubkey.pem -o > $DGKEY
+cat $DGKEY
+$DG -Fpubkey
+
+echo ""
+echo "#### verifying RSA sign for the version:"
+echo "SRCSIGN=$VERDATE"
+echo -n SRCSIGN=
+$DG -FdeMime -b < $DGRSA | $RSAVRFY $DGKEY > $DGSIG
+cat $DGSIG
+dmd5=`sed < $DGSIG -e 's/[^:]*:[^:]*://' -e 's/:.*//'`
+echo ""
+
+echo ""
+echo "#### getting MD5 of the source:"
+echo $dmd5
+smd5=`make -s srcmd5s`
+echo $smd5
+
+echo ""
+if [ "$dmd5" = "$smd5" ]; then
+  echo ">>>> OK, this is the original source code approved by DeleGate.ORG"
+else
+  echo ">>>> BAD, spoofed or forged"
+fi
+echo ""
+
+####################################################################

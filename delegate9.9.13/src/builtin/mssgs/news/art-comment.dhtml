@@ -1,0 +1,26 @@
+<INPUT type=hidden name=commentSize value=400>
+<P>
+<UL>
+<TABLE width=90% border=0>
+<TR><TD width=140pt>Your Email-Address</TD>
+<TD align=left><INPUT type=text name=adminEmail size=40></TD>
+</TR>
+<TR><TD width=140pt>Your Auth-Key</TD>
+<TD align=left>
+<INPUT type=text name=authKey size=14 value="${print%.formv.authKey}"></TD>
+</TR>
+${formv.authKey?:
+  <TR><TD valign=top>
+  ${button:submit:com:comment:auth:style="font-size:small"}</TD>
+  <TD>${include:art-authkey.dhtml}</TD>
+  </TR>
+}
+
+</TABLE>
+Comment:<BR>
+<TEXTAREA cols=80 rows=5 name=comment>
+</TEXTAREA>
+<BR>
+${formv.authKey?<small>${include:art-echopass.dhtml}</small><BR>}
+${button:submit:com:sendComment:Send Comment}
+</UL>

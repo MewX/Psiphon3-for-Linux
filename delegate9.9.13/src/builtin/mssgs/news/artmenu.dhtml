@@ -1,0 +1,17 @@
+<A HREF="../">[Top</A>/<A HREF="../${grp.up}"><B>Up</B>]</A>
+
+${num.min<num.anum2? <A HREF="${ref.top}">[oldest]</A> : [oldest]}
+-
+${num.min<num.anum1?
+ <A HREF="${ref.purl1}">[Older</A>+<A HREF="${ref.purlp}">chunk]</A>
+:[Older-chunk]
+}
+-
+${num.anum2<num.max?
+ <A HREF="${ref.nurl1}">[Newer</A>+<A HREF="${ref.nurlp}">chunk]</A>
+:[Newer-chunk]
+}
+-
+${num.anum1<num.max? <A HREF="${ref.end}">[newest</A>:[newest}
++
+${0<num.anum1? <A HREF="../${grp.print}/?Expire">Check]</A> : Check]}

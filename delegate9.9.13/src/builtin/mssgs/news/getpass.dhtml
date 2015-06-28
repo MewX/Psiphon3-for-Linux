@@ -1,0 +1,27 @@
+<FORM>
+<TABLE width="100%">
+<TR>
+<TD bgcolor=#E0E0E0>
+&nbsp;Sending password to:<BR>
+  <Table>
+  <Tr>
+    <Td>&nbsp;&nbsp;</Td><Td>Your E-mail</Td><Td><INPUT size=55 type=text name=email value="${print%s.formv.email}"></Td>
+  </Tr>
+  <Tr>
+    <Td>&nbsp;&nbsp;</Td><Td></Td><Td>copy the text in this image
+    <IMG ALIGN=middle SRC="http://dummyimage.com/80x24/000/fff.gif&text=${estamp.short}">
+    &nbsp;to here&nbsp; <INPUT size=10 tyep=text name=echo value="">
+    </Td>
+  </Tr>
+  <Tr>
+    <Td>&nbsp;</Td>
+    <Td><INPUT type=submit name=fmt value="Sendpass"></Td>
+  </Tr>
+  </Table>
+</TD></TR>
+</TABLE>
+<INPUT type=hidden name=msgid  value="${art.Message_ID}">
+<INPUT type=hidden name=Pragma value="no-cache">
+<INPUT type=hidden name=estamp value="${estamp.gen}">
+</FORM>
+<HR>

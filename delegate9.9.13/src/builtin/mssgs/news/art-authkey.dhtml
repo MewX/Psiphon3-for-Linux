@@ -1,0 +1,15 @@
+<TABLE border=0 cellpadding=4 cellspacing=0 bgcolor=#F0F0F0><TR><TD>
+<small>
+If you don't have the Auth-Key yet,
+let the DeleGate send it to you (the poseter of the message)
+via mail.
+Fill the Email-Address above,
+copy the pass-String for confirmation,
+and push sendKey,
+then wait the mail to arrive including your Auth-Key.
+<BR>
+${include:art-echopass.dhtml}
+<BR>
+<INPUT type=submit name=com value=sendKey style="font-size:small;padding=0">
+</small>
+</TD></TR></TABLE>

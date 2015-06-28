@@ -1,0 +1,57 @@
+<BODY bgcolor="#F0F0F0">
+<FORM ACTION="${url.base}" METHOD=POST>
+
+<INPUT type=hidden name=Admin>
+<TABLE width=100% border=0><TR><TD align=right>
+<TR><TD bgcolor=#C0C0FF><H2>
+<IMG ALT="Admin" SRC="${icon.frogAdmin.gif}" ALIGN=MIDDLE>
+${formv.com.comment?Comment to the poster of:Shadowing} the Article
+<A HREF=${num.anum1}?Refresh>${_grp.print}:${num.anum1}</A>
+</H2></TD></TR>
+
+</TABLE width=100% border=0>
+
+Poster's Address: ${art.From}<BR>
+Posted Date: ${art.Date}
+
+${formv.com.comment?${include:art-comment.dhtml}${exit}}
+
+<HR>
+Authentication:
+
+<UL>
+${include:art-authadm.dhtml}
+</UL>
+
+${formv._admresp_?
+<HR>
+<TEXTAREA cols=80 readonly style="background-color:#F0F0F0;color:${formv._admresp_.*ERROR?red:blue};border=0">
+${print%.formv._admresp_}
+</TEXTAREA>
+}
+
+<HR>
+Shadowing:
+<UL>
+${include:art-attrs.dhtml}
+
+<TABLE border=0 width=100%>
+<TR><TD align=left>
+<INPUT type=submit name=com value=submit ${formv.anonFrom.on?checked}>
+</TD></TR>
+</TABLE>
+</UL>
+<HR>
+
+<TABLE width=100% border=0><TR><TD align=right>
+${formv.com.comment?
+  <small>control the visibility of this article</small> &gt;&gt;
+  ${button:submit:com:refresh:admin:style="font-size:small"}
+ :
+  <small>send a comment mail to the Poster of this article</small> &gt;&gt;
+  ${button:submit:com:comment:comment:style="font-size:small"}
+}
+</TD></TR>
+</TABLE>
+</FORM>
+<BODY>

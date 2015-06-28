@@ -1,0 +1,20 @@
+${not.admin.formv.Flag-showtimeout.on&not.admin.formv.Flag-showall?
+  ${admin.dumpformv.-.conf-TIMEOUT}
+  ${exit}
+}
+
+<TABLE width=100% border=1 cellspacing=0 cellpadding=0 bgcolor=#D0D0F0>
+<TR>
+ <TD align=center width=25%>timeouts</TD>
+ <TD>
+ &nbsp;${tag:small:i/o}
+   <INPUT type=text name=conf-TIMEOUT-io size=4>
+ &nbsp;${tag:small:accept}
+   <INPUT type=text name=conf-TIMEOUT-acc size=4>
+ &nbsp;${tag:small:connect}
+   <INPUT type=text name=conf-TIMEOUT-con size=4>
+ &nbsp;${tag:small:dns}
+   <INPUT type=text name=conf-TIMEOUT-dns size=4>
+ </TD>
+</TR>
+</TABLE>

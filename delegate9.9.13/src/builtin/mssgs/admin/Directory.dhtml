@@ -1,0 +1,31 @@
+<!--Directory.dhtml-->
+${setenent}
+${+TITLE=${type:title:DeleGate Directories}}
+${+SUBTITLE=${_admin.admpath}}
+${include:head.dhtml}
+
+<FORM ACTION="${request.url}" METHOD=POST>
+<INPUT type=hidden name=act value=Directory>
+<INPUT type=hidden name=form value=Directory>
+<INPUT type=hidden name=showdir-sort value="${admin.formv.showdir-sort}">
+
+${include:dirmenu.dhtml}
+
+<BR>
+<KBD>
+${admin.formv.com&not.admin.formv.com.refresh,cancell,create,remove,df,showtail,show_file.next,show_file.prev?
+<FONT color=red>
+&nbsp;${admin.formv.com} - not implemented yet
+</FONT>
+ :
+<FONT color=green>
+&nbsp;${_admin.admpath} ${admin.formv.com.df? -- ${admin.system.df}} ${admin.respmssg?<FONT color=red>${admin.respmssg}</FONT>}
+</FONT>
+}
+</KBD>
+<P>
+
+${not.admin.is_dir?${include:file-show.dhtml}${exit}}
+${include:file-list.dhtml}
+
+</FORM>

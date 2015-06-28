@@ -1,0 +1,55 @@
+<TABLE width=100% border=0 cellpadding=0 cellspacing=0 bgcolor=#D0D0F0>
+
+<TR>
+${ifndef.btm?<TD width=25% align=right>configuration
+  ${ifndef.btm?
+  ${button:submit:com:list:list:${admin.com.list?style="color:green"}}
+</TD>}
+}
+
+<TD>
+${ifdef.ConfName?
+  <INPUT type=text size=16 name=${refer.ConfName}
+   ${admin.conferr.conf-newservname?style="background-color:#FFD0F0"}
+   value=${evaleval.admin.formv.${refer.ConfName}?
+          "${_evaleval.admin.formv.${refer.ConfName}}"
+          :"${_admin.formv.conf-servname}"}>
+:
+  <INPUT type=text size=16 name=conf-servname value="${_admin.formv.conf-servname}" ${admin.conferr.conf-servname?style="background-color:#FFD0F0"}>
+}
+
+${not.admin.com.list?
+
+  ${ifndef.btm?
+  <IMG ALIGN=middle SRC=${ifdef.btm?${icon.prev}:${icon.next}}>
+  ${button:submit:com:load:load:${admin.com.load?style="color:green"}}
+  ${button:submit:com:clear:clear:${admin.com.clear?style="color:green"}}
+  }
+}
+${ifdef.btm?
+  <IMG ALIGN=middle SRC=${ifdef.btm?${icon.next}:${icon.prev}}>
+  ${button:submit:com:store:store:
+   ${admin.com.store?style="color:green"}
+   ${not.admin.config.writable.conf-newservname?style="color:pink":${admin.config.error?style="color:pink"}}}
+
+  ${admin.config.writable.conf-newservname?
+    ${button:submit:com:start:start:
+    ${admin.config.error?style="color:pink"}}
+  : ${button:submit:com:stop:stop}
+  }
+}
+</TD>
+
+<TD align=right>
+${ifndef.btm?
+  <BUTTON type=reset value=reset><small>reset</small></BUTTON>
+  ${button:submit:com:refresh:refresh:style="font-size:100%"}
+}
+${ifdef.btm?
+  ${button:submit:com:new:new:${admin.com.new?style="color:green"}}
+  ${button:submit:com:list:list}
+}
+</TD>
+
+</TR>
+</TABLE>

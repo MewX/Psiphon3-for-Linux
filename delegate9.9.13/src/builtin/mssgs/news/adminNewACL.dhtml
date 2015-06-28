@@ -1,0 +1,20 @@
+${include:../admin/adminNewACL.dhtml}
+
+#
+# Base-URL: URL of the target NNTP server
+#   Do not rewrite the following line.
+#
+Base-URL: nntp://${serv.hostport}/
+
+#
+# On / Off: newsgroup
+#
+#   Now chose one of following lines and remove the `#'
+#   at the top of the chosen line to show you selected it.
+
+#On: ${grp.name}
+#Off: ${grp.name}
+
+#
+#   You can control more, but at most ${acl.max} newsgroups.
+#

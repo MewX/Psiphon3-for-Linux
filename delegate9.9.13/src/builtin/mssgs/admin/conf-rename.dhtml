@@ -1,0 +1,24 @@
+${not.admin.com.rename?${exit}}
+
+<TABLE width=100% border=0 cellpadding=0 cellspacing=0 bgcolor=#D0D0FF>
+<TD>
+${button:submit:com:rename:rename}
+ from
+ ${admin.formv.conf-servname|admin.formv.conf-checked?
+ <INPUT type=text name=conf-servname readonly
+ value="${admin.formv.conf-checked?${admin.formv.conf-checked}:${admin.formv.conf-servname}}">
+ :${putrespmssg.- check a configuration to be renamed}
+  <small>(<FONT color=red>checked one</FONT>)</small>
+ }
+to
+${not.admin.formv.conf-newservname?<FONT color=red>*</FONT>}
+ <INPUT type=text name=conf-newservname
+   value="${admin.formv.conf-newservname}"
+${not.admin.formv.conf-newservname?style="background-color:pink"}>
+
+</TD></TR></TABLE>
+
+${not.admin.formv.conf-servname&not.admin.formv.conf-checked?
+<FONT color=red>- check a box</FONT><BR>}
+${not.admin.formv.conf-newservname?
+<FONT color=red>- enter the new name of the configuration</FONT><BR>}

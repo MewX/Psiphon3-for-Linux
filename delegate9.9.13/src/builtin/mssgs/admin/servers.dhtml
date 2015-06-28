@@ -1,0 +1,50 @@
+${admin.act.Form2conf?
+ ${include:Form2conf.dhtml}
+ ${exit}
+}
+
+${admin.act.ScreenCtl?${include:Hostsets.dhtml}${exit}}
+
+${define.TITLE=${type:title:DeleGate Server Control}}
+${include:head.dhtml}
+
+${admin.act.Servlist|admin.com.new,help,list,refresh-list,status,start,stop,edit,backup,rename,remove,restore?
+  ${include:ServerCtl.dhtml}
+  ${exit}
+}
+${admin.com.install?
+  ${include:install.dhtml}
+  ${exit}
+}
+
+SERVER START / STOP / DESTROY / CREATE
+
+ ${+Embed=1}
+ ${include:serv-list.dhtml}
+ ${include:conf-list.dhtml}
+ <P>
+<UL>
+<LI> <A HREF="${abase}servers?com=list">START | STOP | DESTROY</A>
+<LI> <A HREF="${abase}config?act=Form2conf&com=new">CREATE</A>
+</UL>
+
+<HR>
+CONTROL THIS SERVER
+<UL>
+<LI> <A HREF="${abase}config?act=Showlog">Show the startup log</A>
+<LI> <A HREF="${abase}config?act=Restart">Soft Restart</A>
+<LI> <A HREF="${abase}restart">Hard Restart</A>
+<LI> Pause server
+<LI> Halt server
+</UL>
+
+<HR>
+<A HREF="${abase}servers?com=install">INSTALL</A> SERVER AND LIBRARIES
+<UL>
+<LI> <A HREF=ftp://ftp.delegate.org/pub/DeleGate/>Download Source</A>
+<LI> Compile
+<LI> Install
+<LI> Replace server
+</UL>
+
+<HR>

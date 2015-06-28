@@ -1,0 +1,15 @@
+${admin.formv.conf-checked._self_|admin.isself.conf-checked?
+ ${not.admin.formv.conf-admpass?
+  ${admin.dumpformv.-.conf-checked}
+  <UL>
+  Login as the administrator to stop self.
+  <TABLE border=0 width=50% bgcolor=pink>
+  <TR><TD align=right>Username</TD><TD><INPUT type=text name=conf-admuser></TD></TR>
+  <TR><TD align=right>Password</TD><TD><INPUT type=password name=conf-admpass></TD></TR>
+  </TABLE>
+  ${button:submit:com:stop:STOP SELF:style="color:red"}
+  ${button:submit:com:cancell:cancell}
+  </UL>
+  <P>
+ }
+}

@@ -1,0 +1,22 @@
+<TABLE width=100% border=0 bgcolor=#8080FF cellpadding=1 cellspacing=0>
+ <TR>
+  <FORM ACTION="${url.self}" METHOD=GET>
+   <TD>
+    <small>&nbsp;</small>
+    ${putmenu?
+     ${noadmin?:
+    <A HREF="?Admin"><IMG BORDER=0 ALIGN=MIDDLE ALT="admin" SRC="${icon.frogAdmin.gif}"></A>
+     }
+    <A HREF=../-search?${grp.print}><IMG BORDER=0 ALIGN=MIDDLE ALT="search" SRC="${icon.frogSearch.gif}"></A>
+    }
+    ${include:artbuttons.dhtml}
+    ${putmenu?
+     <INPUT type=image name=fmt value=Print style="border:none" SRC="${icon.print.gif}" ALT="print" ALIGN=MIDDLE>
+     </TD></TR><TR bgcolor=#C0C0D0><TD>
+     <small>${include:artmenu.dhtml}</small>
+    }
+   </TD>
+  </FORM>
+ </TR>
+</TABLE>
+<small><FONT color=gray>${expires?${expires}}</FONT></small>

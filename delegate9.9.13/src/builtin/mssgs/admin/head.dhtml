@@ -1,0 +1,43 @@
+<HEAD>
+<TITLE>${?TITLE} ${?SUBTITLE}</TITLE>
+</HEAD>
+
+<BODY bgcolor=#${clif.withssl?E0E0FF:FFE0E0}>
+
+<FORM ACTION="${request.url}" METHOD=POST>${admin.dump_common}
+<TABLE width=100% border=0 cellpadding=0 cellspacing=0><TR>
+<TD width=5%>
+ <H2><A HREF="${admin.admact?${abase}:${ibase}}"><IMG SRC="${icon.frog9LTW}" ALIGN=middle BORDER=0></A>
+</TD>
+<TD>
+  &nbsp;<BIG><BIG><B>${?TITLE}</B></BIG></BIG>
+</TD>
+<TD align=right>
+  ${include:lang.dhtml}
+</TD>
+</TR></TABLE>
+
+${auth.admin_enabled?:
+<P><FONT color=red>
+<B>CAUTION</B></FONT>: disabled remote administration
+(<B>AUTH=admin</B> parameter is not given)
+[<A HREF=${ibase}builtin/mssgs/admin/server-help.dhtml>HELP</A>]
+<HR>
+}
+
+${include:head-sslauth.dhtml}
+
+${auth.admin_enabled?:
+ ${type:message:The authorizaion for administration is NOT yet configured.}
+  [<A HREF=${ibase}builtin/mssgs/admin/server-help.dhtml><FONT color=red><B>${type:button:Configure}</B></FONT></A>]<BR>
+}
+${auth.authorized?: ${type:message:You are NOT yet authorized as the administrator.}
+  [<A HREF=authenticate><FONT color=red><B>${type:button:Authenticate}</B></FONT></A>]
+  <small>[<A HREF=${ibase}builtin/mssgs/admin/server-help.dhtml>HELP</A>]</small>
+  <BR>
+}
+
+${include:menu.dhtml}
+<HR>
+</FORM>
+${include:custom1.dhtml}

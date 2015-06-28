@@ -1,0 +1,19 @@
+<TABLE width=100% border=0>
+<TR><TD width=15%>
+Email-Address
+</TD><TD>
+<INPUT type=text size=32 name=adminEmail value="${print%.formv.adminEmail}" ${formv._admresp_.*Email-Address?style="background-color:#FFE0E0"}>
+<small>(the Poster's Address)</small>
+</TD></TR>
+<TR><TD width=15%>
+Auth-Key
+</TD><TD>
+<INPUT type=text size=12 name=authKey ${formv.authKey?value="${print%.formv.authKey}":style="background-color:#FFE0E0"}>
+<small>to authenticate that you are the poster of the article.</small>
+</TD></TR>
+<TR><TD valign=top>
+<INPUT type=submit name=com value=refresh style="font-size:small;padding=0">
+</TD><TD>
+${NOT.formv.authKey?${include:art-authkey.dhtml}}
+</TD></TR>
+</TABLE>

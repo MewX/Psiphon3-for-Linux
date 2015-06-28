@@ -1,0 +1,12 @@
+<HR>
+Sending password to you
+${estamp.shortok?
+  ${Sendpass?
+    <FONT color=green>is finished successfully</FONT>.
+  :
+    <FONT color=red>FAILED</FONT> (${error.reason})
+  }
+:
+  <FONT color=red>FAILED</FONT> (${error.reason})
+}
+<HR>

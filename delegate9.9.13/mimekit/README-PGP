@@ -1,0 +1,61 @@
+////////////////////////////////////////////////////////////
+
+        How to use MimeKit as a PGP Filter
+
+        Feb. 13, 1997   Yutaka Sato <ysato@etl.go.jp>
+
+////////////////////////////////////////////////////////////
+
+0) General
+
+  MimeKit contains two filter commands; enMime for encoding
+and deMime for decoding.  Both take a RFC822 message from
+the standard input and put a converted message to the
+standard output.
+
+  % enMime [options] < infile > outfile
+  % deMime [options] < infile > outfile
+
+Conversions applied to the message are specified by options;
+
+  CHARCODE={JIS,EUC,SJIS}    ... for deMime only
+  PGP={sign,encr,vrfy,decr,mime}*
+
+These commands can be used as a PGP filters to sign, encrypt,
+decrypt, or convert text data in RFC822 messages based on
+PGP encryption.  They recognize both ``PGP Message Exchange
+Formats [RFC1991]'' and ``MIME Security with Pretty Good
+Privacy (PGP) [RFC2015]'' format (PGP/MIME).
+
+To use them as PGP filters, you need a pgp command installed
+somewhere in your command PATH.  EnMime and deMime use pgp
+as a filter command.  When pass phrase is necessary to process
+a message, pgp will ask you it on the terminal.
+
+USAGE:
+
+  1) Sign in PGP/MIME format
+
+    % enMime PGP=sign,mime
+
+  2) Sign in PGP format
+
+    % enMime PGP=sign
+
+  3) Encrypt in PGP/MIME format
+
+    % enMime PGP=encr,mime
+
+  4) Encrypt in PGP format
+
+    % enMime PGP=encr
+
+  5) Verify signed PGP/MIME format (insert X-PGP-Verified header)
+
+    % deMime PGP=vrfy
+
+  6) Decrypt signed or encrypted PGP/MIME or PGP format
+
+    % deMime PGP=decr
+
+////////////////////////////////////////////////////////////

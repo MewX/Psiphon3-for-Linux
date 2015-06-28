@@ -1,0 +1,19 @@
+###############################################################################
+# Making DeleGate without C++ but retaining "QS" capability
+#                                                                091123 Y.Sato
+###############################################################################
+
+# if your MAKE program does not take definitions from the command line,
+# the following definitions need to be written into "src/DELEGATE_CONF".
+CC = cc
+CFLAGS = -DQSC -O2          ## add "-MD" for icc, "-m64" for 64bits CPU,
+                            ##     "-DSTAT64" for huge file support on Linux
+LDOPTS =                    ## add "-MD" for icc, "-m64" for 64bits CPU
+CFLAGSPLUS =                ## to be empty
+
+all:;make -f Makefile \
+	CC="$(CC)" \
+	CFLAGS="$(CFLAGS)" \
+	CFLAGSPLUS="$(CFLAGSPLUS)" \
+	LDOPTS="$(LDOPTS)"
+###############################################################################

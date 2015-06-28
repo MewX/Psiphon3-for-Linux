@@ -1,0 +1,30 @@
+<TABLE width=100% border=0 cellpadding=0 cellspacing=0
+ ${not.admin.act.Form2conf?bgcolor="#D0D0F0"}><TR><TD>
+
+${not.admin.com.new,rename,upload,download?
+${button:submit:com:status:status:style="font-size:100%;${admin.com.list?:background-color:C0FFC0}"}
+${button:submit:com:start:start:style="font-size:100%;${admin.com.list?:background-color:C0FFC0}"}
+${button:submit:com:restart:restart:style="font-size:100%;${admin.com.list?:background-color:C0FFC0}"}
+${button:submit:com:stop:stop:style="font-size:100%;${admin.com.list?:background-color:C0FFC0}"}
+}
+</TD>
+
+${not.admin.com.new,rename,upload,download?
+<TD align=left>
+<INPUT type=checkbox name=auto-refresh ${admin.formv.auto-refresh.on?checked}><FONT color="#00FF20">${tag:small:auto refresh}</FONT>
+<INPUT type=checkbox name=serv-showall ${admin.formv.serv-showall.on?checked}><FONT color="#00FF20">${tag:small:show all}</FONT>
+${admin.formv.auto-refresh?${evaleval.refresh.10.${ibase}admin/servers/com=status&${~admin.dumpformvu.-.act,lang,auto-refresh}}}
+</TD>
+}
+
+<TD align=right>
+<BUTTON type=reset><small>reset</small></BUTTON>
+
+${admin.com.new,rename,upload,download?
+  ${not.admin.com.new?
+   ${button:submit:com:cancel:cancel}
+  }
+:${button:submit:com:refresh:refresh}
+}
+</TD></TR>
+</TABLE>

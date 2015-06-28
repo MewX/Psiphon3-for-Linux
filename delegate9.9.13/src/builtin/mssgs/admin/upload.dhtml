@@ -1,0 +1,13 @@
+${+TITLE=DeleGate Server Administration}
+${include:head.dhtml}
+
+<FORM ENCTYPE="multipart/form-data" ACTION=${ibase}admin/config METHOD=POST>
+<INPUT type=hidden name=prevact value="${admin.config.curact}">
+
+<INPUT type=file name=confdata size=60 value="dgdefault.cnf"><BR>
+<INPUT type=submit name=act value=Upload>
+</FORM>
+
+<P>
+Current cnfiguration:<BR>
+<TABLE border=1 width=100% cellpadding=4 cellspacing=0><TR><TD><PRE>${admin.getconfig}</PRE></TD></TR></TABLE>

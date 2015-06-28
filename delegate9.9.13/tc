@@ -1,0 +1,120 @@
+#!/bin/sh
+# test cases
+
+DG=delegated
+export ADMIN=test@domain
+
+if [ "$1" = "1" ]; then
+	export CACHE=no
+	if [ "$2" = "up" ]; then  ### universal proxy
+		$DG -P9999 \
+		-Q9998/socks/ssl \
+		-Q9997/delegate/ssl \
+		-Q9996/yymux/ssl \
+		-r -fv
+	fi
+
+	if [ "$2" = "ur" ]; then  ### reverse proxy with selectable routing
+		$DG -P9995,9994,9993 SERVER=ftp://ftp.openssl.org \
+			FORWARD="delegate://localhost:9997/ssl-_-*:*:-Q9994" \
+			   FORWARD="socks://localhost:9998/ssl-_-*:*:-Q9995" \
+			   FORWARD="yymux://localhost:9996/ssl-_-*:*:-Q9993" \
+			-r -fv $3
+	fi
+
+	if [ "$2" = "csf" ]; then ### origin-server via SOCKS
+		$DG -fv SOCKS=localhost:9998/ssl -Fdget ftp://ftp.openssl.org -h -o -c
+	fi
+	if [ "$2" = "crs" ]; then ### via reverse-proxy via SOCKS
+		$DG -fv -vd -Fdget ftp://localhost:9995 -h -o -c
+	fi
+	if [ "$2" = "crm" ]; then ### via reverse-proxy via MASTER
+		$DG -fv -vd -Fdget ftp://localhost:9994 -h -o -c
+	fi
+	if [ "$2" = "cry" ]; then ### via reverse-proxy via YYMUX
+		$DG -fv -vd -Fdget ftp://localhost:9993 -h -o -c
+	fi
+
+
+	if [ "$2" = "o1" ]; then  ### origin FTPS server with SSL
+		$DG -P9992 STLS=fcl SERVER=ftps MOUNT="/* /*" -r -fv
+	fi
+	if [ "$2" = "c1" ]; then  ### FTP/ssl direct
+		$DG STLS=fsv -Fdget ftps://localhost:9992  -o -c -fv
+	fi
+
+	if [ "$2" = "o2" ]; then  ### origin ftp server with STLS
+		$DG -P9992 STLS=-fcl SERVER=ftp MOUNT="/* /*" -r -fv
+	fi
+	if [ "$2" = "ss" ]; then  ### SOCKS server with SSL (optional)
+		$DG -P9991 STLS=-fcl SERVER=socks             -r -fv
+	fi
+	if [ "$2" = "c3" ]; then  ### FTP     via SOCKS/ssl
+		$DG SOCKS=localhost:9991/ssl:"*" -Fdget ftps://localhost:9992 -o -c -fv
+	fi
+	if [ "$2" = "c4" ]; then  ### FTP-ctrl/ssl
+		$DG STLS=fsv:ftp -Fdget ftp://localhost:9992 -o -c -fv
+	fi
+	if [ "$2" = "c5" ]; then  ### FTP/ssl via SOCKS
+		$DG SOCKS=localhost:9991:"*" STLS=fsv:ftp,ftp-data -Fdget ftp://localhost:9992 -o -c -fv
+	fi
+fi
+
+if [ "$1" = "2" ]; then
+	if [ "$2" = "sv" ]; then  ### origin servers
+		$DG -P9980 SERVER=ftp MOUNT="/* /*" \
+			-Q9982/http \
+			-Q9981/yysh/ssl \
+			-Q9983/yysh \
+			-r -fv
+	fi
+	if [ "$2" = "yy" ]; then  ### YYMUX proxy
+		$DG -P9986/yymux -Q9987/yymux/ssl -r -fv
+	fi
+	if [ "$2" = "tc" ]; then  ### TCP connection between YY server/client
+		$DG \
+			SERVER=tcprelay://localhost:9986:-:-P9988 -P9988 \
+			SERVER=tcprelay://localhost:9987:-:-P9989 -Q9989 \
+			-r -fv
+	fi
+	if [ "$2" = "c0" ]; then  ### client for FTP via YYMUX
+		$DG YYMUX=localhost:9988 $* -Fdget http://localhost:9982 -h -3
+	fi
+	if [ "$2" = "c1" ]; then  ### client for FTP via YYMUX
+		$DG -fv YYMUX=localhost:9988 -Fconnect localhost 9980
+	fi
+	if [ "$2" = "c2" ]; then  ### client for FTP via YYMUX/ssl
+		$DG -fv YYMUX=localhost:9989/ssl -Fconnect localhost 9980
+	fi
+	if [ "$2" = "c3" ]; then  ### client for yysh/ssl via YYMUX (non-SSL)
+		$DG YYMUX=localhost:9988 $3 -Fyysh localhost:9981 STLS=fsv:yysh -yi
+		#$DG YYMUX=localhost:9988 $3 -Fyysh localhost:9981.ssl -yi
+		#".ssl" is bad for RSM-Connect
+	fi
+	if [ "$2" = "c4" ]; then  ### client for yysh/ssh via YYMUX
+		$DG YYMUX=localhost:9989/ssl STLS=fsv:yysh -Fyysh -yi localhost:9981
+	fi
+	if [ "$2" = "c5" ]; then  ### client for yysh via YYMUX/ssl
+		$DG YYMUX=localhost:9989 STLS=fsv:yymux -Fyysh -yi localhost:9983
+	fi
+	if [ "$2" = "c6" ]; then  ### client for yysh/ssl via YYMUX/ssl
+		$DG YYMUX=localhost:9989/ssl STLS=fsv $3 -Fyysh -yi localhost:9981
+		#$DG YYMUX=localhost:9989/ssl         $3 -Fyysh -yi localhost:9981/ssl
+	fi
+	if [ "$2" = "c7" ]; then  ### client for yysh/ssl via YYMUX/ssl with command
+		$DG YYMUX=localhost:9989/ssl STLS=fsv $3 -Fyysh -yi localhost:9981 ping localhost
+	fi
+
+	if [ "$2" = "p1" ]; then  ### proxy via yysh
+		$DG -r -fv -P9985 SERVER=http YYMUX=localhost:9988 -d1+7
+	fi
+	if [ "$2" = "pc1" ]; then  ### proxy via yysh
+		$DG -fv -Fdget PROXY=localhost:9985 ftp://localhost:9980
+	fi
+	if [ "$2" = "p2" ]; then  ### proxy via yysh/ssl
+		$DG -r -fv -P9984 SERVER=http YYMUX=localhost:9989 STLS=fsv:yy -d1+7
+	fi
+	if [ "$2" = "pc2" ]; then  ### proxy via yysh
+		$DG -fv -Fdget PROXY=localhost:9984 ftp://localhost:9980
+	fi
+fi

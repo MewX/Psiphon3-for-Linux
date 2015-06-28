@@ -1,0 +1,28 @@
+${nobutton? ${exit}}
+${putmenu?
+  <A HREF="../"><IMG BORDER=0 ALIGN=MIDDLE ALT="upper" SRC="${icon.up.gif}"></A>
+}
+${num.min<num.anum2?
+<A HREF="${ref.top}">   <IMG BORDER=0 ALIGN=MIDDLE ALT="oldest" SRC="${icon.left3.gif}"></A> :
+                        <IMG BORDER=0 ALIGN=MIDDLE ALT="oldest" SRC="${icon.left3.gif}">
+}
+${num.min<num.anum1?
+ <A HREF="${ref.purlp}"><IMG BORDER=0 ALIGN=MIDDLE ALT="olders" SRC="${icon.left2.gif}"></A>
+ <A HREF="${ref.purl1}"><IMG BORDER=0 ALIGN=MIDDLE ALT="older1" SRC="${icon.prev1l.gif}"></A>
+:<IMG BORDER=0 ALIGN=MIDDLE ALT="olders" SRC="${icon.left2.gif}">
+ <IMG BORDER=0 ALIGN=MIDDLE ALT="older1" SRC="${icon.left.gif}">
+}
+#${num.anum1<num.anum2?
+ <A HREF="${ref.center}"><IMG BORDER=0 ALIGN=MIDDLE ALT="this" SRC="${icon.center.gif}"></A>
+#:<IMG BORDER=0 ALIGN=MIDDLE ALT="this" SRC="${icon.center.gif}">
+#}
+${num.anum2<num.max?
+ <A HREF="${ref.nurl1}"><IMG BORDER=0 ALIGN=MIDDLE ALT="newer1" SRC="${icon.next1l.gif}"></A>
+ <A HREF="${ref.nurlp}"><IMG BORDER=0 ALIGN=MIDDLE ALT="newers" SRC="${icon.right2.gif}" ></A>
+:<IMG BORDER=0 ALIGN=MIDDLE ALT="newer1" SRC="${icon.right.gif}">
+ <IMG BORDER=0 ALIGN=MIDDLE ALT="newers" SRC="${icon.right2.gif}">
+}
+${num.anum1<num.max? <A HREF="${ref.end}">
+ <IMG BORDER=0 ALIGN=MIDDLE ALT="latest" SRC="${icon.right3.gif}"></A>
+:<IMG BORDER=0 ALIGN=MIDDLE ALT="latest" SRC="${icon.right3.gif}">
+}

@@ -1,0 +1,13 @@
+--
+--  @"@
+-- ( o ) { Cannot connect to: `${_server.host}:${server.port}' }\
+${cantconn.rejected?
+!!!!!!!! FORBIDDEN by DeleGate}\
+${cantconn.unknown?
+!!!!!!!! UNKNOWN host}\
+${cantconn.timeout?
+!!!!!!!! connection TIMEOUT}\
+${cantconn.refused?
+!!!!!!!! connection REFUSED (no server?)}\
+${cantconn.unreach?
+!!!!!!!! UNREACHABLE host/net}

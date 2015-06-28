@@ -1,0 +1,79 @@
+<H2> What is Mounting? </H2>
+It's a mapping from URL-<I>V</I> to URL-<I>R</I> in request messages,
+and mapping URL-<I>R</I> to URL-<I>V</I> in response messages.
+
+<P><B>Example 1</B>
+<FORM ACTION="${ibase}admin/mount" METHOD=POST>
+<INPUT TYPE=hidden NAME=action VALUE="mount">
+<I>V</I>:
+<SELECT NAME=vurl-proto>
+<OPTION SELECTED>http://-/
+</SELECT>
+<INPUT TYPE=TEXT NAME=vurl-path SIZE=20 VALUE="mirror/www/dg">
+<SELECT NAME=vurl-tail>
+<OPTION SELECTED>/*
+</SELECT>
+<BR>
+<I>R</I>:
+<SELECT NAME=rurl-proto>
+<OPTION SELECTED>http://
+</SELECT>
+<INPUT TYPE=TEXT NAME=rurl-login SIZE=20 VALUE="www.delegate.org">
+<SELECT NAME=rurl-tail>
+<OPTION SELECTED>/*
+</SELECT>
+<P>
+<INPUT TYPE=submit VALUE=MOUNT>
+</FORM>
+
+Press the MOUNT button then you will be able to access
+http://www.delegate.org/* as if it is
+http://${hostport.clif}/mirror/dg/*.
+
+<P><B>Example 2</B>
+<FORM ACTION="${ibase}admin/mount" METHOD=POST>
+<INPUT TYPE=hidden NAME=action VALUE="mount">
+<I>V</I>:
+<SELECT NAME=vurl-proto>
+<OPTION SELECTED>http://-/
+</SELECT>
+<INPUT TYPE=TEXT NAME=vurl-path SIZE=20 VALUE="mirror/ftp/dg">
+<SELECT NAME=vurl-tail>
+<OPTION SELECTED>/*
+</SELECT>
+<BR>
+<I>R</I>:
+<SELECT NAME=rurl-proto>
+<OPTION SELECTED>ftp://
+</SELECT>
+<INPUT TYPE=TEXT NAME=rurl-login SIZE=20 VALUE="ftp.delegate.org">
+<SELECT NAME=rurl-tail>
+<OPTION SELECTED>/*
+</SELECT>
+<P>
+<INPUT TYPE=submit VALUE=MOUNT>
+</FORM>
+
+<P><B>Example 3</B>
+<FORM ACTION="${ibase}admin/mount" METHOD=POST>
+<INPUT TYPE=hidden NAME=action VALUE="mount">
+<I>V</I>:
+<SELECT NAME=vurl-proto>
+<OPTION SELECTED>http://-/
+</SELECT>
+<INPUT TYPE=TEXT NAME=vurl-path SIZE=20 VALUE="mirror/news/dg">
+<SELECT NAME=vurl-tail>
+<OPTION SELECTED>/*
+</SELECT>
+<BR>
+<I>R</I>:
+<SELECT NAME=rurl-proto>
+<OPTION SELECTED>nntp://
+</SELECT>
+<INPUT TYPE=TEXT NAME=rurl-login SIZE=20 VALUE="news.delegate.org">
+<SELECT NAME=rurl-tail>
+<OPTION SELECTED>/*
+</SELECT>
+<P>
+<INPUT TYPE=submit VALUE=MOUNT>
+</FORM>

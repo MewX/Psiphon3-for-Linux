@@ -1,0 +1,17 @@
+<TABLE width=100% bgcolor=#${clif.withssl?8080FF:FF8080}><TR><TD>
+<B>
+${clif.withssl?<FONT color=#4040FF>${type:message:SSL enabled}
+ ${auth.authorized?</B><small><small><small>(${admin.openssl.version})</B></small></small></small>}</FONT>
+: ${type:message:NON-SSL!}
+ ${clif.withadm?:[<A HREF=${ibase}builtin/mssgs/admin/server-help.dhtml><FONT color=red>${type:button:Configure}</FONT></A>]}
+ ${admin.isset?<A HREF="https://${admin.port}${abase}"><FONT color=red>enable</FONT></A>}
+}</B>
+
+${auth.authorized?
+</TD><TD ALIGN=right>
+ <small><FONT color=blue>${type:message:You are authorized as the administrator.}</blue>
+ ${auth.with_pass?[<A HREF=${abase}reauth><FONT color=#408070><B>${type:button:clear}</B></FONT></A>]}
+ [<A HREF=${ibase}builtin/mssgs/admin/server-help.dhtml><FONT color=blue>${type:button:HELP}</FONT></A>]
+ </small>
+}
+</TD></TR></TABLE>

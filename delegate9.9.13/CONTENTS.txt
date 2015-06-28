@@ -1,0 +1,39 @@
+---------------------------------------------------------------------
+ CONTENTS OF INSTALLED DELEGATE 9.9.X
+---------------------------------------------------------------------
+ :::: WINDOWS ::::
+DGROOT/bin/con32-dg9_9_13.exe      ... executable (Console App.)
+DGROOT/bin/con32-dg9_9_13.conf.txt ... default configuration of above
+DGROOT/bin/dgzlib1.dll             ... Zlib DLL
+DGROOT/bin/libeay32.dll            ... Crypto DLL
+DGROOT/bin/ssleay32.dll            ... SSL DLL
+DGROOT/bin/win32-dg9_9_13.exe      ... executable (Windows App.)
+DGROOT/bin/win32-dg9_9_13.conf.txt ... default configuration of above
+DGROOT/doc/zlib.h                  ... Zlib license
+DGROOT/doc/OpenSSL-LICENSE         ... OpenSSL license
+DGROOT/doc/LICENSE.txt             ... DeleGate license
+DGROOT/doc/LICENSE-ja.txt          ... DeleGate license in Japanese
+DGROOT/doc/COPYRIGHT               ... DeleGate copyright
+DGROOT/lib/libopt_s.a              ... for building from source code
+DGROOT/lib/libgates.a              ... for building from source code
+
+ :::: UNIX ::::
+DGROOT/bin/dg9_9_13                ... executable
+DGROOT/bin/dg9_9_13.conf           ... default configuration of above
+DGROOT/subin/setup-subin.sh        ... subin setup script
+DGROOT/subin/dgdate                ... setting date
+DGROOT/subin/dgcpnod               ... creating a device node
+DGROOT/subin/dgpam                 ... authentication by PAM
+DGROOT/subin/dgbind                ... binding socket
+DGROOT/subin/dgchroot              ... changing root
+DGROOT/subin/dgforkpty             ... creating pseudo tty
+DGROOT/doc/LICENSE.txt             ... DeleGate license
+DGROOT/doc/LICENSE-ja.txt          ... DeleGate license in Japanese
+DGROOT/doc/COPYRIGHT               ... DeleGate copyright
+DGROOT/lib/libopt_s.a              ... for building from source code
+DGROOT/lib/libgates.a              ... for building from source code
+---------------------------------------------------------------------
+ Tutorials for newbies of DeleGate are in preparation:
+   http://www.delegate.org/delegate/newbies.shtml (in English)
+   http://www.delegate.org/delegate/newbies-ja.shtml (in Japanese)
+---------------------------------------------------------------------

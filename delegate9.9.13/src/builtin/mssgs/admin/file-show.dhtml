@@ -1,0 +1,19 @@
+
+ <HR>
+ <PRE>${admin.com.showtail?${admin.show_file.tail}:${admin.show_file}}</PRE>
+ <HR>
+
+ <INPUT type=hidden name=filepos value=${admin.show_file.filepos}>
+ </FORM>
+
+ <A NAME=tail>
+ <FORM ACTION="#tail" METHOD=POST>${admin.dump_common}
+ <A NAME=tail>${button:submit:com:showtail:refresh tail}</A>
+ <!--
+ <INPUT type=checkbox name=auto-refresh ${admin.formv.auto-refresh.on?checked}>
+ -->
+ </FORM>
+ </A>
+
+ <PRE><FONT color=red>${admin.respmssg}</FONT></PRE>
+ ${exit}

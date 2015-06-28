@@ -1,0 +1,41 @@
+${admin.com.upload,download? ${exit}}
+${admin.com.new?
+ ${button:submit:com:new:new}
+ ${button:submit:com:cancell:dismiss}
+ ${exit}
+}
+
+${admin.com.new,rename?
+<TABLE width=100% border=0 cellpadding=0 cellspacing=0 bgcolor=#D0D0FF>
+<TR><TD><HR>
+}
+
+${admin.com.rename?
+ ${include:conf-rename.dhtml}
+:
+<TABLE width=100% border=0 cellpadding=0 cellspacing=0
+ ${admin.act.Form2conf?bgcolor="#C0C0FF"}>
+<TR><TD>
+ ${not.admin.com.new?
+  ${not.ifdef.Embed?<IMG SRC=${icon.next} align=middle>
+  ${button:submit:com:backup:backup}
+  ${button:submit:com:remove:remove}
+  ${button:submit:com:edit:edit}
+  }
+ }
+</TD><TD align=right>
+ <NOBREAK>
+  ${button:submit:com:new:new}
+  ${button:submit:com:rename:rename}
+  ${button:submit:com:upload:upload:style="font-family:roman;font-size:75%"}
+  ${button:submit:com:download:download:style="font-family:roman;font-size:75%"}
+ </NOBREAK>
+</TD></TR></TABLE>
+}
+
+${admin.com.new,rename?
+<HR></TD></TR></TABLE>
+
+<TABLE width=100% border=0 cellpadding=0 cellspacing=0><TR><TD align=right>
+${button:submit:com:dismissed:dismissed}</TD></TR></TABLE>
+}

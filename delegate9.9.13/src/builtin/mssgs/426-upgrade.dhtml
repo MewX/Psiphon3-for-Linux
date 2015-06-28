@@ -1,0 +1,3 @@
+${setenent}
+protocol error, must be in HTTPS/SSL.<BR>
+<A HREF="https://${hostport.clif}${request.url}">https://${hostport.clif}${request.url}</A>

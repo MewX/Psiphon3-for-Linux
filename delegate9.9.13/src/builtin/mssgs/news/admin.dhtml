@@ -1,0 +1,26 @@
+${num.anum1&NOT.num.anum2?${include:artadmin.dhtml}${exit}}
+
+<TITLE> Administration of the Newsgroup `${_grp.print}' </TITLE>
+
+<H2>
+<IMG ALT="LOGO" SRC="${icon.DeleGateLogoTrans.gif}" ALIGN=MIDDLE>
+<IMG ALT="Admin" SRC="${icon.frogAdmin.gif}" ALIGN=MIDDLE>
+Administration of the Newsgroup `<I>${_grp.print}</I>'
+</H2>
+
+The newsgroup is <B>${grp.Subscribe? SUBSCRIBED : UNSUBSCRIBED}</B>
+for <B>${user.class}</B> users, decided by majority of users themselves.
+See the <A HREF="${url.base}?Admin=ShowACL">Access Control List</A> for more detail.
+<UL>
+<LI>The number of administrators of the newsgroup = <B>${grp.Nadmin}</B>
+<LI>Votes for SUBSCRIBE(S) = <B>${grp.Nsubsc}</B> points
+<LI>Votes for UNSUBSCRIBE(U) = <B>${grp.Nunsub}</B> points
+<LI>A newsgroups is SUBSCRIBED if U <= S
+</UL>
+You may be able to change the decision by voting as an administrator.
+See <A HREF="#admin-guide">Guide for Administrators</A> below.
+<P>
+<HR>
+${include:../admin/admin-guide.dhtml}
+<P>
+<HR>

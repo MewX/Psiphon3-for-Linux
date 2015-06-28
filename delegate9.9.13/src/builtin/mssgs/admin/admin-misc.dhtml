@@ -1,0 +1,53 @@
+${+TITLE=DeleGate Administration}
+${include:head.dhtml}
+
+${auth.authorized?:
+  ${admin.act.unauth?
+    <TABLE width=100% bgcolor=#FFE0E0><TR><TD>
+    Do <A HREF=authenticate><FONT color=red><B>Authenticate</B></FONT></A>
+    First
+    </TD></TR></TABLE>
+    <small>
+  }
+  <small>
+ }
+<UL>
+<LI> <A HREF=servers?act=Servlist&com=servers>Control servers</A>
+  <small> -- status | start | restart | stop | pause </small>
+<LI> <A HREF=config?act=Form2conf&com=new>Create a new server configuration</A>
+<LI> <A HREF=config?act=Form2conf>Edit a configuration</A>
+<LI> <A HREF=showdir/DGROOT/>Browse administration data</A>
+<LI> <A HREF="servers?act=Servlist&com=showinit&serv-confname=${admin.conf-selfname}">Show startup log</A>
+<LI> <A HREF="?act=customize&menu=customize&lang=${admin.formv.lang}">Customize</A>
+</UL>
+<P>
+<UL>
+<LI> <A HREF=account>Account management</A>
+<LI> <A HREF=mount>Mount <small>(Link/Unlink)</small></A>
+<LI> Access control <small> --
+ Test |
+ <A HREF=showdir/ADMDIR/shutout/>Shutout list</A> |
+ REJECT list </small>
+<LI> Log control -- ${tag:small:Statistics | Debug}
+<LI> Cache control -- ${tag:small:Statistics | Expire}
+<!--
+<LI> <A HREF=system.vmstat>Vmstat</A>
+<LI> date command for setting (su only)
+-->
+<LI> <A HREF=servers>Installation</A>
+</UL>
+${auth.authorized?:</small>}
+<HR>
+
+<small>${include:printauth.dhtml}</small>
+
+<P>
+<FORM>
+<small>
+Recent Admin Login:<BR>
+<TEXTAREA NAME=authlog cols="100" rows=10 wrap=off style="font-size:100%;background-color:#F0F0FF">
+${admin.authlog.5000}
+</TEXTAREA>
+<small>
+</FORM>
+</BODY>

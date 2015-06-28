@@ -1,0 +1,3 @@
+CONTROL/INHERIT:     sendmail
+CONTROL/RECIPIENT:   ${recipient}
+CONTROL/SERVER-HOST: ${recipient.mx}
