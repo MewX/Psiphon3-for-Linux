@@ -16,14 +16,20 @@ and copy ssh binary from `openssh-5.9p1/` to `pyclient/`
 
 - update server list first
 
+run these commands:
+
     cd pyclient
     python update.py
 
-- run proxy, you will see `Your SOCKS proxy is now running at 127.0.0.1:1080`
+- run proxy
+
+run these commands, and you will see `Your SOCKS proxy is now running at 127.0.0.1:1080`:
 
     python psi_client.py
 
 - set proxy configuration in apps (Android Studio for example)
+
+run these commands:
 
     select "SOCKS"
     fill "Address" and "Port"
