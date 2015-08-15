@@ -1,11 +1,11 @@
 # Menu
 
-- 赛风3 Linux版 [CHS]
-- Psiphon3-for-Linux [ENG]
+- [赛风3 Linux版 `CHS`](#chs)
+- [Psiphon3-for-Linux `ENG`](#eng)
 
 
-# 赛风3 Linux版 [CHS]
-这个repo实际上是[Psiphon3](https://bitbucket.org/psiphon/psiphon-circumvention-system) `SOCKS Proxy` repo的一小部分，这部分是python脚本，可以在Linux上面运行。但是只是`SOCKS Proxy`。
+# <a id="chs"></a>赛风3 Linux版 [CHS]
+这个repo实际上是[Psiphon3](https://bitbucket.org/psiphon/psiphon-circumvention-system) `SOCKS Proxy` repo的一小部分，这部分是python脚本，可以在Linux上面运行。**但是只是`SOCKS5 Proxy`（@skyer0721 测试SOCKS4不行）**。
 
 所以我又添加了DeleGate repo用来支持Linux上的`HTTP Proxy`。
 
@@ -29,7 +29,7 @@
     cd pyclient
     python update.py
 
-### 开启SOCKS代理
+### 开启SOCKS5代理
 
 执行如下命令，可以看到软件有提示信息`Your SOCKS proxy is now running at 127.0.0.1:1080`：
 
@@ -37,7 +37,7 @@
 
 **P.S.** 命令执行可能会提示缺少包，缺少啥就谷歌啥。比如我就遇到了问题，搜一下需要执行如下指令`sudo apt-get install python-socksipy`。
 
-### 在需要的软件里面设置SOCKS代理（以Android Studio为例）
+### 在需要的软件里面设置SOCKS5代理（以Android Studio为例）
 
 Do these steps:
 
@@ -81,8 +81,8 @@ Do these steps:
 关于赛风3的官方资讯：
 https://groups.google.com/forum/#!searchin/psiphon3-developers/python$20/psiphon3-developers/cb8CW7Y98nI/BRx7-cIQ7C8J
 
-# Psiphon3-for-Linux [ENG]
-Part of [Psiphon3](https://bitbucket.org/psiphon/psiphon-circumvention-system) `SOCKS Proxy` repo, for Linux operating system.
+# <a id="eng"></a>Psiphon3-for-Linux [ENG]
+Part of [Psiphon3](https://bitbucket.org/psiphon/psiphon-circumvention-system) `SOCKS5 Proxy` repo, for Linux operating system.
 
 With DeleGate repo to achieve `HTTP Proxy` on Linux.
 
@@ -107,7 +107,7 @@ Run these commands:
     cd pyclient
     python update.py
 
-### Run SOCKS Proxy
+### Run SOCKS5 Proxy
 
 Run these commands, and you will see `Your SOCKS proxy is now running at 127.0.0.1:1080`:
 
@@ -115,7 +115,7 @@ Run these commands, and you will see `Your SOCKS proxy is now running at 127.0.0
 
 **P.S.** You may need to install some python packages, the commands are just in Google. e.g. I was in need of this `sudo apt-get install python-socksipy`.
 
-### Set SOCKS Proxy configuration in apps (Android Studio for example)
+### Set SOCKS5 Proxy configuration in apps (Android Studio for example)
 
 Do these steps:
 
